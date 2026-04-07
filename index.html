@@ -239,9 +239,9 @@ body{display:flex;align-items:center;justify-content:center;padding:env(safe-are
 @keyframes slashIn2{from{transform:translateX(-50%) rotate(-45deg) scaleY(0);opacity:0}to{transform:translateX(-50%) rotate(-45deg) scaleY(1);opacity:1}}
 
 .tile-sword{background:#000;}
-.tile-shield{background:#000;}
-.tile-potion{background:#000;}
-.tile-coin{background:#000;}
+.tile-shield{background:rgba(0,180,0,0.15);}
+.tile-potion{background:rgba(200,0,0,0.15);}
+.tile-coin{background:rgba(210,150,0,0.1);border-color:#2a2a2a;}
 .tile-skull{background:#000;}
 .tile-skull.sk-poison{border-color:#446633;background:#000;animation:poisonSkPulse 3s ease-in-out infinite;}
 .tile-skull.sk-thief{border-color:#665522;background:#000;animation:thiefSkPulse 3s ease-in-out infinite;}
@@ -257,9 +257,9 @@ body{display:flex;align-items:center;justify-content:center;padding:env(safe-are
 .tile.sel{transform:scale(1.06);z-index:5;border-color:var(--sv-hi)!important;box-shadow:0 0 8px rgba(200,200,210,.4);}
 .tile.inp{z-index:4;border-color:var(--sv)!important;transform:scale(1.03);box-shadow:0 0 5px rgba(200,196,188,.25);}
 .tile-sword.sel,.tile-sword.inp{background:#000;}
-.tile-shield.sel,.tile-shield.inp{background:#000;}
-.tile-potion.sel,.tile-potion.inp{background:#000;}
-.tile-coin.sel,.tile-coin.inp{background:#000;}
+.tile-shield.sel,.tile-shield.inp{background:rgba(0,180,0,0.8);}
+.tile-potion.sel,.tile-potion.inp{background:rgba(200,0,0,0.8);}
+.tile-coin.sel,.tile-coin.inp{background:rgba(210,150,0,0.8);}
 .tile-skull.sel,.tile-skull.inp{background:#000;}
 .sk-st{position:absolute;bottom:1px;left:0;right:0;display:flex;justify-content:center;gap:3px;font-size:clamp(8px,2vw,11px);z-index:2;font-weight:900;}
 .sk-a{color:#aa6666;}.sk-d{color:#7799bb;}.sk-h{color:#ccc;}
