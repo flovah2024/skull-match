@@ -242,14 +242,14 @@ body{display:flex;align-items:center;justify-content:center;padding:env(safe-are
 .tile-shield{background:rgba(0,180,0,0.15);}
 .tile-potion{background:rgba(200,0,0,0.15);}
 .tile-coin{background:rgba(210,150,0,0.1);border-color:#2a2a2a;}
-.tile-skull{background:#0a080c;}
-.tile-skull.sk-poison{border-color:#446633;background:#080a06;animation:poisonSkPulse 3s ease-in-out infinite;}
+.tile-skull{background:#0a0a0a;}
+.tile-skull.sk-poison{border-color:#446633;background:#0a0a0a;animation:poisonSkPulse 3s ease-in-out infinite;}
 .tile-skull.sk-thief{border-color:#665522;background:#0a0a0a;animation:thiefSkPulse 3s ease-in-out infinite;}
-.tile-skull.sk-freeze{border-color:#336688;background:#060a0e;animation:freezeSkPulse 3s ease-in-out infinite;}
+.tile-skull.sk-freeze{border-color:#336688;background:#0a0a0a;animation:freezeSkPulse 3s ease-in-out infinite;}
 @keyframes poisonSkPulse{0%,100%{box-shadow:none}50%{box-shadow:inset 0 0 8px rgba(50,180,30,.08)}}
 @keyframes thiefSkPulse{0%,100%{box-shadow:none}50%{box-shadow:inset 0 0 8px rgba(200,160,50,.08)}}
 @keyframes freezeSkPulse{0%,100%{box-shadow:none}50%{box-shadow:inset 0 0 8px rgba(50,130,220,.08)}}
-.tile-skull.sk-boss{background:radial-gradient(ellipse at 40% 35%,#1a0606,#0e0404);border-color:#882222;box-shadow:inset 0 0 15px rgba(180,30,30,.15),0 0 6px rgba(200,40,40,.15);animation:bossPulse 2.5s ease-in-out infinite;}
+.tile-skull.sk-boss{background:#0a0a0a;border-color:#882222;box-shadow:inset 0 0 15px rgba(180,30,30,.15),0 0 6px rgba(200,40,40,.15);animation:bossPulse 2.5s ease-in-out infinite;}
 @keyframes bossPulse{0%,100%{box-shadow:inset 0 0 12px rgba(180,30,30,.1),0 0 5px rgba(200,40,40,.1)}50%{box-shadow:inset 0 0 16px rgba(200,40,40,.18),0 0 8px rgba(220,50,50,.15)}}
 /* Selection — pure silver glow with pulse */
 @keyframes selPulse{0%,100%{box-shadow:0 0 10px rgba(200,200,210,.4),0 0 3px #bbb}50%{box-shadow:0 0 16px rgba(200,200,210,.6),0 0 5px #ccc}}
