@@ -3227,7 +3227,7 @@ async function ultWarrior(){
   // Kill dead skulls
   const rem=new Set();
   for(let r=0;r<R;r++)for(let c=0;c<C;c++){if(board[r][c]?.type==='skull'&&board[r][c].hp<=0){rem.add(`${r},${c}`);G.kills++;}}
-  if(rem.size>0){await animRem(rem,'a-kill');for(const k of rem){const[rr,cc]=k.split(',').map(Number);board[rr][cc]=null;}await dropFill();}
+  if(rem.size>0){await animRem(rem,'a-kill');for(const k of rem){const[rr,cc]=k.split(',').map(Number);board[rr][cc]=null;}await collapse();}
 }
 async function ultMage(){
   // Board-wide blast + reset all skill CD
@@ -3244,7 +3244,7 @@ async function ultMage(){
   await sl(500);
   const rem=new Set();
   for(let r=0;r<R;r++)for(let c=0;c<C;c++){if(board[r][c]?.type==='skull'&&board[r][c].hp<=0){rem.add(`${r},${c}`);G.kills++;}}
-  if(rem.size>0){await animRem(rem,'a-kill');for(const k of rem){const[rr,cc]=k.split(',').map(Number);board[rr][cc]=null;}await dropFill();}
+  if(rem.size>0){await animRem(rem,'a-kill');for(const k of rem){const[rr,cc]=k.split(',').map(Number);board[rr][cc]=null;}await collapse();}
 }
 async function ultRogue(){
   // Instant kill strongest skull + bonus gold
@@ -3257,7 +3257,7 @@ async function ultRogue(){
     const e=tEl(strongest.r,strongest.c);if(e)e.classList.add('a-kill');
     await sl(400);
     board[strongest.r][strongest.c]=null;G.kills++;
-    await dropFill();
+    await collapse();
   }
   // Bonus gold
   const bonus=20+G.lck*5;
