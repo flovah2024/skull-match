@@ -1,0 +1,2630 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<title>Skull Match</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Noto+Serif+KR:wght@400;700;900&display=swap" rel="stylesheet" onerror="">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;}
+html,body{background:#000;color:#bbb;font-family:'Noto Serif KR',Georgia,'Times New Roman',serif;overflow:hidden;height:100%;width:100%;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+body{display:flex;align-items:center;justify-content:center;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);}
+:root{--board-gap:2px;--tile-r:2px;--sv:#b0aca4;--sv-hi:#ddd8d0;--sv-lo:#707068;--sv-dk:#404040;--ox:#585850;}
+
+
+/* ===== CHROME HEARTS DECORATIVE ===== */
+@keyframes skullBlink{0%,36%,54%,100%{opacity:0}38%{opacity:.9}40%,50%{opacity:0}44%{opacity:0}48%{opacity:0}52%{opacity:.9}}
+.ch-cross{display:inline-block;position:relative;}
+.ch-cross svg{filter:drop-shadow(0 0 3px rgba(200,196,188,.15));}
+.ch-divider{display:flex;align-items:center;justify-content:center;gap:8px;padding:4px 0;}
+.ch-divider::before,.ch-divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,#444,transparent);}
+.ch-line{width:100%;height:1px;background:linear-gradient(90deg,transparent 0%,#333 15%,#555 50%,#333 85%,transparent 100%);}
+.ch-corner{position:absolute;width:16px;height:16px;opacity:.25;}
+.ch-corner svg{width:100%;height:100%;}
+.ch-corner.tl{top:4px;left:4px;}.ch-corner.tr{top:4px;right:4px;transform:scaleX(-1);}
+.ch-corner.bl{bottom:4px;left:4px;transform:scaleY(-1);}.ch-corner.br{bottom:4px;right:4px;transform:scale(-1);}
+.ch-fleur{opacity:.3;display:flex;align-items:center;justify-content:center;}
+
+
+/* Gothic lattice background pattern */
+.gothic-bg{background-image:
+  radial-gradient(ellipse at 50% 50%,transparent 60%,rgba(30,30,40,.3) 61%,transparent 62%),
+  linear-gradient(45deg,transparent 48%,rgba(40,40,50,.15) 49%,rgba(40,40,50,.15) 51%,transparent 52%),
+  linear-gradient(-45deg,transparent 48%,rgba(40,40,50,.15) 49%,rgba(40,40,50,.15) 51%,transparent 52%);
+  background-size:20px 20px;}
+
+
+.ch-rosette{display:block;margin:0 auto 6px;opacity:.4;}
+
+/* Gothic corner ornaments */
+.mbox::after{content:'';position:absolute;inset:0;pointer-events:none;
+  border:1px solid rgba(180,180,190,.08);
+  box-shadow:inset 2px 2px 0 rgba(180,180,190,.06),inset -2px -2px 0 rgba(180,180,190,.06),
+    inset 2px -2px 0 rgba(180,180,190,.06),inset -2px 2px 0 rgba(180,180,190,.06);}
+.cbtn{position:relative;}
+.cbtn::before{content:'';position:absolute;top:-1px;left:-1px;right:-1px;bottom:-1px;pointer-events:none;
+  border:1px solid transparent;border-image:linear-gradient(135deg,rgba(180,180,190,.2) 0%,transparent 30%,transparent 70%,rgba(180,180,190,.2) 100%) 1;}
+.cbtn.picked::before{border-image:linear-gradient(135deg,rgba(200,200,210,.4) 0%,rgba(160,160,170,.15) 30%,rgba(160,160,170,.15) 70%,rgba(200,200,210,.4) 100%) 1;}
+.eq-slot{position:relative;}
+.eq-slot::before{content:'';position:absolute;top:-1px;left:-1px;right:-1px;bottom:-1px;pointer-events:none;
+  border:1px solid transparent;border-image:linear-gradient(135deg,rgba(180,180,190,.15) 0%,transparent 40%,transparent 60%,rgba(180,180,190,.15) 100%) 1;}
+.st-chip{position:relative;}
+.st-chip::before{content:'';position:absolute;top:-1px;left:-1px;right:-1px;bottom:-1px;pointer-events:none;
+  border:1px solid transparent;border-image:linear-gradient(180deg,rgba(180,180,190,.12) 0%,transparent 50%,rgba(180,180,190,.12) 100%) 1;}
+.sk-btn{position:relative;}
+.sk-btn::before{content:'';position:absolute;top:-1px;left:-1px;right:-1px;bottom:-1px;pointer-events:none;
+  border:1px solid transparent;border-image:linear-gradient(135deg,rgba(180,180,190,.15) 0%,transparent 30%,transparent 70%,rgba(180,180,190,.15) 100%) 1;}
+.sk-btn.rdy::before{border-image:linear-gradient(135deg,rgba(200,200,210,.3) 0%,rgba(160,160,170,.1) 30%,rgba(160,160,170,.1) 70%,rgba(200,200,210,.3) 100%) 1;}
+
+
+/* Settings */
+#set-btn{position:absolute;top:6px;right:6px;width:32px;height:32px;background:rgba(0,0,0,.5);border:1px solid #2a2a2a;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:50;transition:all .12s;-webkit-tap-highlight-color:transparent;}
+#set-btn:active{transform:scale(.9);}
+#set-btn svg{width:18px;height:18px;opacity:.5;}
+.set-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #1a1a1a;}
+.set-label{font-size:13px;color:var(--sv-lo);font-weight:700;}
+.set-ctrl{display:flex;gap:4px;}
+.set-lang-btn{padding:4px 10px;font-size:12px;border:1px solid #2a2a2a;background:#0a0a0a;color:#888;cursor:pointer;font-weight:700;transition:all .1s;}
+.set-lang-btn.active{border-color:var(--sv);color:var(--sv-hi);background:#141414;}
+.set-lang-btn:active{transform:scale(.95);}
+.set-slider{-webkit-appearance:none;width:120px;height:6px;background:#1a1a1a;outline:none;border-radius:3px;}
+.set-slider::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;background:var(--sv);border-radius:50%;cursor:pointer;}
+.set-close{text-align:center;padding:10px;margin-top:8px;font-family:'Noto Serif KR',Georgia,serif;font-size:16px;color:var(--sv-hi);border:1px solid #444;background:#0a0a0a;cursor:pointer;letter-spacing:4px;}
+.set-close:active{transform:scale(.96);}
+#set-btn-title{position:absolute;top:16px;right:16px;width:36px;height:36px;background:rgba(0,0,0,.3);border:1px solid #333;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:510;transition:all .12s;}
+#set-btn-title:active{transform:scale(.9);}
+#set-btn-title svg{width:20px;height:20px;opacity:.5;}
+
+
+#start-lang{display:flex;gap:8px;justify-content:center;margin-bottom:24px;opacity:0;animation:startBtnReveal .6s ease-out 1.8s forwards;}
+.start-lang-btn{font-family:'Noto Serif KR',Georgia,serif;font-size:14px;color:#888;padding:8px 16px;border:1px solid #2a2a2a;background:#0a0a0a;cursor:pointer;transition:all .12s;letter-spacing:1px;}
+.start-lang-btn:active{transform:scale(.95);}
+.start-lang-btn.active{border-color:var(--sv);color:var(--sv-hi);background:#141414;}
+/* ===== LAYOUT ===== */
+#root{width:100%;max-width:430px;height:100vh;max-height:932px;display:none;flex-direction:column;background:#000;position:relative;overflow:hidden;}
+#root.active{display:flex;}
+
+/* ===== TOP HUD (skills) ===== */
+#hud-top{flex:1;display:flex;flex-direction:column;justify-content:flex-end;
+  background:linear-gradient(180deg,#0a0a0a 0%,#060606 100%);
+  background-image:
+    radial-gradient(ellipse at 50% 50%,transparent 60%,rgba(40,40,50,.06) 61%,transparent 62%),
+    linear-gradient(45deg,transparent 48%,rgba(40,40,50,.04) 49%,rgba(40,40,50,.04) 51%,transparent 52%),
+    linear-gradient(-45deg,transparent 48%,rgba(40,40,50,.04) 49%,rgba(40,40,50,.04) 51%,transparent 52%);
+  background-size:auto,18px 18px,18px 18px;border-bottom:1px solid #333;padding:calc(6px + env(safe-area-inset-top)) 8px 6px;gap:4px;}
+/* Score bar */
+#score-bar{display:flex;align-items:center;justify-content:center;gap:8px;padding:2px 0 4px;}
+.score-item{display:flex;align-items:baseline;gap:4px;background:#060606;border:1px solid #252525;padding:2px 8px; 0,100% 4px,100% calc(100% - 4px),calc(100% - 4px) 100%,4px 100%,0 calc(100% - 4px),0 4px);}
+.score-label{font-size:10px;color:#585858;font-weight:700;letter-spacing:2px;}
+.score-num{font-size:18px;color:var(--sv-hi);font-weight:900;letter-spacing:1px;font-family:'UnifrakturMaguntia',Georgia,serif;}
+.score-ini{font-size:11px;color:var(--sv-lo);font-weight:900;letter-spacing:2px;margin-right:4px;}
+.score-best{color:#666;}
+.score-div{display:flex;align-items:center;opacity:.5;}
+/* Equipment row */
+#equip-row{display:flex;gap:4px;}
+.eq-slot{flex:1;display:flex;align-items:center;gap:4px;background:linear-gradient(180deg,#0e0e0e,#080808);border:1px solid #2a2a2a;padding:5px 10px;overflow:hidden; 0,100% 4px,100% calc(100% - 4px),calc(100% - 4px) 100%,4px 100%,0 calc(100% - 4px),0 4px);}
+.eq-slot span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+#eq-wpn-name,#eq-arm-name{font-size:11px;color:#888;font-weight:700;flex:1;}
+.eq-val{font-size:12px;color:var(--sv-hi);font-weight:900;flex-shrink:0;}
+/* Stat chips */
+#stat-chips{display:flex;gap:3px;justify-content:center;}
+.st-chip{flex:1;display:flex;align-items:center;justify-content:center;gap:2px;background:linear-gradient(180deg,#0c0c0c,#060606);border:1px solid #282828;padding:3px 0; 0,100% 4px,100% calc(100% - 4px),calc(100% - 4px) 100%,4px 100%,0 calc(100% - 4px),0 4px);}
+.st-label{font-size:10px;color:#585858;font-weight:700;letter-spacing:1px;}
+.st-val{font-size:14px;color:var(--sv-hi);font-weight:900;}
+/* Skill row */
+#skill-row{display:flex;align-items:center;justify-content:center;gap:4px;}
+#skill-bar{display:flex;gap:4px;justify-content:center;flex-wrap:wrap;}
+
+/* ===== BOARD ===== */
+#board-wrap{flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:4px;position:relative;background:#000;}
+#board-frame{width:min(calc(100vw - 8px), 420px);height:min(calc(100vw - 8px), 420px);background:#030303;border:2px solid #3a3a3a;padding:3px;position:relative;box-shadow:inset 0 0 40px rgba(0,0,0,.95),0 0 1px #444,0 0 20px rgba(0,0,0,.5);overflow:hidden;border-image:linear-gradient(135deg,#666 0%,#3a3a3a 25%,#222 50%,#3a3a3a 75%,#666 100%) 1;}
+#board-frame::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;opacity:.15;
+  background-image:
+    radial-gradient(ellipse at 50% 50%,transparent 60%,rgba(55,55,65,.2) 61%,transparent 62%),
+    linear-gradient(45deg,transparent 48%,rgba(55,55,65,.1) 49%,rgba(55,55,65,.1) 51%,transparent 52%),
+    linear-gradient(-45deg,transparent 48%,rgba(55,55,65,.1) 49%,rgba(55,55,65,.1) 51%,transparent 52%);
+  background-size:24px 24px;}
+#board{display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(6,1fr);gap:var(--board-gap);width:100%;height:100%;}
+
+/* ===== BOTTOM HUD ===== */
+#hud-bot{flex:1;display:flex;flex-direction:column;justify-content:flex-start;
+  background:linear-gradient(0deg,#0a0a0a 0%,#060606 100%);
+  background-image:
+    radial-gradient(ellipse at 50% 50%,transparent 60%,rgba(40,40,50,.06) 61%,transparent 62%),
+    linear-gradient(45deg,transparent 48%,rgba(40,40,50,.04) 49%,rgba(40,40,50,.04) 51%,transparent 52%),
+    linear-gradient(-45deg,transparent 48%,rgba(40,40,50,.04) 49%,rgba(40,40,50,.04) 51%,transparent 52%);
+  background-size:auto,18px 18px,18px 18px;border-top:1px solid #333;padding:6px 8px calc(6px + env(safe-area-inset-bottom));}
+/* HP + ARM bars */
+#bars-row{display:flex;gap:8px;align-items:center;margin-bottom:5px;}
+#lvl-badge{width:40px;height:40px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#eee,#bbb 30%,#888 50%,#555 80%,#333);border:2px solid var(--sv);display:flex;align-items:center;justify-content:center;font-size:17px;color:#111;flex-shrink:0;font-weight:900;box-shadow:0 0 10px rgba(200,196,188,.25),inset 0 -2px 3px rgba(0,0,0,.5);}
+#bars-col{flex:1;display:flex;flex-direction:column;gap:4px;}
+.hbar{display:flex;align-items:center;gap:5px;}
+.hbar-icon{flex-shrink:0;display:flex;align-items:center;}
+.hbar-icon svg{width:18px;height:18px;}
+.hbar-track{flex:1;height:16px;background:#0a0a0a;border:1px solid #2a2a2a;overflow:hidden;box-shadow:inset 0 1px 3px rgba(0,0,0,.5);}
+.hbar-fill{height:100%;transition:width .4s cubic-bezier(.4,.0,.2,1);}
+.hbar-val{font-size:13px;color:#888;font-weight:900;min-width:50px;text-align:right;letter-spacing:.5px;}
+.fill-hp{background:linear-gradient(90deg,#4a1515,#8a2020);}
+.fill-hp.critical{animation:hpCritical 1.2s ease-in-out infinite;background:linear-gradient(90deg,#6a1010,#cc2020);}
+@keyframes hpCritical{0%,100%{opacity:1}50%{opacity:.6}}
+.fill-arm{background:linear-gradient(90deg,#333,#666);}
+/* Resource row */
+#res-row{display:flex;gap:4px;margin-bottom:5px;}
+.res{flex:1;display:flex;align-items:center;gap:4px;background:linear-gradient(180deg,#0a0a0a,#060606);border:1px solid #252525;padding:4px 6px;overflow:hidden; 0,100% 4px,100% calc(100% - 4px),calc(100% - 4px) 100%,4px 100%,0 calc(100% - 4px),0 4px);}
+.res-icon{flex-shrink:0;display:flex;align-items:center;}
+.res-icon svg{width:16px;height:16px;}
+.res-bar{flex:1;height:8px;background:#0a0a0a;border:1px solid #202020;overflow:hidden;}
+.res-fill{height:100%;transition:width .4s cubic-bezier(.4,.0,.2,1);}
+.fill-xp{background:linear-gradient(90deg,#444,#888);}
+.fill-upg{background:linear-gradient(90deg,#3a3a3a,#777);}
+.fill-gold{background:linear-gradient(90deg,#555,#aaa);}
+/* Turn counter in res-row */
+.res-turn{display:flex;align-items:center;gap:3px;background:#060606;border:1px solid #202020;padding:4px 8px; 0,100% 4px,100% calc(100% - 4px),calc(100% - 4px) 100%,4px 100%,0 calc(100% - 4px),0 4px);font-size:13px;color:#666;font-weight:900;letter-spacing:.5px;}
+.res-turn b{color:var(--sv-hi);font-size:15px;}
+/* Status effects */
+#status-fx{display:flex;gap:5px;justify-content:center;min-height:0;flex-wrap:wrap;margin-bottom:4px;}
+.sfx-chip{display:inline-flex;align-items:center;gap:3px;font-size:12px;font-weight:900;padding:3px 8px;border:1px solid #252525;background:#060606; 0,100% 4px,100% calc(100% - 4px),calc(100% - 4px) 100%,4px 100%,0 calc(100% - 4px),0 4px);}
+/* Message */
+#msg{text-align:center;min-height:22px;font-size:14px;color:var(--sv);margin-bottom:4px;letter-spacing:.5px;font-weight:700;}
+/* Skill buttons */
+.sk-btn{width:52px;height:52px;background:linear-gradient(180deg,#0c0c0c,#060606);border:1px solid #2a2a2a;border-radius:0; 0,100% 4px,100% calc(100% - 4px),calc(100% - 4px) 100%,4px 100%,0 calc(100% - 4px),0 4px);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;font-size:15px;position:relative;transition:all .15s;}
+.sk-btn>span:first-child{display:flex;align-items:center;justify-content:center;}
+.sk-btn:hover{border-color:#585858;background:#121212;box-shadow:0 0 6px rgba(200,196,188,.1);}
+.sk-btn:active{transform:scale(.92);filter:brightness(1.2);}
+.sk-btn.cd{opacity:.25;cursor:default;}
+.sk-btn.rdy{border-color:var(--sv-lo);box-shadow:0 0 6px rgba(200,196,188,.15);animation:skBtnReady 1.5s ease-in-out infinite;}
+@keyframes skBtnReady{0%,100%{box-shadow:0 0 6px rgba(200,196,188,.15)}50%{box-shadow:0 0 12px rgba(200,196,188,.3),0 0 2px rgba(255,255,255,.1)}}
+.sk-btn .cdn{position:absolute;top:2px;right:4px;font-size:12px;color:#aa4444;font-weight:900;}
+.sk-btn .sn{font-size:9px;color:#585858;margin-top:1px;letter-spacing:.5px;font-weight:700;}
+
+
+/* ===== TILES — Black + Silver ONLY ===== */
+.tile{border-radius:var(--tile-r);display:flex;align-items:center;justify-content:center;position:relative;cursor:pointer;transition:transform .1s,box-shadow .15s,border-color .15s,filter .15s;aspect-ratio:1;overflow:hidden;border:1px solid #252525;}
+.tile:active{transform:scale(.95);filter:brightness(1.15);}
+.t-icon{display:flex;align-items:center;justify-content:center;position:relative;z-index:1;filter:drop-shadow(0 1px 2px rgba(0,0,0,.8));transition:transform .1s;}
+.t-icon svg{width:clamp(38px,9.5vw,52px);height:clamp(38px,9.5vw,52px);}
+
+.tile-sword{background:#0c0808;}
+.tile-shield{background:#080a0e;}
+.tile-potion{background:#0a0808;}
+.tile-coin{background:#0a0a0a;border-color:#2a2a2a;}
+.tile-skull{background:#0a080c;}
+.tile-skull.sk-poison{border-color:#446633;background:#080a06;animation:poisonSkPulse 3s ease-in-out infinite;}
+.tile-skull.sk-thief{border-color:#665522;background:#0a0a0a;animation:thiefSkPulse 3s ease-in-out infinite;}
+.tile-skull.sk-freeze{border-color:#336688;background:#060a0e;animation:freezeSkPulse 3s ease-in-out infinite;}
+@keyframes poisonSkPulse{0%,100%{box-shadow:none}50%{box-shadow:inset 0 0 8px rgba(50,180,30,.08)}}
+@keyframes thiefSkPulse{0%,100%{box-shadow:none}50%{box-shadow:inset 0 0 8px rgba(200,160,50,.08)}}
+@keyframes freezeSkPulse{0%,100%{box-shadow:none}50%{box-shadow:inset 0 0 8px rgba(50,130,220,.08)}}
+.tile-skull.sk-boss{background:radial-gradient(ellipse at 40% 35%,#1a0606,#0e0404);border-color:#882222;box-shadow:inset 0 0 15px rgba(180,30,30,.15),0 0 6px rgba(200,40,40,.15);animation:bossPulse 2.5s ease-in-out infinite;}
+@keyframes bossPulse{0%,100%{box-shadow:inset 0 0 12px rgba(180,30,30,.1),0 0 5px rgba(200,40,40,.1)}50%{box-shadow:inset 0 0 16px rgba(200,40,40,.18),0 0 8px rgba(220,50,50,.15)}}
+/* Selection — pure silver glow with pulse */
+@keyframes selPulse{0%,100%{box-shadow:0 0 10px rgba(200,200,210,.4),0 0 3px #bbb}50%{box-shadow:0 0 16px rgba(200,200,210,.6),0 0 5px #ccc}}
+@keyframes inpGlow{0%,100%{box-shadow:0 0 5px rgba(200,196,188,.2)}50%{box-shadow:0 0 8px rgba(200,196,188,.35)}}
+.tile.sel{transform:scale(1.08);animation:selPulse .8s ease-in-out infinite;z-index:5;border-color:var(--sv-hi)!important;}
+.tile.inp{animation:inpGlow 1s ease-in-out infinite;z-index:4;border-color:var(--sv)!important;transform:scale(1.02);}
+.sk-st{position:absolute;bottom:1px;left:0;right:0;display:flex;justify-content:center;gap:3px;font-size:clamp(8px,2vw,11px);z-index:2;font-weight:900;}
+.sk-a{color:#aa6666;}.sk-d{color:#7799bb;}.sk-h{color:#ccc;}
+.sk-type{position:absolute;top:0;right:1px;font-size:10px;z-index:2;}
+
+/* ===== LINE — silver chain ===== */
+#lsvg{position:absolute;top:3px;left:3px;width:calc(100% - 6px);height:calc(100% - 6px);pointer-events:none;z-index:10;}
+#lsvg polyline{stroke:#aa2020;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;fill:none;filter:drop-shadow(0 0 8px rgba(200,30,30,.5)) drop-shadow(0 0 3px rgba(255,50,50,.3));}
+
+/* ===== ANIMATIONS ===== */
+@keyframes spawn{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes pop{0%{transform:scale(1);opacity:1}100%{transform:scale(.3);opacity:0}}
+@keyframes fall{from{transform:translateY(calc(-50px * var(--fd,1)));opacity:.4}to{transform:translateY(0);opacity:1}}
+@keyframes shake{0%,100%{transform:translate(0)}20%{transform:translate(-3px,1px)}40%{transform:translate(3px,-1px)}60%{transform:translate(-2px,1px)}80%{transform:translate(1px,-1px)}}
+@keyframes dmgf{0%{border-color:#222;box-shadow:none}40%{border-color:#aa3333;box-shadow:inset 0 0 15px rgba(180,30,30,.15)}100%{border-color:#222;box-shadow:none}}
+@keyframes slashHit{0%{transform:scale(1);filter:brightness(1)}30%{transform:scale(.93);filter:brightness(1.4)}100%{transform:scale(1);filter:brightness(1)}}
+@keyframes skullDeath{0%{transform:scale(1);opacity:1;filter:brightness(1)}30%{transform:scale(1.15);filter:brightness(1.6)}100%{transform:scale(0);opacity:0;filter:brightness(.5)}}
+@keyframes healPulse{0%{box-shadow:none}50%{box-shadow:inset 0 0 12px rgba(80,220,80,.15)}100%{box-shadow:none}}
+@keyframes shieldPulse{0%{box-shadow:none}50%{box-shadow:inset 0 0 12px rgba(80,130,220,.15)}100%{box-shadow:none}}
+@keyframes coinPulse{0%{box-shadow:none}50%{box-shadow:inset 0 0 12px rgba(220,180,50,.15)}100%{box-shadow:none}}
+@keyframes poisonPulse{0%{box-shadow:none}50%{box-shadow:inset 0 0 12px rgba(50,180,30,.12)}100%{box-shadow:none}}
+@keyframes burnPulse{0%{box-shadow:none}50%{box-shadow:inset 0 0 12px rgba(220,100,20,.12)}100%{box-shadow:none}}
+@keyframes comboGlow{0%{text-shadow:0 0 4px rgba(200,196,188,.3)}50%{text-shadow:0 0 12px rgba(255,200,100,.5)}100%{text-shadow:0 0 4px rgba(200,196,188,.3)}}
+@keyframes vampSteal{0%{box-shadow:none}50%{box-shadow:inset 0 0 10px rgba(200,50,80,.15)}100%{box-shadow:none}}
+@keyframes skillFlash{0%{filter:brightness(1)}50%{filter:brightness(1.3)}100%{filter:brightness(1)}}
+@keyframes hpBarFlash{0%{filter:brightness(1)}50%{filter:brightness(1.5)}100%{filter:brightness(1)}}
+.a-spawn{animation:spawn .3s cubic-bezier(.25,.1,.25,1)}
+.a-pop{animation:pop .3s ease-out forwards}
+.a-fall{animation:fall .35s cubic-bezier(.25,.46,.45,.94)}
+.a-shake{animation:shake .35s ease-in-out}
+.a-dmg{animation:dmgf .45s ease-in-out}
+.a-slash{animation:slashHit .25s ease-in-out}
+.a-kill{animation:skullDeath .4s ease-out forwards}
+.a-heal{animation:healPulse .5s ease-in-out}
+.a-shield{animation:shieldPulse .5s ease-in-out}
+.a-coin{animation:coinPulse .5s ease-in-out}
+.a-poison{animation:poisonPulse .6s ease-in-out}
+.a-burn{animation:burnPulse .6s ease-in-out}
+.a-vamp{animation:vampSteal .5s ease-in-out}
+.a-skill{animation:skillFlash .4s ease-in-out}
+
+/* ===== FLOAT TEXT ===== */
+.ft{position:absolute;pointer-events:none;font-size:14px;z-index:100;animation:fup 1.5s cubic-bezier(.2,.8,.3,1) forwards;font-weight:900;color:var(--sv-hi);text-shadow:0 1px 4px rgba(0,0,0,.95),0 0 8px rgba(0,0,0,.8);white-space:nowrap;left:50%;transform:translateX(-50%);}
+.ft-big{font-size:18px;animation:fupBig 1.5s cubic-bezier(.2,.8,.3,1) forwards;}
+.ft-crit{font-size:20px;animation:fupCrit 1.8s cubic-bezier(.2,.8,.3,1) forwards;}
+@keyframes fup{0%{opacity:1;transform:translateX(-50%) translateY(0) scale(1.2)}10%{transform:translateX(-50%) translateY(-5px) scale(1)}60%{opacity:1}100%{opacity:0;transform:translateX(-50%) translateY(-28px) scale(.8)}}
+@keyframes fupBig{0%{opacity:1;transform:translateX(-50%) translateY(0) scale(1.5)}10%{transform:translateX(-50%) translateY(-5px) scale(1.1)}60%{opacity:1}100%{opacity:0;transform:translateX(-50%) translateY(-35px) scale(.7)}}
+@keyframes fupCrit{0%{opacity:1;transform:translateX(-50%) translateY(0) scale(2)}8%{transform:translateX(-50%) translateY(-3px) scale(1.3)}60%{opacity:1}100%{opacity:0;transform:translateX(-50%) translateY(-40px) scale(.6)}}
+
+/* ===== MODALS ===== */
+/* ===== MODALS (compact) ===== */
+.mbg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.96);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+.mbg.show{display:flex;animation:modalBgIn .3s ease-out;}
+.mbox{background:#0a0a0a;border:1px solid #2a2a2a;padding:16px 14px;max-width:370px;width:92%; 0,100% 6px,100% calc(100% - 6px),calc(100% - 6px) 100%,6px 100%,0 calc(100% - 6px),0 6px);box-shadow:0 0 40px rgba(0,0,0,.8),0 0 1px #555;animation:modalBoxIn .3s cubic-bezier(.34,1.2,.64,1);}
+@keyframes modalBgIn{from{opacity:0}to{opacity:1}}
+@keyframes modalBoxIn{from{opacity:0;transform:scale(.9) translateY(15px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.mbox::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;
+  background-image:
+    radial-gradient(ellipse at 50% 50%,transparent 60%,rgba(40,40,50,.12) 61%,transparent 62%),
+    linear-gradient(45deg,transparent 48%,rgba(50,50,60,.08) 49%,rgba(50,50,60,.08) 51%,transparent 52%),
+    linear-gradient(-45deg,transparent 48%,rgba(50,50,60,.08) 49%,rgba(50,50,60,.08) 51%,transparent 52%);
+  background-size:16px 16px;opacity:.5;}
+.mbox h2{text-align:center;color:var(--sv-hi);position:relative;font-family:'UnifrakturMaguntia',Georgia,serif;font-size:20px;margin-bottom:8px;letter-spacing:2px;font-weight:400;}
+.cbtn{background:linear-gradient(180deg,#0c0c0c,#060606);border:1px solid #282828;padding:8px 12px; 0,100% 4px,100% calc(100% - 4px),calc(100% - 4px) 100%,4px 100%,0 calc(100% - 4px),0 4px);cursor:pointer;color:#999;text-align:left;width:100%;margin-bottom:3px;transition:all .12s;}
+.cbtn:hover{border-color:#585858;background:#0e0e0e;}
+.cbtn .ct{font-size:13px;color:var(--sv-hi);font-weight:900;letter-spacing:.5px;}
+.cbtn .cd2{font-size:11px;color:#585858;margin-top:1px;line-height:1.3;}
+.cbtn .cty{font-size:9px;color:var(--sv-lo);text-transform:uppercase;margin-bottom:1px;letter-spacing:2px;font-weight:700;}
+.cbtn.picked{border-color:var(--sv);background:#121212;box-shadow:0 0 8px rgba(200,196,188,.1);}
+.cbtn.picked .ct{color:#fff;}
+.ch-ok{font-family:'Noto Serif KR',Georgia,serif;font-size:22px;color:var(--sv-hi);text-align:center;padding:10px;margin-top:6px;border:1px solid #444;background:linear-gradient(180deg,#0e0e0e,#080808); 0,100% 6px,100% calc(100% - 6px),calc(100% - 6px) 100%,6px 100%,0 calc(100% - 6px),0 6px);cursor:pointer;letter-spacing:6px;transition:all .15s;}
+.ch-ok:hover{border-color:#666;}
+.ch-ok:active{transform:scale(.96);}
+.ch-ok.disabled{opacity:.15;cursor:default;pointer-events:none;}
+/* Level up sections */
+.lvl-section{font-family:'Noto Serif KR',Georgia,serif;font-size:13px;color:var(--sv-lo);letter-spacing:3px;text-align:center;padding:6px 0 3px;border-bottom:1px solid #1a1a1a;margin-bottom:3px;}
+.cbtn-skill{border-left:2px solid #555;}
+.cbtn-stat{border-left:2px solid #444;}
+.cbtn-skill.picked{border-left:2px solid var(--sv-hi);}
+.cbtn-stat.picked{border-left:2px solid var(--sv);}
+
+
+/* Initials input */
+/* Tutorial overlay */
+#tut-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:600;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(3px);transition:opacity .3s;}
+.tut-box{text-align:center;padding:24px 20px;max-width:320px;}
+.tut-step{margin-bottom:16px;}
+.tut-icon{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:12px;}
+.tut-icon span{font-size:20px;color:#555;}
+.tut-text{font-family:'Noto Serif KR',Georgia,serif;font-size:16px;color:var(--sv-hi);line-height:1.6;margin-bottom:6px;}
+.tut-sub{font-family:'Noto Serif KR',Georgia,serif;font-size:13px;color:var(--sv-lo);line-height:1.5;}
+.tut-hand{margin:16px auto;opacity:.5;}
+.tut-ok{display:inline-block;font-family:'Noto Serif KR',Georgia,serif;font-size:16px;color:var(--sv-hi);padding:10px 40px;border:1px solid #444;background:#0c0c0c;cursor:pointer;letter-spacing:4px;margin-top:12px;transition:all .12s;}
+.tut-ok:active{transform:scale(.95);background:#1a1a1a;}
+
+#ini-input{margin-top:12px;text-align:center;}
+.ini-label{font-family:'Noto Serif KR',Georgia,serif;font-size:13px;color:var(--sv-lo);margin-bottom:8px;letter-spacing:1px;}
+.ini-slots{display:flex;justify-content:center;gap:10px;margin-bottom:12px;}
+.ini-char{display:flex;align-items:center;justify-content:center;width:48px;height:56px;font-family:'Noto Serif KR',Georgia,serif;font-size:32px;color:var(--sv-hi);background:#0c0c0c;border:1px solid #2a2a2a;cursor:pointer;transition:all .1s;-webkit-tap-highlight-color:transparent;}
+.ini-char:active{background:#1a1a1a;transform:scale(.92);color:#fff;}
+.ini-ok{display:inline-block;font-family:'Noto Serif KR',Georgia,serif;font-size:16px;color:var(--sv-hi);padding:10px 36px;border:1px solid #444;background:#0c0c0c;cursor:pointer;letter-spacing:4px;transition:all .12s;}
+.ini-ok:active{transform:scale(.95);background:#1a1a1a;}
+/* ===== SCREENS ===== */
+#scr-start{position:fixed;inset:0;background:#000;
+  background-image:
+    radial-gradient(ellipse at 50% 50%,transparent 60%,rgba(40,40,50,.08) 61%,transparent 62%),
+    linear-gradient(45deg,transparent 48%,rgba(40,40,50,.05) 49%,rgba(40,40,50,.05) 51%,transparent 52%),
+    linear-gradient(-45deg,transparent 48%,rgba(40,40,50,.05) 49%,rgba(40,40,50,.05) 51%,transparent 52%);
+  background-size:20px 20px;z-index:500;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;}
+#scr-start.hide{display:none;}
+/* Sequential entrance animations */
+#scr-start h1{font-family:'UnifrakturMaguntia',Georgia,serif;font-size:36px;color:var(--sv-hi);letter-spacing:2px;font-weight:400;opacity:0;animation:startTextReveal 1.2s ease-out .3s forwards;text-shadow:0 0 20px rgba(200,196,188,.15),0 2px 8px rgba(0,0,0,.9);}
+.start-line{width:0;height:1px;background:linear-gradient(90deg,transparent,#444,transparent);margin:16px auto 24px;animation:startLineGrow .8s ease-out 1.2s forwards;}
+#scr-start .dbtn{opacity:0;animation:startBtnReveal .6s ease-out 1.8s forwards;font-family:'Noto Serif KR',Georgia,serif;font-size:16px;letter-spacing:10px;width:auto;padding:10px 36px;border:1px solid #333;}
+@keyframes startReveal{0%{opacity:0;transform:scale(.6) translateY(20px)}60%{opacity:1;transform:scale(1.05) translateY(-5px)}100%{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes startCrossSpin{0%{opacity:0;transform:rotate(-90deg) scale(.3)}100%{opacity:.5;transform:rotate(0) scale(1)}}
+@keyframes startTextReveal{0%{opacity:0;letter-spacing:12px;filter:blur(6px)}100%{opacity:1;letter-spacing:2px;filter:blur(0)}}
+@keyframes startLineGrow{0%{width:0}100%{width:200px}}
+@keyframes startBtnReveal{0%{opacity:0;transform:translateY(15px)}100%{opacity:1;transform:translateY(0)}}
+/* Logo skull eye glow pulse */
+.dbtn{display:block;width:210px;background:#0a0a0a;border:1px solid #2a2a2a;padding:13px; 0,100% 6px,100% calc(100% - 6px),calc(100% - 6px) 100%,6px 100%,0 calc(100% - 6px),0 6px);color:var(--sv-hi);font-size:16px;cursor:pointer;margin:4px auto;text-align:center;transition:all .15s;letter-spacing:4px;font-weight:900;animation:dbtnPulse 2s ease-in-out infinite;}
+.dbtn:hover{border-color:#666;background:#121212;box-shadow:0 0 12px rgba(200,196,188,.08);transform:translateY(-1px);}
+.dbtn:active{transform:scale(.95);filter:brightness(1.3);}
+@keyframes dbtnPulse{0%,100%{box-shadow:0 0 4px rgba(200,196,188,.05)}50%{box-shadow:0 0 15px rgba(200,196,188,.12),0 0 3px rgba(200,196,188,.1)}}
+.dbtn .ds{font-size:12px;color:#585858;font-weight:400;letter-spacing:1px;margin-top:3px;}
+
+#scr-over{display:none;position:fixed;inset:0;background:rgba(0,0,0,.98);
+  background-image:
+    radial-gradient(ellipse at 50% 50%,transparent 60%,rgba(45,40,50,.1) 61%,transparent 62%),
+    linear-gradient(45deg,transparent 48%,rgba(45,40,50,.06) 49%,rgba(45,40,50,.06) 51%,transparent 52%),
+    linear-gradient(-45deg,transparent 48%,rgba(45,40,50,.06) 49%,rgba(45,40,50,.06) 51%,transparent 52%);
+  background-size:22px 22px;z-index:500;flex-direction:column;align-items:center;justify-content:center;}
+#scr-over.show{display:flex;animation:goFadeIn .8s ease-out;}
+#scr-over h1{font-family:'UnifrakturMaguntia',Georgia,serif;font-size:30px;color:#aa3333;margin-bottom:10px;letter-spacing:3px;font-weight:400;text-shadow:0 0 20px rgba(170,50,50,.25);animation:goTextPulse 2s ease-in-out infinite;}
+#scr-over .big{margin-bottom:14px;animation:goSkullDrop .6s cubic-bezier(.34,1.4,.64,1) .3s both;}
+@keyframes goFadeIn{from{opacity:0}to{opacity:1}}
+@keyframes goSkullDrop{from{opacity:0;transform:translateY(-30px) scale(1.5)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes goTextPulse{0%,100%{text-shadow:0 0 20px rgba(170,50,50,.25)}50%{text-shadow:0 0 35px rgba(200,50,50,.4),0 0 60px rgba(170,30,30,.15)}}
+#go-st{color:#888;font-size:15px;text-align:center;line-height:2.4;letter-spacing:1px;}
+#go-st b{color:var(--sv-hi);}
+.rbtn{margin-top:20px;background:#0a0a0a;border:1px solid #444; 0,100% 6px,100% calc(100% - 6px),calc(100% - 6px) 100%,6px 100%,0 calc(100% - 6px),0 6px);color:var(--sv-hi);font-family:'Noto Serif KR',Georgia,serif;font-size:17px;padding:16px 44px;cursor:pointer;letter-spacing:5px;font-weight:900;transition:all .12s;text-transform:uppercase;}
+.rbtn:hover{border-color:#888;box-shadow:0 0 15px rgba(200,196,188,.1);transform:translateY(-2px);}
+
+</style>
+</head>
+<body>
+
+<!-- ===== START SCREEN ===== -->
+<div id="scr-start" onclick="titleSfx()">
+  <h1>Skull Match</h1>
+  <div class="start-line"></div>
+  <div id="start-lang">
+    <span class="start-lang-btn" onclick="pickLang('ko')">한국어</span>
+    <span class="start-lang-btn" onclick="pickLang('en')">English</span>
+    <span class="start-lang-btn" onclick="pickLang('es')">Español</span>
+  </div>
+  <button class="dbtn" onclick="SFX.start();go('normal')" id="start-btn" style="display:none">START</button>
+</div>
+
+<!-- ===== GAME OVER ===== -->
+<div id="scr-over">
+  <div class="big"><svg width="80" height="80" viewBox="0 0 32 32" fill="none"><defs><linearGradient id="goskull" x1=".3" y1="0" x2=".7" y2="1"><stop offset="0%" stop-color="#bbb"/><stop offset="40%" stop-color="#888"/><stop offset="100%" stop-color="#444"/></linearGradient></defs><path d="M7 16C7 9 10.5 3 16 3C21.5 3 25 9 25 16C25 20 23 22.5 21.5 23.5V26.5C21.5 27.5 20.5 28.5 19.5 28.5H12.5C11.5 28.5 10.5 27.5 10.5 26.5V23.5C9 22.5 7 20 7 16Z" fill="url(#goskull)" stroke="#882222" stroke-width="1.5" stroke-linejoin="round"/><ellipse cx="12" cy="15" rx="3.2" ry="3.8" fill="#080404" stroke="#662222" stroke-width="1.2"/><ellipse cx="20" cy="15" rx="3.2" ry="3.8" fill="#080404" stroke="#662222" stroke-width="1.2"/><path d="M12 23L14 21L16 23L18 21L20 23" stroke="#664444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="13" y1="25" x2="13" y2="28.5" stroke="#888" stroke-width="1"/><line x1="16" y1="25" x2="16" y2="28.5" stroke="#888" stroke-width="1"/><line x1="19" y1="25" x2="19" y2="28.5" stroke="#888" stroke-width="1"/></svg></div>
+  <h1>YOU DIED</h1>
+  <svg class="ch-gdiv" width="200" height="12" viewBox="0 0 200 12">
+<line x1="0" y1="6" x2="200" y2="6" stroke="#2a2a2a" stroke-width=".5"/>
+<path d="M70 6L80 2L90 6L100 10L110 6L120 2L130 6" fill="none" stroke="#444" stroke-width="1"/>
+<circle cx="100" cy="6" r="4" fill="#111" stroke="#444" stroke-width="1"/>
+<path d="M98 4V8M96 6H104" stroke="#555" stroke-width="1" stroke-linecap="round"/>
+<circle cx="70" cy="6" r="1.5" fill="#333"/>
+<circle cx="130" cy="6" r="1.5" fill="#333"/>
+</svg>
+  <div class="ch-divider" style="width:180px;margin:0 auto 10px;"><span class="ch-cross"><svg width="12" height="12" viewBox="0 0 16 16"><path d="M7 0H9V7H16V9H9V16H7V9H0V7H7V0Z" fill="#555"/></svg></span></div>
+  <div id="go-st"></div>
+  <div class="ch-divider" style="width:140px;margin:8px auto;"><span class="ch-cross"><svg width="12" height="12" viewBox="0 0 16 16"><path d="M7 0H9V7H16V9H9V16H7V9H0V7H7V0Z" fill="#555"/></svg></span></div>
+  <button class="rbtn" onclick="SFX.click();location.reload()"><span style="display:flex;align-items:center;justify-content:center;gap:8px;"><svg width="12" height="12" viewBox="0 0 16 16"><path d="M7 0H9V7H16V9H9V16H7V9H0V7H7V0Z" fill="#555"/></svg><span>RETRY</span><svg width="12" height="12" viewBox="0 0 16 16"><path d="M7 0H9V7H16V9H9V16H7V9H0V7H7V0Z" fill="#555"/></svg></span></button>
+</div>
+
+
+<!-- ===== SETTINGS ===== -->
+<div class="mbg" id="m-set"><div class="mbox">
+  <h2 id="set-h2">Settings</h2>
+  <div class="set-row"><span class="set-label" id="set-l-lang">Language</span><div class="set-ctrl">
+    <span class="set-lang-btn" onclick="setLang('ko')">한국어</span>
+    <span class="set-lang-btn" onclick="setLang('en')">EN</span>
+    <span class="set-lang-btn" onclick="setLang('es')">ES</span>
+  </div></div>
+  <div class="set-row"><span class="set-label" id="set-l-bgm">BGM</span><div class="set-ctrl">
+    <input type="range" class="set-slider" id="sl-bgm" min="0" max="100" value="70" oninput="setBgmVol(this.value)">
+  </div></div>
+  <div class="set-row"><span class="set-label" id="set-l-sfx">SFX</span><div class="set-ctrl">
+    <input type="range" class="set-slider" id="sl-sfx" min="0" max="100" value="70" oninput="setSfxVol(this.value)">
+  </div></div>
+  <div class="set-close" onclick="closeSettings()">OK</div>
+</div></div>
+
+<!-- ===== MODALS ===== -->
+<div class="mbg" id="m-lvl"><div class="mbox"><svg class="ch-rosette" width="40" height="40" viewBox="0 0 40 40">
+<circle cx="20" cy="20" r="18" fill="none" stroke="#3a3a3a" stroke-width="1.5"/>
+<circle cx="20" cy="20" r="14" fill="none" stroke="#2a2a2a" stroke-width="1"/>
+<path d="M20 2V38M2 20H38" stroke="#3a3a3a" stroke-width="2"/>
+<circle cx="20" cy="20" r="10" fill="none" stroke="#555" stroke-width="1.5"/>
+<path d="M20 10C23 13 23 17 20 20C17 17 17 13 20 10Z" fill="#1a1808" stroke="#555" stroke-width=".8"/>
+<path d="M20 30C17 27 17 23 20 20C23 23 23 27 20 30Z" fill="#1a1808" stroke="#555" stroke-width=".8"/>
+<path d="M10 20C13 17 17 17 20 20C17 23 13 23 10 20Z" fill="#1a1808" stroke="#555" stroke-width=".8"/>
+<path d="M30 20C27 23 23 23 20 20C23 17 27 17 30 20Z" fill="#1a1808" stroke="#555" stroke-width=".8"/>
+<circle cx="20" cy="20" r="3" fill="#1a1208" stroke="#777" stroke-width="1"/>
+<circle cx="20" cy="20" r="1.2" fill="#999"/>
+</svg><h2>LEVEL UP</h2><div id="ml-c"></div></div></div>
+<div class="mbg" id="m-eq"><div class="mbox"><svg class="ch-rosette" width="40" height="40" viewBox="0 0 40 40">
+<circle cx="20" cy="20" r="18" fill="none" stroke="#3a3a3a" stroke-width="1.5"/>
+<circle cx="20" cy="20" r="14" fill="none" stroke="#2a2a2a" stroke-width="1"/>
+<path d="M20 2V38M2 20H38" stroke="#3a3a3a" stroke-width="2"/>
+<circle cx="20" cy="20" r="10" fill="none" stroke="#555" stroke-width="1.5"/>
+<path d="M20 10C23 13 23 17 20 20C17 17 17 13 20 10Z" fill="#1a1808" stroke="#555" stroke-width=".8"/>
+<path d="M20 30C17 27 17 23 20 20C23 23 23 27 20 30Z" fill="#1a1808" stroke="#555" stroke-width=".8"/>
+<path d="M10 20C13 17 17 17 20 20C17 23 13 23 10 20Z" fill="#1a1808" stroke="#555" stroke-width=".8"/>
+<path d="M30 20C27 23 23 23 20 20C23 17 27 17 30 20Z" fill="#1a1808" stroke="#555" stroke-width=".8"/>
+<circle cx="20" cy="20" r="3" fill="#1a1208" stroke="#777" stroke-width="1"/>
+<circle cx="20" cy="20" r="1.2" fill="#999"/>
+</svg><h2>Equipment Shop</h2><div id="me-c"></div></div></div>
+<div class="mbg" id="m-up"><div class="mbox"><svg class="ch-rosette" width="40" height="40" viewBox="0 0 40 40">
+<circle cx="20" cy="20" r="18" fill="none" stroke="#3a3a3a" stroke-width="1.5"/>
+<circle cx="20" cy="20" r="14" fill="none" stroke="#2a2a2a" stroke-width="1"/>
+<path d="M20 2V38M2 20H38" stroke="#3a3a3a" stroke-width="2"/>
+<circle cx="20" cy="20" r="10" fill="none" stroke="#555" stroke-width="1.5"/>
+<path d="M20 10C23 13 23 17 20 20C17 17 17 13 20 10Z" fill="#1a1808" stroke="#555" stroke-width=".8"/>
+<path d="M20 30C17 27 17 23 20 20C23 23 23 27 20 30Z" fill="#1a1808" stroke="#555" stroke-width=".8"/>
+<path d="M10 20C13 17 17 17 20 20C17 23 13 23 10 20Z" fill="#1a1808" stroke="#555" stroke-width=".8"/>
+<path d="M30 20C27 23 23 23 20 20C23 17 27 17 30 20Z" fill="#1a1808" stroke="#555" stroke-width=".8"/>
+<circle cx="20" cy="20" r="3" fill="#1a1208" stroke="#777" stroke-width="1"/>
+<circle cx="20" cy="20" r="1.2" fill="#999"/>
+</svg><h2>Upgrade</h2><div id="mu-c"></div></div></div>
+
+<!-- ===== MAIN GAME ===== -->
+<div id="root">
+  <div id="hud-top"><div id="set-btn" onclick="showSettings()"><svg viewBox="0 0 24 24"><path d="M12 2C7.5 2 4 6 4 11c0 3 1.5 5.5 3.5 6.5V20c0 .5.5 1 1 1h7c.5 0 1-.5 1-1v-2.5C18.5 16.5 20 14 20 11c0-5-3.5-9-8-9z" fill="#888" stroke="#666" stroke-width=".5"/><ellipse cx="9" cy="11" rx="2.5" ry="3" fill="#222" stroke="#555" stroke-width=".5"/><ellipse cx="15" cy="11" rx="2.5" ry="3" fill="#222" stroke="#555" stroke-width=".5"/><path d="M9 17l1-1 1.5 1.5L12 16l.5 1.5L14 16l1 1" stroke="#666" stroke-width="1" stroke-linecap="round" fill="none"/></svg></div>
+    <div id="score-bar">
+      <div class="score-item"><span class="score-label">SCORE</span><span class="score-num" id="v-score">0</span></div>
+      <div class="score-div"><svg width="8" height="8" viewBox="0 0 16 16"><path d="M7 2H9V7H14V9H9V14H7V9H2V7H7V2Z" fill="#333"/></svg></div>
+      <div class="score-item"><span class="score-label">BEST</span><span class="score-ini" id="v-ini">---</span><span class="score-num score-best" id="v-best">0</span></div>
+    </div>
+    <div id="equip-row">
+      <div class="eq-slot" id="eq-wpn">
+        <svg width="14" height="14" viewBox="0 0 32 32" style="opacity:.5"><g transform="rotate(-45 16 16)"><path d="M16 4L14 8V18H18V8L16 4Z" fill="#999" stroke="#777" stroke-width=".5"/><line x1="10" y1="18" x2="22" y2="18" stroke="#bbb" stroke-width="2.5" stroke-linecap="round"/><rect x="14.5" y="20" width="3" height="5" rx=".5" fill="#555"/></g></svg>
+        <span id="eq-wpn-name">Rusty Sword</span>
+        <span class="eq-val" id="eq-wpn-val">ATK 3</span>
+      </div>
+      <div class="eq-slot" id="eq-arm">
+        <svg width="14" height="14" viewBox="0 0 32 32" style="opacity:.5"><path d="M16 2L4 8V17C4 23.5 9.5 29 16 30C22.5 29 28 23.5 28 17V8L16 2Z" fill="none" stroke="#999" stroke-width="2"/></svg>
+        <span id="eq-arm-name">Leather Armor</span>
+        <span class="eq-val" id="eq-arm-val">DEF 2</span>
+      </div>
+    </div>
+    <div id="stat-chips">
+      <div class="st-chip"><span class="st-label" id="sl-str"></span><span class="st-val" id="s-str">1</span></div>
+      <div class="st-chip"><span class="st-label" id="sl-dex"></span><span class="st-val" id="s-dex">1</span></div>
+      <div class="st-chip"><span class="st-label" id="sl-vit"></span><span class="st-val" id="s-vit">1</span></div>
+      <div class="st-chip"><span class="st-label" id="sl-lck"></span><span class="st-val" id="s-lck">1</span></div>
+    </div>
+    <div id="skill-row">
+      <div id="skill-bar"></div>
+
+    </div>
+  </div>
+  <div id="board-wrap">
+    <div id="board-frame">
+      <div id="board"></div>
+      <svg id="lsvg"></svg>
+    </div>
+  </div>
+  <div id="hud-bot">
+    <div id="bars-row">
+      <div id="lvl-badge">1</div>
+      <div id="bars-col">
+        <div class="hbar">
+          <span class="hbar-icon"><svg viewBox="0 0 14 14"><path d="M7 12C7 12 2 8.5 2 5.5C2 3.5 3.5 2 5.5 2C6.5 2 7 2.8 7 2.8S7.5 2 8.5 2C10.5 2 12 3.5 12 5.5C12 8.5 7 12 7 12Z" fill="#8a2020" stroke="#aa3030" stroke-width=".8"/></svg></span>
+          <div class="hbar-track"><div class="hbar-fill fill-hp" id="b-hp" style="width:100%"></div></div>
+          <span class="hbar-val" id="t-hp">50/50</span>
+        </div>
+        <div class="hbar">
+          <span class="hbar-icon"><svg viewBox="0 0 14 14"><path d="M7 1L2 3.5V8C2 11 4.5 13 7 13C9.5 13 12 11 12 8V3.5L7 1Z" fill="none" stroke="#888" stroke-width="1.5"/></svg></span>
+          <div class="hbar-track"><div class="hbar-fill fill-arm" id="b-arm" style="width:0%"></div></div>
+          <span class="hbar-val" id="t-arm">0/20</span>
+        </div>
+      </div>
+    </div>
+    <div id="res-row">
+      <div class="res"><span class="res-icon"><svg viewBox="0 0 12 12"><polygon points="6,1 7.5,4.5 11,5 8.5,7.5 9,11 6,9.5 3,11 3.5,7.5 1,5 4.5,4.5" fill="#888" stroke="#aaa" stroke-width=".5"/></svg></span><div class="res-bar"><div class="res-fill fill-xp" id="b-xp" style="width:0%"></div></div></div>
+      <div class="res"><span class="res-icon"><svg viewBox="0 0 12 12"><rect x="2" y="3" width="8" height="6" rx="1" fill="none" stroke="#888" stroke-width="1.2"/><rect x="4" y="1" width="4" height="3" rx=".5" fill="none" stroke="#888" stroke-width="1"/></svg></span><div class="res-bar"><div class="res-fill fill-upg" id="b-up" style="width:0%"></div></div></div>
+      <div class="res"><span class="res-icon"><svg viewBox="0 0 12 12"><circle cx="6" cy="6" r="5" fill="#d4aa40" stroke="#8a6a20" stroke-width=".6"/><text x="6" y="8.5" text-anchor="middle" fill="#604010" font-size="7" font-weight="bold" font-family="serif">$</text></svg></span><div class="res-bar"><div class="res-fill fill-gold" id="b-gd" style="width:0%"></div></div></div>
+      <div class="res-turn"><svg width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="5" fill="none" stroke="#666" stroke-width="1.2"/><line x1="6" y1="3" x2="6" y2="6" stroke="#888" stroke-width="1.2" stroke-linecap="round"/><line x1="6" y1="6" x2="8.5" y2="7.5" stroke="#888" stroke-width="1" stroke-linecap="round"/></svg><b id="v-tn">0</b></div>
+    </div>
+    <div id="status-fx"></div>
+    <div id="msg">&nbsp;</div>
+  </div>
+</div>
+
+<script>
+
+// ================================================================
+//  LOCALIZATION
+// ================================================================
+let curLang='ko';
+try{curLang=localStorage.getItem('dr_lang')||'ko';}catch(e){}
+const LANG={
+ko:{
+  // Tutorial
+  tutText:'같은 종류를 3개 이상 이어서 드래그',
+  tutSub:'검+해골을 함께 이으면 전투!',
+  tutLabel:'탭해서 이니셜 입력',
+  // HUD labels
+  str:'힘',dex:'민첩',vit:'생명',lck:'행운',
+  // Combat messages
+  swords:'검',shields:'방패',potions:'물약',coins:'금화',
+  dmgMsg:(sw,sk,dmg)=>`검 ${sw}개 → 해골 ${sk}마리 | 데미지 ${dmg}`,
+  typeCount:(type,n)=>`${type} ${n}개!`,
+  pathCount:(n)=>`${n}/3...`,
+  killMsg:(n)=>`${n}마리 처치!`,
+  comboMsg:(name,bonus,chain)=>`${name}! +${bonus} 보너스${chain>=3?' · 연쇄 '+chain+'콤보!':''}`,
+  thiefMsg:(n)=>`도둑이 코인 ${n}개 훔쳤다!`,
+  chainMsg:(n)=>`— ${n} 콤보! —`,
+  atkMsg:(atk,dot,hp)=>`${atk}${dot} → 체력 -${hp}`,
+  defMsg:(tot,dot)=>`방어 성공! ${tot} 막음${dot?' | '+dot:''}`,
+  dotMsg:(dmg)=>`지속 피해 -${dmg} → 체력 -${dmg}`,
+  healMsg:(hp)=>`Heal! 체력 +${hp}`,
+  repairMsg:(v)=>`Repair! 방어 +${v}`,
+  treasureMsg:(g)=>`Treasure! 골드 +${g}`,
+  slashMsg:(row)=>`Slash! ${row}행 수집!`,
+  vampMsg:(n)=>`흡혈 +${n}`,
+  // Game over
+  goScore:'점수',goNewBest:'NEW BEST!',goClass:'CLASS',goLv:'LV',goTurn:'TURN',
+  goKills:'처치',goMaxCombo:'최대 콤보',goWeapon:'무기',goArmor:'방어구',
+  // Settings
+  setTitle:'설정',setLang:'언어',setBgm:'배경음',setSfx:'효과음',
+  // Descriptions
+  descStr:'검 1개당 데미지 +1, 보너스 경험치 확률 +5%',
+  descDex:'방패 1개당 방어 +0.5, 보너스 방패 확률 +5%',
+  descVit:'최대 체력 +5 즉시 회복, 보너스 물약 확률 +5%',
+  descLck:'물약 회복량 +1, 보너스 코인 확률 +5%',
+  descHp10:'최대 체력 +10, 즉시 +10 회복',
+  descArm8:'최대 방어력 상한 +8',
+  descArmDur:'피격 시 방어구 유지 확률 +8% (소모 감소)',
+  descVamp:'전투 데미지의 흡혈 비율 +5% (최대 40%)',
+  descThorns:'방패 수집 시 모든 해골에 1 데미지',
+  descAnti:'매 턴 독 스택 1 추가 감소',
+  descFire:'매 턴 화상 스택 1 추가 감소',
+  // Skills
+  skHeal:'보드 위 모든 물약 수집 → 즉시 체력 회복',
+  skRepair:'보드 위 모든 방패 수집 → 즉시 방어 충전',
+  skSlash:'랜덤 1행 모든 타일 수집 + 해골에 3배 데미지',
+  skTreasure:'보드 위 모든 동전 수집 → 즉시 골드 획득',
+  skCharge:'보드 가장자리 20칸 전부 수집 + 해골 2배 데미지',
+  skCounter:'모든 해골이 자기 공격력만큼 자해',
+  skShatter:'모든 해골 공격력/방어력 → 1로 감소',
+  skTeleport:'해골 제외 전체 타일 재배치',
+  skGolden:'보드 위 모든 검 → 동전으로 변환',
+  skScavenge:'보드 위 모든 검 → 방패로 변환',
+  skDazzle:'보드 위 모든 동전 → 검으로 변환',
+  skDisarm:'보드 위 모든 해골 → 검으로 변환',
+  skEnchant:'즉시 업그레이드 선택 1회 발동',
+  skExplosive:'모든 물약 폭발 → 주변 8칸 해골에 5 데미지',
+  skPoison:'모든 해골에 즉시 3 데미지',
+  // Shop
+  shopPass:'골드 유지, 다음 100골드에 재등장',
+  shopWpn:(cur,nxt,diff,attr)=>`검 데미지 ${cur} → ${nxt} (+${diff}) | ${attr}`,
+  shopArm:(cur,nxt,diff,ma,attr)=>`방패당 방어 ${cur} → ${nxt} (+${diff}) | 최대방어 ${ma} | ${attr}`,
+  // Upgrade
+  upgWpn:(a,b)=>`검 데미지 ${a} → ${b} (+1)`,
+  upgArm:(a,b)=>`방패당 방어 ${a} → ${b} (+1)`,
+  upgDur:(a,b)=>`방어구 유지 ${a}% → ${b}% (+10%)`,
+  upgHp:(a,b)=>`최대 체력 ${a} → ${b} (즉시 회복)`,
+  // Eq attrs
+  eqQuicken:'스킬 쿨타임 최대 5로 제한',eqLifeSteal:'킬 시 HP +1 회복',eqRegen:'매 턴 HP +1 자동 회복',
+  eqSpikes:'해골 공격 시 1 반사 데미지',eqBlunt:'전투 데미지 +2 고정',eqPierce:'적 방어력 효과 -5%',
+  // Weapon/Armor names
+  wn:['낡은 검','철검','강철 검','미스릴 검','화염검','얼음검','번개검','룬 소드','드래곤 슬레이어','전설의 검'],
+  an:['가죽 갑옷','사슬 갑옷','판금 갑옷','미스릴 갑옷','드래곤 갑옷','성기사 갑옷','마법 갑옷','전설의 갑옷'],
+  atk:'공격',def:'방어',
+  // Combat float text
+  dmgFlt:(d)=>`${d} 데미지!`,
+  thornFlt:(n)=>`반격 ${n}마리!`,
+  shieldFlt:(ag,of2)=>`방어 +${ag}${of2>0?' (강화 +'+of2+')':''}`,
+  healFlt:(hp,cl,mn)=>`체력 +${hp}${cl}${mn>0?' (마나 -'+mn+')':''}`,
+  goldFlt:(v)=>`골드 +${v}`,
+  // DoT/combat turn
+  frozen:'얼었다! 이번 턴 공격 없음!',
+  poisonDot:(n)=>`독${n}`,burnDot:(n,ab)=>`화상${n}${ab>0?'(ARM-'+ab+')':''}`,curseDot:(n)=>`저주${n}`,
+  atkPart:(n)=>`공격 -${n}`,dotPart:(n)=>`지속 피해 -${n}`,
+  cleanPoison:(n)=>`독-${n}`,cleanBurn:(n)=>`화상-${n}`,cleanCurse:'저주-1',
+  cocky:'4개 이상 연결해야 해요!',
+  // Skill use messages
+  skMsgCharge:'Charge! 테두리 수집!',skMsgCounter:'Counter! 해골끼리 싸웠다!',
+  skMsgShatter:'Shatter! 해골 약화!',skMsgTeleport:'Teleport! 보드 리셋!',
+  skMsgGolden:'Golden Touch! 검→코인!',skMsgScavenge:'Scavenge! 검→방패!',
+  skMsgDazzle:'Dazzle! 코인→검!',skMsgDisarm:'Disarm! 해골→검!',
+  skMsgEnchant:'Enchant! 장비 강화!',skMsgExplosive:'Explosive! 물약 폭발!',
+  skMsgPoison:'Poison! 전체 독 피해!',
+  // Shop desc
+  shopWpnDesc:(cur,nxt,diff,attr)=>`검 데미지 ${cur} → ${nxt} (+${diff}) | ${attr}`,
+  shopArmDesc:(cur,nxt,diff,ma,attr)=>`방패당 방어 ${cur} → ${nxt} (+${diff}) | 최대방어 ${ma} | ${attr}`,
+  // Upgrade desc
+  upgWpnDesc:(a,b)=>`검 데미지 ${a} → ${b} (+1)`,
+  upgArmDesc:(a,b)=>`방패당 방어 ${a} → ${b} (+1)`,
+  upgDurDesc:(a,b)=>`방어구 유지 ${a}% → ${b}% (+10%)`,
+  upgHpDesc:(a,b)=>`최대 체력 ${a} → ${b} (즉시 회복)`,
+  // Initials
+  iniSaved:(ini)=>`${ini} 등록!`,
+  // Stat names for upgrade buttons
+  vampName:'흡혈 강화',burnResist:'화상 저항',
+},
+en:{
+  tutText:'Drag 3+ same tiles in a line',
+  tutSub:'Connect swords + skulls to attack!',
+  tutLabel:'Tap to set initials',
+  str:'STR',dex:'DEX',vit:'VIT',lck:'LCK',
+  swords:'Sword',shields:'Shield',potions:'Potion',coins:'Coin',
+  dmgMsg:(sw,sk,dmg)=>`${sw} swords → ${sk} skulls | ${dmg} DMG`,
+  typeCount:(type,n)=>`${n} ${type}!`,
+  pathCount:(n)=>`${n}/3...`,
+  killMsg:(n)=>`${n} killed!`,
+  comboMsg:(name,bonus,chain)=>`${name}! +${bonus} bonus${chain>=3?' · Chain x'+chain+'!':''}`,
+  thiefMsg:(n)=>`Thief stole ${n} coins!`,
+  chainMsg:(n)=>`— ${n} combo! —`,
+  atkMsg:(atk,dot,hp)=>`${atk}${dot} → HP -${hp}`,
+  defMsg:(tot,dot)=>`Blocked! ${tot} absorbed${dot?' | '+dot:''}`,
+  dotMsg:(dmg)=>`DoT -${dmg} → HP -${dmg}`,
+  healMsg:(hp)=>`Heal! HP +${hp}`,
+  repairMsg:(v)=>`Repair! Armor +${v}`,
+  treasureMsg:(g)=>`Treasure! Gold +${g}`,
+  slashMsg:(row)=>`Slash! Row ${row} cleared!`,
+  vampMsg:(n)=>`Lifesteal +${n}`,
+  goScore:'SCORE',goNewBest:'NEW BEST!',goClass:'CLASS',goLv:'LV',goTurn:'TURN',
+  goKills:'Kills',goMaxCombo:'Max Combo',goWeapon:'Weapon',goArmor:'Armor',
+  setTitle:'Settings',setLang:'Language',setBgm:'BGM',setSfx:'SFX',
+  descStr:'DMG +1 per sword, +5% bonus XP chance',
+  descDex:'DEF +0.5 per shield, +5% bonus shield chance',
+  descVit:'Max HP +5 instant heal, +5% bonus potion chance',
+  descLck:'Potion heal +1, +5% bonus coin chance',
+  descHp10:'Max HP +10, instant +10 heal',
+  descArm8:'Max armor +8',
+  descArmDur:'Armor retain +8% on hit',
+  descVamp:'Lifesteal +5% (max 40%)',
+  descThorns:'Shield collect deals 1 DMG to all skulls',
+  descAnti:'Poison stack -1 extra per turn',
+  descFire:'Burn stack -1 extra per turn',
+  skHeal:'Collect all potions → instant heal',
+  skRepair:'Collect all shields → instant armor',
+  skSlash:'Clear random row + 3x skull DMG',
+  skTreasure:'Collect all coins → instant gold',
+  skCharge:'Collect all edge tiles + 2x skull DMG',
+  skCounter:'All skulls damage themselves',
+  skShatter:'All skull ATK/DEF → 1',
+  skTeleport:'Shuffle all non-skull tiles',
+  skGolden:'All swords → coins',
+  skScavenge:'All swords → shields',
+  skDazzle:'All coins → swords',
+  skDisarm:'All skulls → swords',
+  skEnchant:'Trigger upgrade selection',
+  skExplosive:'Explode all potions → 5 DMG to nearby skulls',
+  skPoison:'Deal 3 DMG to all skulls',
+  shopPass:'Keep gold, shop returns at next 100g',
+  shopWpn:(cur,nxt,diff,attr)=>`Sword DMG ${cur} → ${nxt} (+${diff}) | ${attr}`,
+  shopArm:(cur,nxt,diff,ma,attr)=>`Shield DEF ${cur} → ${nxt} (+${diff}) | Max ${ma} | ${attr}`,
+  upgWpn:(a,b)=>`Sword DMG ${a} → ${b} (+1)`,
+  upgArm:(a,b)=>`Shield DEF ${a} → ${b} (+1)`,
+  upgDur:(a,b)=>`Armor retain ${a}% → ${b}% (+10%)`,
+  upgHp:(a,b)=>`Max HP ${a} → ${b} (instant heal)`,
+  eqQuicken:'Skill CD capped at 5',eqLifeSteal:'Kill heals +1 HP',eqRegen:'+1 HP regen/turn',
+  eqSpikes:'Reflect 1 DMG on skull attack',eqBlunt:'+2 flat combat DMG',eqPierce:'-5% enemy DEF',
+  wn:['Rusty Sword','Iron Sword','Steel Sword','Mithril Sword','Flame Sword','Ice Sword','Thunder Sword','Rune Sword','Dragon Slayer','Legendary Sword'],
+  an:['Leather Armor','Chain Armor','Plate Armor','Mithril Armor','Dragon Armor','Paladin Armor','Magic Armor','Legendary Armor'],
+  atk:'ATK',def:'DEF',
+  dmgFlt:(d)=>`${d} DMG!`,
+  thornFlt:(n)=>`Thorns ${n} kills!`,
+  shieldFlt:(ag,of2)=>`Armor +${ag}${of2>0?' (Upgrade +'+of2+')':''}`,
+  healFlt:(hp,cl,mn)=>`HP +${hp}${cl}${mn>0?' (Mana -'+mn+')':''}`,
+  goldFlt:(v)=>`Gold +${v}`,
+  frozen:'Frozen! No attacks this turn!',
+  poisonDot:(n)=>`Psn${n}`,burnDot:(n,ab)=>`Burn${n}${ab>0?'(ARM-'+ab+')':''}`,curseDot:(n)=>`Curse${n}`,
+  atkPart:(n)=>`ATK -${n}`,dotPart:(n)=>`DoT -${n}`,
+  cleanPoison:(n)=>`Psn-${n}`,cleanBurn:(n)=>`Burn-${n}`,cleanCurse:'Curse-1',
+  cocky:'Must connect 4+ tiles!',
+  skMsgCharge:'Charge! Edges collected!',skMsgCounter:'Counter! Skulls fight!',
+  skMsgShatter:'Shatter! Skulls weakened!',skMsgTeleport:'Teleport! Board reset!',
+  skMsgGolden:'Golden Touch! Swords→Coins!',skMsgScavenge:'Scavenge! Swords→Shields!',
+  skMsgDazzle:'Dazzle! Coins→Swords!',skMsgDisarm:'Disarm! Skulls→Swords!',
+  skMsgEnchant:'Enchant! Gear upgraded!',skMsgExplosive:'Explosive! Potions explode!',
+  skMsgPoison:'Poison! All skulls hit!',
+  shopWpnDesc:(cur,nxt,diff,attr)=>`Sword DMG ${cur} → ${nxt} (+${diff}) | ${attr}`,
+  shopArmDesc:(cur,nxt,diff,ma,attr)=>`Shield DEF ${cur} → ${nxt} (+${diff}) | Max ${ma} | ${attr}`,
+  upgWpnDesc:(a,b)=>`Sword DMG ${a} → ${b} (+1)`,
+  upgArmDesc:(a,b)=>`Shield DEF ${a} → ${b} (+1)`,
+  upgDurDesc:(a,b)=>`Armor retain ${a}% → ${b}% (+10%)`,
+  upgHpDesc:(a,b)=>`Max HP ${a} → ${b} (instant heal)`,
+  iniSaved:(ini)=>`${ini} saved!`,
+  vampName:'Vampiric',burnResist:'Fire Resist',
+},
+es:{
+  tutText:'Arrastra 3+ fichas iguales en línea',
+  tutSub:'¡Conecta espadas + calaveras para atacar!',
+  tutLabel:'Toca para poner iniciales',
+  str:'FUE',dex:'DES',vit:'VIT',lck:'SRT',
+  swords:'Espada',shields:'Escudo',potions:'Poción',coins:'Moneda',
+  dmgMsg:(sw,sk,dmg)=>`${sw} espadas → ${sk} calaveras | ${dmg} daño`,
+  typeCount:(type,n)=>`${n} ${type}!`,
+  pathCount:(n)=>`${n}/3...`,
+  killMsg:(n)=>`¡${n} eliminados!`,
+  comboMsg:(name,bonus,chain)=>`¡${name}! +${bonus} bonus${chain>=3?' · Cadena x'+chain+'!':''}`,
+  thiefMsg:(n)=>`¡Ladrón robó ${n} monedas!`,
+  chainMsg:(n)=>`— ¡${n} combo! —`,
+  atkMsg:(atk,dot,hp)=>`${atk}${dot} → HP -${hp}`,
+  defMsg:(tot,dot)=>`¡Bloqueado! ${tot} absorbido${dot?' | '+dot:''}`,
+  dotMsg:(dmg)=>`DoT -${dmg} → HP -${dmg}`,
+  healMsg:(hp)=>`¡Curación! HP +${hp}`,
+  repairMsg:(v)=>`¡Reparar! Armadura +${v}`,
+  treasureMsg:(g)=>`¡Tesoro! Oro +${g}`,
+  slashMsg:(row)=>`¡Tajo! ¡Fila ${row} eliminada!`,
+  vampMsg:(n)=>`Robo de vida +${n}`,
+  goScore:'PUNTOS',goNewBest:'¡NUEVO RÉCORD!',goClass:'CLASE',goLv:'NV',goTurn:'TURNO',
+  goKills:'Eliminados',goMaxCombo:'Combo Máx',goWeapon:'Arma',goArmor:'Armadura',
+  setTitle:'Ajustes',setLang:'Idioma',setBgm:'Música',setSfx:'Efectos',
+  descStr:'Daño +1 por espada, +5% prob. EXP bonus',
+  descDex:'DEF +0.5 por escudo, +5% prob. escudo bonus',
+  descVit:'HP máx +5 curación inst., +5% prob. poción',
+  descLck:'Curación poción +1, +5% prob. moneda bonus',
+  descHp10:'HP máx +10, curación inst. +10',
+  descArm8:'Armadura máx +8',
+  descArmDur:'Retención armadura +8% al recibir daño',
+  descVamp:'Robo de vida +5% (máx 40%)',
+  descThorns:'Escudo inflige 1 daño a todas las calaveras',
+  descAnti:'Veneno -1 extra por turno',
+  descFire:'Quemadura -1 extra por turno',
+  skHeal:'Recoger todas las pociones → curación',
+  skRepair:'Recoger todos los escudos → armadura',
+  skSlash:'Limpiar fila aleatoria + 3x daño calaveras',
+  skTreasure:'Recoger todas las monedas → oro',
+  skCharge:'Recoger bordes + 2x daño calaveras',
+  skCounter:'Calaveras se dañan a sí mismas',
+  skShatter:'ATK/DEF calaveras → 1',
+  skTeleport:'Mezclar fichas (excepto calaveras)',
+  skGolden:'Espadas → monedas',
+  skScavenge:'Espadas → escudos',
+  skDazzle:'Monedas → espadas',
+  skDisarm:'Calaveras → espadas',
+  skEnchant:'Activar mejora',
+  skExplosive:'Explotar pociones → 5 daño a calaveras',
+  skPoison:'3 daño a todas las calaveras',
+  shopPass:'Conservar oro, tienda reaparece a 100g',
+  shopWpn:(cur,nxt,diff,attr)=>`Daño espada ${cur} → ${nxt} (+${diff}) | ${attr}`,
+  shopArm:(cur,nxt,diff,ma,attr)=>`DEF escudo ${cur} → ${nxt} (+${diff}) | Máx ${ma} | ${attr}`,
+  upgWpn:(a,b)=>`Daño espada ${a} → ${b} (+1)`,
+  upgArm:(a,b)=>`DEF escudo ${a} → ${b} (+1)`,
+  upgDur:(a,b)=>`Retención ${a}% → ${b}% (+10%)`,
+  upgHp:(a,b)=>`HP máx ${a} → ${b} (curación inst.)`,
+  eqQuicken:'CD habilidad máx 5',eqLifeSteal:'Matar cura +1 HP',eqRegen:'+1 HP regen/turno',
+  eqSpikes:'Refleja 1 daño al ataque de calavera',eqBlunt:'+2 daño fijo',eqPierce:'-5% DEF enemigo',
+  wn:['Espada Oxidada','Espada de Hierro','Espada de Acero','Espada Mithril','Espada Llameante','Espada de Hielo','Espada Trueno','Espada Rúnica','Matadragones','Espada Legendaria'],
+  an:['Armadura de Cuero','Cota de Malla','Armadura de Placas','Armadura Mithril','Armadura Dragón','Armadura Paladín','Armadura Mágica','Armadura Legendaria'],
+  atk:'ATQ',def:'DEF',
+  dmgFlt:(d)=>`¡${d} daño!`,
+  thornFlt:(n)=>`¡Espinas ${n} muertes!`,
+  shieldFlt:(ag,of2)=>`Armadura +${ag}${of2>0?' (Mejora +'+of2+')':''}`,
+  healFlt:(hp,cl,mn)=>`HP +${hp}${cl}${mn>0?' (Maná -'+mn+')':''}`,
+  goldFlt:(v)=>`¡Oro +${v}!`,
+  frozen:'¡Congelado! ¡Sin ataques este turno!',
+  poisonDot:(n)=>`Ven${n}`,burnDot:(n,ab)=>`Quem${n}${ab>0?'(ARM-'+ab+')':''}`,curseDot:(n)=>`Mald${n}`,
+  atkPart:(n)=>`ATQ -${n}`,dotPart:(n)=>`DoT -${n}`,
+  cleanPoison:(n)=>`Ven-${n}`,cleanBurn:(n)=>`Quem-${n}`,cleanCurse:'Mald-1',
+  cocky:'¡Conecta 4+ fichas!',
+  skMsgCharge:'¡Carga! ¡Bordes recogidos!',skMsgCounter:'¡Contra! ¡Calaveras luchan!',
+  skMsgShatter:'¡Destrozo! ¡Calaveras debilitadas!',skMsgTeleport:'¡Teleporte! ¡Tablero reiniciado!',
+  skMsgGolden:'¡Toque Dorado! Espadas→Monedas!',skMsgScavenge:'¡Rebuscar! Espadas→Escudos!',
+  skMsgDazzle:'¡Deslumbrar! Monedas→Espadas!',skMsgDisarm:'¡Desarmar! Calaveras→Espadas!',
+  skMsgEnchant:'¡Encantar! ¡Equipo mejorado!',skMsgExplosive:'¡Explosivo! ¡Pociones explotan!',
+  skMsgPoison:'¡Veneno! ¡Todas las calaveras!',
+  shopWpnDesc:(cur,nxt,diff,attr)=>`Daño espada ${cur} → ${nxt} (+${diff}) | ${attr}`,
+  shopArmDesc:(cur,nxt,diff,ma,attr)=>`DEF escudo ${cur} → ${nxt} (+${diff}) | Máx ${ma} | ${attr}`,
+  upgWpnDesc:(a,b)=>`Daño espada ${a} → ${b} (+1)`,
+  upgArmDesc:(a,b)=>`DEF escudo ${a} → ${b} (+1)`,
+  upgDurDesc:(a,b)=>`Retención ${a}% → ${b}% (+10%)`,
+  upgHpDesc:(a,b)=>`HP máx ${a} → ${b} (curación inst.)`,
+  iniSaved:(ini)=>`¡${ini} guardado!`,
+  vampName:'Vampírico',burnResist:'Resist. Fuego',
+},
+};
+function T(k,...a){try{const v=LANG[curLang]?.[k]||LANG.ko[k];return typeof v==='function'?v(...a):v||k;}catch(e){return k;}}
+
+// Global error handler to prevent uncaught errors from breaking the game
+window.onerror=function(msg,src,line,col,err){console.error('Game error:',msg,'line:',line,'col:',col,err);return true;};
+window.addEventListener('unhandledrejection',e=>{e.preventDefault();console.warn('Unhandled:',e.reason);});
+// ================================================================
+//  SKULL MATCH — RESTORED EDITION
+// ================================================================
+const R=6,C=6;
+
+// ===== SVG ICON SYSTEM (Chrome Hearts — Black + Sterling Silver) =====
+let _si=0;
+const SVG_ICONS={
+  // DAGGER — Chrome Hearts signature, pure silver on black
+  sword:(s=24)=>{const i=_si++;return`<svg width="${s}" height="${s}" viewBox="0 0 32 32" fill="none">
+    <defs><linearGradient id="sb${i}" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#eee"/><stop offset="35%" stop-color="#999"/><stop offset="65%" stop-color="#ccc"/><stop offset="100%" stop-color="#777"/></linearGradient></defs>
+    <g transform="rotate(-45 16 16)">
+    <path d="M16 2L13.5 7V19.5H18.5V7L16 2Z" fill="url(#sb${i})" stroke="#888" stroke-width=".7"/>
+    <line x1="8" y1="19.5" x2="24" y2="19.5" stroke="#ddd" stroke-width="3.5" stroke-linecap="round"/>
+    <circle cx="16" cy="19.5" r="2.2" fill="#111" stroke="#ccc" stroke-width="1.2"/>
+    <rect x="14" y="22" width="4" height="7" rx="1" fill="#333" stroke="#555" stroke-width=".8"/>
+    <circle cx="16" cy="30" r="1.5" fill="#bbb"/>
+    </g>
+  </svg>`;},
+  // GOTHIC CROSS SHIELD — silver cross on dark
+  shield:(s=24)=>{const i=_si++;return`<svg width="${s}" height="${s}" viewBox="0 0 32 32" fill="none">
+    <defs><linearGradient id="sh${i}" x1=".5" y1="0" x2=".5" y2="1"><stop offset="0%" stop-color="#444"/><stop offset="50%" stop-color="#222"/><stop offset="100%" stop-color="#111"/></linearGradient></defs>
+    <path d="M16 2L4 8V17C4 23.5 9.5 29 16 30C22.5 29 28 23.5 28 17V8L16 2Z" fill="url(#sh${i})" stroke="#666" stroke-width="1.5" stroke-linejoin="round"/>
+    <path d="M16 6V26" stroke="#ddd" stroke-width="4" stroke-linecap="round"/>
+    <path d="M8 14H24" stroke="#ddd" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="16" cy="14" r="3" fill="none" stroke="#999" stroke-width="1.2"/>
+  </svg>`;},
+  // DARK ELIXIR — silver cap, dark blood red
+  potion:(s=24)=>{const i=_si++;return`<svg width="${s}" height="${s}" viewBox="0 0 32 32" fill="none">
+    <defs><linearGradient id="po${i}" x1=".3" y1="0" x2=".7" y2="1"><stop offset="0%" stop-color="#cc3030"/><stop offset="40%" stop-color="#882020"/><stop offset="100%" stop-color="#441010"/></linearGradient>
+    <filter id="pog${i}"><feGaussianBlur stdDeviation=".8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+    <path d="M16 28C16 28 4 20 4 12C4 7.5 7.5 4 11 4C13.5 4 15 5.5 16 7C17 5.5 18.5 4 21 4C24.5 4 28 7.5 28 12C28 20 16 28 16 28Z" fill="url(#po${i})" stroke="#aa3333" stroke-width="1.2" stroke-linejoin="round"/>
+    <path d="M8 10C9 7 10.5 5.5 12 5" stroke="rgba(255,200,200,.15)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    <path d="M16 7V10" stroke="rgba(255,150,150,.1)" stroke-width="1" stroke-linecap="round"/>
+  </svg>`;},
+  // SILVER COIN — cross-engraved sterling silver
+  coin:(s=24)=>{const i=_si++;return`<svg width="${s}" height="${s}" viewBox="0 0 32 32" fill="none">
+    <defs><radialGradient id="cn${i}" cx=".35" cy=".3"><stop offset="0%" stop-color="#f8e8a0"/><stop offset="30%" stop-color="#d4aa40"/><stop offset="60%" stop-color="#a08020"/><stop offset="100%" stop-color="#604810"/></radialGradient></defs>
+    <circle cx="16" cy="16" r="13" fill="url(#cn${i})" stroke="#8a6a20" stroke-width="1"/>
+    <circle cx="16" cy="16" r="11.5" fill="none" stroke="#c8a040" stroke-width=".6"/>
+    <text x="16" y="22" text-anchor="middle" fill="#604010" font-size="18" font-weight="900" font-family="serif">$</text>
+    <line x1="16" y1="5" x2="16" y2="27" stroke="#8a6a20" stroke-width=".8" stroke-linecap="round"/>
+    <path d="M10 9.5C12 6.5 14 5 16 4.5" stroke="rgba(255,255,200,.2)" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+  </svg>`;},
+  // CHROME HEARTS SKULL — dynamic based on power level
+  // threat: 0=weak, 1=normal, 2=strong, 3=elite | spec: poison/thief/freeze | boss: true/false
+  skull:(s=24,threat=1,spec=null,boss=false)=>{const i=_si++;
+    // Eye colors by threat level
+    const eyeColors=[
+      {iris:'#666666',glow:'#444444',pupil:'#888888',gOp:.5},    // 0: weak — dim grey
+      {iris:'#ff2200',glow:'#cc0000',pupil:'#ff6644',gOp:.8},    // 1: normal — red
+      {iris:'#ff6600',glow:'#ff4400',pupil:'#ffaa33',gOp:.9},    // 2: strong — orange-fire
+      {iris:'#ff00ff',glow:'#cc00cc',pupil:'#ff66ff',gOp:1},     // 3: elite — magenta
+    ];
+    // Special skull eye overrides
+    const specEyes={
+      poison:{iris:'#44ff22',glow:'#22cc00',pupil:'#88ff66',gOp:.9},
+      thief:{iris:'#ffcc00',glow:'#ddaa00',pupil:'#ffee55',gOp:.9},
+      freeze:{iris:'#22ccff',glow:'#0099dd',pupil:'#88eeff',gOp:.9},
+    };
+    // Boss: glowing crimson skull
+    const bossEye={iris:'#ff0000',glow:'#ff0000',pupil:'#ff4444',gOp:1};
+    const ec=boss?bossEye:spec&&specEyes[spec]?specEyes[spec]:eyeColors[Math.min(3,threat)];
+    // Eye size scales with threat
+    const eyeRx=boss?4:2+threat*0.5;
+    const eyeRy=boss?4.8:2.5+threat*0.6;
+    const socketRx=boss?4.5:3.5;
+    const socketRy=boss?5:4.2;
+    // Skull body color
+    let skullGrad,skullStroke,skullShadow='';
+    if(boss){
+      skullGrad=`<linearGradient id="sk${i}" x1=".3" y1="0" x2=".7" y2="1"><stop offset="0%" stop-color="#cc3333"/><stop offset="30%" stop-color="#992222"/><stop offset="70%" stop-color="#551111"/><stop offset="100%" stop-color="#330808"/></linearGradient>`;
+      skullStroke='#ff4444';
+      skullShadow=`<filter id="sksh${i}"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>`;
+    }else if(threat>=3){
+      skullGrad=`<linearGradient id="sk${i}" x1=".3" y1="0" x2=".7" y2="1"><stop offset="0%" stop-color="#ccc"/><stop offset="30%" stop-color="#999"/><stop offset="70%" stop-color="#555"/><stop offset="100%" stop-color="#222"/></linearGradient>`;
+      skullStroke='#aa88cc';
+    }else{
+      const bright=Math.min(220,180+threat*20);
+      const mid=Math.min(180,140+threat*20);
+      const dark=Math.min(120,80+threat*20);
+      const lo=Math.min(70,50+threat*10);
+      skullGrad=`<linearGradient id="sk${i}" x1=".3" y1="0" x2=".7" y2="1"><stop offset="0%" stop-color="rgb(${bright},${bright},${bright-10})"/><stop offset="30%" stop-color="rgb(${mid},${mid},${mid-10})"/><stop offset="70%" stop-color="rgb(${dark},${dark},${dark-10})"/><stop offset="100%" stop-color="rgb(${lo},${lo},${lo})"/></linearGradient>`;
+      skullStroke='#888';
+    }
+    // Glow filter for eyes
+    const glowFilter=`<filter id="skgl${i}"><feGaussianBlur stdDeviation="${boss?2:1.2}" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>`;
+    // Teeth style
+    const teethStroke=boss?'#cc6666':'#888';
+    const teethWidth=boss?2.2:1.8;
+    // Crack lines for strong/elite/boss
+    let cracks='';
+    if(threat>=2||boss){
+      cracks+=`<path d="M13 4.5L14.5 8M19 4.5L17.5 8" stroke="${boss?'#882222':'#555'}" stroke-width=".8" stroke-linecap="round" opacity=".6"/>`;
+      cracks+=`<path d="M11 12L10.5 7" stroke="${boss?'#772222':'#666'}" stroke-width=".6" opacity=".5"/>`;
+    }
+    if(threat>=3||boss){
+      cracks+=`<path d="M21 11L22 6.5" stroke="${boss?'#772222':'#666'}" stroke-width=".6" opacity=".5"/>`;
+      cracks+=`<path d="M14 6L15 3.5" stroke="${boss?'#882222':'#555'}" stroke-width=".5" opacity=".4"/>`;
+    }
+    // Boss: horns
+    let horns='';
+    if(boss){
+      horns=`<path d="M9 6L5 -1L8 5" fill="#771111" stroke="#aa3333" stroke-width="1" stroke-linejoin="round"/>
+      <path d="M23 6L27 -1L24 5" fill="#771111" stroke="#aa3333" stroke-width="1" stroke-linejoin="round"/>`;
+    }
+    // Boss: outer glow
+    const outerFilter=boss?` filter="url(#sksh${i})"`:'' ;
+    // Random blink timing for this skull
+    const blinkDur=(3+Math.random()*4).toFixed(1);
+    const blinkDelay=(Math.random()*5).toFixed(1);
+    const blinkStyle=`animation:skullBlink ${blinkDur}s ease-in-out ${blinkDelay}s infinite;`;
+    return`<svg width="${s}" height="${s}" viewBox="0 0 32 32" fill="none">
+    <defs>${skullGrad}
+    <radialGradient id="ske${i}" cx=".5" cy=".5" r=".5"><stop offset="0%" stop-color="${ec.iris}"/><stop offset="60%" stop-color="${ec.glow}"/><stop offset="100%" stop-color="#110000"/></radialGradient>
+    ${glowFilter}${skullShadow||''}</defs>
+    ${horns}
+    <path d="M7 15.5C7 8 10.5 2.5 16 2.5C21.5 2.5 25 8 25 15.5C25 19.5 23.5 22 21.5 23.5V26C21.5 27 20.5 28 19.5 28H12.5C11.5 28 10.5 27 10.5 26V23.5C8.5 22 7 19.5 7 15.5Z" fill="url(#sk${i})" stroke="${skullStroke}" stroke-width="${boss?1.8:1.3}" stroke-linejoin="round"${outerFilter}/>
+    <path d="M9 10C10 6 12.5 3.5 16 3.5C17.5 3.5 19 4.5 20.5 6" fill="${boss?'rgba(255,100,100,.06)':'rgba(255,255,255,.08)'}" stroke="none"/>
+    <line x1="16" y1="4" x2="16" y2="10" stroke="${boss?'#882222':'#555'}" stroke-width="${boss?1.2:.7}" stroke-linecap="round" opacity=".5"/>
+    <line x1="13.5" y1="7" x2="18.5" y2="7" stroke="${boss?'#882222':'#555'}" stroke-width="${boss?1.2:.7}" stroke-linecap="round" opacity=".5"/>
+    ${cracks}
+    <ellipse cx="12" cy="14.5" rx="${socketRx}" ry="${socketRy}" fill="#050000" stroke="${boss?'#663333':'#555'}" stroke-width="1"/>
+    <ellipse cx="20" cy="14.5" rx="${socketRx}" ry="${socketRy}" fill="#050000" stroke="${boss?'#663333':'#555'}" stroke-width="1"/>
+    <ellipse cx="12" cy="14.5" rx="${eyeRx}" ry="${eyeRy}" fill="url(#ske${i})" filter="url(#skgl${i})" opacity="${ec.gOp}"/>
+    <ellipse cx="20" cy="14.5" rx="${eyeRx}" ry="${eyeRy}" fill="url(#ske${i})" filter="url(#skgl${i})" opacity="${ec.gOp}"/>
+    <circle cx="11.3" cy="13.8" r="${boss?1.2:.8}" fill="${ec.pupil}" opacity=".7"/>
+    <circle cx="19.3" cy="13.8" r="${boss?1.2:.8}" fill="${ec.pupil}" opacity=".7"/>
+    <ellipse cx="12" cy="14.5" rx="${eyeRx*1.3}" ry="${eyeRy*1.3}" fill="#ff0000" opacity="0" style="${blinkStyle}"/>
+    <ellipse cx="20" cy="14.5" rx="${eyeRx*1.3}" ry="${eyeRy*1.3}" fill="#ff0000" opacity="0" style="${blinkStyle}"/>
+    <ellipse cx="12" cy="14.5" rx="${eyeRx*.7}" ry="${eyeRy*.7}" fill="#ff4400" opacity="0" style="${blinkStyle}"/>
+    <ellipse cx="20" cy="14.5" rx="${eyeRx*.7}" ry="${eyeRy*.7}" fill="#ff4400" opacity="0" style="${blinkStyle}"/>
+    <path d="M16 18.5V20.5" stroke="${boss?'#553333':'#555'}" stroke-width="1"/>
+    <path d="M11 22L12 20L13.5 22.5L15 20L16 22.5L17 20L18.5 22.5L20 20L21 22" stroke="${teethStroke}" stroke-width="${teethWidth}" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <line x1="12.5" y1="24" x2="12.5" y2="28" stroke="${boss?'#885555':'#888'}" stroke-width="1"/>
+    <line x1="16" y1="24" x2="16" y2="28" stroke="${boss?'#885555':'#888'}" stroke-width="1"/>
+    <line x1="19.5" y1="24" x2="19.5" y2="28" stroke="${boss?'#885555':'#888'}" stroke-width="1"/>
+  </svg>`;},
+  swordSm:(s=14)=>SVG_ICONS.sword(s),
+  shieldSm:(s=14)=>SVG_ICONS.shield(s),
+  potionSm:(s=14)=>SVG_ICONS.potion(s),
+  coinSm:(s=14)=>SVG_ICONS.coin(s),
+  skullSm:(s=14)=>SVG_ICONS.skull(s),
+  mana:(s=24)=>{const i=_si++;return`<svg width="${s}" height="${s}" viewBox="0 0 32 32" fill="none">
+    <defs><linearGradient id="mp${i}" x1=".3" y1=".2" x2=".7" y2="1"><stop offset="0%" stop-color="#335577"/><stop offset="100%" stop-color="#1a2a3a"/></linearGradient></defs>
+    <rect x="12" y="2" width="8" height="5" rx="1.5" fill="#999" stroke="#bbb" stroke-width=".8"/>
+    <path d="M12.5 7V11.5L8 20C7 22.5 8 26.5 12 27.5H20C24 26.5 25 22.5 24 20L19.5 11.5V7" fill="url(#mp${i})" stroke="#334455" stroke-width="1.5" stroke-linejoin="round"/>
+    <path d="M14.5 15V20" stroke="rgba(160,190,220,.15)" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M13 17.5H17" stroke="rgba(160,190,220,.15)" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>`;},
+  arrow:(s=24)=>`<svg width="${s}" height="${s}" viewBox="0 0 32 32" fill="none">
+    <line x1="6" y1="26" x2="24" y2="8" stroke="#888" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M24 8L27 5L21 7Z" fill="#ccc" stroke="#999" stroke-width="1" stroke-linejoin="round"/>
+    <line x1="7" y1="25" x2="4" y2="28" stroke="#666" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="7" y1="25" x2="4" y2="25" stroke="#666" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>`,
+  poison_mark:(s=12)=>`<svg width="${s}" height="${s}" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="#080808" stroke="#556644" stroke-width="2"/><text x="8" y="12" text-anchor="middle" fill="#889977" font-size="9" font-weight="bold" font-family="serif">P</text></svg>`,
+  thief_mark:(s=12)=>`<svg width="${s}" height="${s}" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="#080808" stroke="#665544" stroke-width="2"/><text x="8" y="12" text-anchor="middle" fill="#998877" font-size="9" font-weight="bold" font-family="serif">T</text></svg>`,
+  freeze_mark:(s=12)=>`<svg width="${s}" height="${s}" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="#080808" stroke="#445566" stroke-width="2"/><text x="8" y="12" text-anchor="middle" fill="#778899" font-size="9" font-weight="bold" font-family="serif">F</text></svg>`,
+  boss_mark:(s=12)=>`<svg width="${s}" height="${s}" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="#080808" stroke="#554455" stroke-width="2"/><text x="8" y="12" text-anchor="middle" fill="#997799" font-size="9" font-weight="bold" font-family="serif">B</text></svg>`,
+};
+const IC={sword:'Sword',shield:'Shield',potion:'Potion',coin:'Coin',skull:'Skull',mana:'Mana',arrow:'Arrow'};
+const TI={sword:'sword',shield:'shield',potion:'potion',coin:'coin',skull:'skull'};
+let uid=0;
+
+// ===== CLASSES =====
+const CLS_ICONS={adventurer:'<svg width="20" height="20" viewBox="0 0 20 20"><line x1="5" y1="15" x2="15" y2="5" stroke="#b0a080" stroke-width="2" stroke-linecap="round"/><path d="M15 5L12 6L14 8Z" fill="#ccc"/></svg>',
+  warrior:'<svg width="20" height="20" viewBox="0 0 20 20"><line x1="4" y1="16" x2="16" y2="4" stroke="#ccc" stroke-width="2"/><line x1="16" y1="4" x2="12" y2="4" stroke="#ccc" stroke-width="2"/><line x1="4" y1="16" x2="4" y2="12" stroke="#8b6914" stroke-width="2"/></svg>',
+  mage:'<svg width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="6" fill="none" stroke="#a060dd" stroke-width="2"/><circle cx="10" cy="10" r="2" fill="#a060dd"/></svg>',
+  ranger:'<svg width="20" height="20" viewBox="0 0 20 20"><line x1="4" y1="16" x2="16" y2="4" stroke="#b08840" stroke-width="2"/><path d="M16 4L12 5L15 8Z" fill="#ccc"/></svg>',
+  paladin:'<svg width="20" height="20" viewBox="0 0 20 20"><path d="M10 3L4 6V12C4 15 7 18 10 18.5C13 18 16 15 16 12V6L10 3Z" fill="none" stroke="#88aadd" stroke-width="2"/><line x1="10" y1="7" x2="10" y2="15" stroke="#88aadd" stroke-width="1.5"/></svg>',
+  raider:'<svg width="20" height="20" viewBox="0 0 20 20"><polygon points="10,3 12.5,8 18,9 14,13 15,18 10,15.5 5,18 6,13 2,9 7.5,8" fill="none" stroke="#ddbb44" stroke-width="1.5"/></svg>',
+  priest:'<svg width="20" height="20" viewBox="0 0 20 20"><line x1="10" y1="4" x2="10" y2="17" stroke="#dddd88" stroke-width="2" stroke-linecap="round"/><line x1="6" y1="8" x2="14" y2="8" stroke="#dddd88" stroke-width="2" stroke-linecap="round"/></svg>',
+  assassin:'<svg width="20" height="20" viewBox="0 0 20 20"><line x1="10" y1="3" x2="10" y2="14" stroke="#aaa" stroke-width="2" stroke-linecap="round"/><line x1="8" y1="14" x2="12" y2="14" stroke="#666" stroke-width="2.5" stroke-linecap="round"/></svg>',
+  barbarian:'<svg width="20" height="20" viewBox="0 0 20 20"><line x1="10" y1="4" x2="10" y2="17" stroke="#b08840" stroke-width="2.5" stroke-linecap="round"/><path d="M5 4L10 8L15 4" stroke="#ccc" stroke-width="2" fill="none" stroke-linecap="round"/></svg>',
+  rogue:'<svg width="20" height="20" viewBox="0 0 20 20"><line x1="10" y1="4" x2="10" y2="17" stroke="#aaa" stroke-width="1.5" stroke-linecap="round"/><path d="M7 4C7 4 10 6 13 4" stroke="#aaa" stroke-width="1.5" fill="none"/></svg>'};
+const CLASSES=[
+  {id:'warrior',name:'Warrior',icon:CLS_ICONS.warrior,perk:'HP +10, base DMG +1',flaw:'Special skull HP +5%',
+   mods:{maxHpBonus:10,baseDmgBonus:1,skSpecialHpMult:1.05},unlocked:true},
+  {id:'mage',name:'Mage',icon:CLS_ICONS.mage,perk:'5% mana potion → skill CD -1',flaw:'Max HP -10',
+   mods:{maxHpBonus:-10,manaChance:.05,skillCdBonus:true},unlocked:true},
+  {id:'rogue',name:'Rogue',icon:CLS_ICONS.rogue,perk:'Gold +1/coin, 5% arrow chance',flaw:'Max HP -5',
+   mods:{maxHpBonus:-5,coinBonus:1,arrowChance:.05},unlocked:true},
+];
+
+// ===== ALL SKILLS (15 basal + class skills) =====
+// Skill SVG icons (small, 18px)
+const SK_IC={
+  heal:`<svg width="18" height="18" viewBox="0 0 18 18"><path d="M9 3C7 3 4 5 4 8C4 12 9 15 9 15C9 15 14 12 14 8C14 5 11 3 9 3Z" fill="#dd4444" stroke="#ff6666" stroke-width="1"/></svg>`,
+  repair:`<svg width="18" height="18" viewBox="0 0 18 18"><path d="M9 2L4 5V10C4 13 6.5 15.5 9 16C11.5 15.5 14 13 14 10V5L9 2Z" fill="none" stroke="#5588cc" stroke-width="1.5"/></svg>`,
+  slash:`<svg width="18" height="18" viewBox="0 0 18 18"><line x1="4" y1="14" x2="14" y2="4" stroke="#ccaaaa" stroke-width="2" stroke-linecap="round"/><line x1="3" y1="9" x2="15" y2="9" stroke="#ff6666" stroke-width="1" stroke-dasharray="2 2"/></svg>`,
+  treasure:`<svg width="18" height="18" viewBox="0 0 18 18"><rect x="3" y="7" width="12" height="8" rx="1" fill="none" stroke="#ddbb44" stroke-width="1.5"/><path d="M3 7L5 4H13L15 7" stroke="#ddbb44" stroke-width="1.5" fill="none"/><circle cx="9" cy="11" r="2" fill="#ddbb44"/></svg>`,
+  charge:`<svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="6" fill="none" stroke="#88ccff" stroke-width="1.5"/><path d="M9 3V6M9 12V15M3 9H6M12 9H15" stroke="#88ccff" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+  counter:`<svg width="18" height="18" viewBox="0 0 18 18"><path d="M12 4A5 5 0 1 1 6 4" fill="none" stroke="#88ddaa" stroke-width="1.5" stroke-linecap="round"/><path d="M12 4L14 2M12 4L14 6" stroke="#88ddaa" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+  shatter:`<svg width="18" height="18" viewBox="0 0 18 18"><line x1="9" y1="4" x2="9" y2="14" stroke="#ffaa44" stroke-width="1.5"/><line x1="4" y1="9" x2="14" y2="9" stroke="#ffaa44" stroke-width="1.5"/><line x1="5" y1="5" x2="13" y2="13" stroke="#ffaa44" stroke-width="1"/><line x1="13" y1="5" x2="5" y2="13" stroke="#ffaa44" stroke-width="1"/></svg>`,
+  teleport:`<svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="6" fill="none" stroke="#aa88dd" stroke-width="1.5"/><circle cx="9" cy="9" r="2" fill="#aa88dd"/><line x1="9" y1="3" x2="9" y2="5" stroke="#aa88dd" stroke-width="1"/><line x1="9" y1="13" x2="9" y2="15" stroke="#aa88dd" stroke-width="1"/></svg>`,
+  golden:`<svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="6" fill="#ddbb33" fill-opacity="0.3" stroke="#ddbb33" stroke-width="1.5"/><text x="9" y="12.5" text-anchor="middle" fill="#ddbb33" font-size="10" font-weight="bold">G</text></svg>`,
+  scavenge:`<svg width="18" height="18" viewBox="0 0 18 18"><path d="M7 4L5 6L8 9L5 12L7 14L10 11L13 14L15 12L12 9L15 6L13 4L10 7Z" fill="none" stroke="#88aa88" stroke-width="1.5"/></svg>`,
+  dazzle:`<svg width="18" height="18" viewBox="0 0 18 18"><path d="M9 2L10 7L15 6L11 9L15 12L10 11L9 16L8 11L3 12L7 9L3 6L8 7Z" fill="#ffdd66" stroke="#ffcc33" stroke-width="0.5"/></svg>`,
+  disarm:`<svg width="18" height="18" viewBox="0 0 18 18"><rect x="3" y="7" width="12" height="5" rx="1" fill="none" stroke="#dddddd" stroke-width="1.5"/><line x1="5" y1="7" x2="5" y2="12" stroke="#ddd" stroke-width="1"/><line x1="9" y1="7" x2="9" y2="12" stroke="#ddd" stroke-width="1"/><line x1="13" y1="7" x2="13" y2="12" stroke="#ddd" stroke-width="1"/></svg>`,
+  enchant:`<svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="5" fill="none" stroke="#bb77ee" stroke-width="1.5"/><circle cx="9" cy="9" r="2" fill="#bb77ee"/><path d="M9 2V4M9 14V16M2 9H4M14 9H16" stroke="#bb77ee" stroke-width="1" stroke-linecap="round"/></svg>`,
+  explosive:`<svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="10" r="5" fill="#443" stroke="#ff6644" stroke-width="1.5"/><path d="M9 5V2" stroke="#ffaa44" stroke-width="1.5" stroke-linecap="round"/><circle cx="9" cy="1.5" r="1" fill="#ffcc44"/></svg>`,
+  poison:`<svg width="18" height="18" viewBox="0 0 18 18"><circle cx="9" cy="9" r="6" fill="none" stroke="#66cc44" stroke-width="1.5"/><circle cx="7" cy="8" r="1.5" fill="#66cc44"/><circle cx="11" cy="8" r="1.5" fill="#66cc44"/><path d="M7 12C8 13 10 13 11 12" stroke="#66cc44" stroke-width="1.5" fill="none"/></svg>`,
+};
+const ALL_SK=[
+  {id:'heal',icon:SK_IC.heal,name:'Heal',get desc(){return T('skHeal')},maxCd:10,fn:skHeal},
+  {id:'repair',icon:SK_IC.repair,name:'Repair',get desc(){return T('skRepair')},maxCd:10,fn:skRepair},
+  {id:'slash',icon:SK_IC.slash,name:'Slash',get desc(){return T('skSlash')},maxCd:8,fn:skSlash},
+  {id:'treasure',icon:SK_IC.treasure,name:'Treasure',get desc(){return T('skTreasure')},maxCd:10,fn:skTreasure},
+  {id:'charge',icon:SK_IC.charge,name:'Charge',get desc(){return T('skCharge')},maxCd:12,fn:skCharge},
+  {id:'counter',icon:SK_IC.counter,name:'Counter',get desc(){return T('skCounter')},maxCd:12,fn:skCounter},
+  {id:'shatter',icon:SK_IC.shatter,name:'Shatter',get desc(){return T('skShatter')},maxCd:14,fn:skShatter},
+  {id:'teleport',icon:SK_IC.teleport,name:'Teleport',get desc(){return T('skTeleport')},maxCd:13,fn:skTeleport},
+  {id:'golden',icon:SK_IC.golden,name:'Golden Touch',get desc(){return T('skGolden')},maxCd:9,fn:skGolden},
+  {id:'scavenge',icon:SK_IC.scavenge,name:'Scavenge',get desc(){return T('skScavenge')},maxCd:9,fn:skScavenge},
+  {id:'dazzle',icon:SK_IC.dazzle,name:'Dazzle',get desc(){return T('skDazzle')},maxCd:9,fn:skDazzle},
+  {id:'disarm',icon:SK_IC.disarm,name:'Disarm',get desc(){return T('skDisarm')},maxCd:16,fn:skDisarm},
+  {id:'enchant',icon:SK_IC.enchant,name:'Enchant',get desc(){return T('skEnchant')},maxCd:14,fn:skEnchant},
+  {id:'explosive',icon:SK_IC.explosive,name:'Explosive',get desc(){return T('skExplosive')},maxCd:11,fn:skExplosive},
+  {id:'poison',icon:SK_IC.poison,name:'Poison',get desc(){return T('skPoison')},maxCd:9,fn:skPoison},
+];
+
+// ===== STAT UPGRADES =====
+const STAT_UP=[
+  {name:'STR +1',get desc(){return T('descStr')},fn:()=>{G.str++;rc();}},
+  {name:'DEX +1',get desc(){return T('descDex')},fn:()=>{G.dex++;rc();}},
+  {name:'VIT +1',get desc(){return T('descVit')},fn:()=>{G.vit++;G.maxHp+=5;G.hp=Math.min(G.hp+5,G.maxHp);rc();}},
+  {name:'LCK +1',get desc(){return T('descLck')},fn:()=>{G.lck++;rc();}},
+  {name:'HP +10',get desc(){return T('descHp10')},fn:()=>{G.maxHp+=10;G.hp=Math.min(G.hp+10,G.maxHp);}},
+  {name:'ARMOR +8',get desc(){return T('descArm8')},fn:()=>{G.maxArmor+=8;}},
+  {name:'ARMOR DUR',get desc(){return T('descArmDur')},fn:()=>{G.armDur=Math.min(.9,G.armDur+.08);}},
+  // === Diablo-style passives ===
+  {get name(){return '<svg width="12" height="12" viewBox="0 0 12 12" style="vertical-align:middle"><path d="M6 2C6 2 3 5 3 7.5C3 9.5 4.5 11 6 11C7.5 11 9 9.5 9 7.5C9 5 6 2 6 2Z" fill="#ff6688" stroke="#cc4466" stroke-width=\".8\"/></svg> '+T('vampName');},get desc(){return T('descVamp')},fn:()=>{G.vampiric=Math.min(.4,G.vampiric+.05);}},
+  {name:'THORNS',get desc(){return T('descThorns')},fn:()=>{G.thornsDmg++;}},
+  {name:'ANTIDOTE',get desc(){return T('descAnti')},fn:()=>{G.poisonResist=(G.poisonResist||0)+1;}},
+  {get name(){return '<svg width="12" height="12" viewBox="0 0 12 12" style="vertical-align:middle"><path d="M6 1C4 4 2 6 4 9C5 10.5 7 10.5 8 9C10 6 8 4 6 1Z" fill="#ff8833" stroke="#cc6622" stroke-width=\".8\"/></svg> '+T('burnResist');},get desc(){return T('descFire')},fn:()=>{G.burnResist=(G.burnResist||0)+1;}},
+];
+
+// ===== EQUIPMENT =====
+function WNAMES(){return T('wn');};
+function ANAMES(){return T('an');};
+const EQ_ATTRS=['Quicken','LifeSteal','Regen','Spikes','Blunt','Pierce'];
+function getEqDesc(k){return T('eq'+k.charAt(0).toUpperCase()+k.slice(1))||T('eq'+k);}
+const EQ_DESC_K={Quicken:'eqQuicken',LifeSteal:'eqLifeSteal',Regen:'eqRegen',Spikes:'eqSpikes',Blunt:'eqBlunt',Pierce:'eqPierce'};
+
+// ===== DIFFICULTY =====
+const DIFF={
+  easy:{hp:100,mAr:30,wD:4,aD:3,sr:.14,sg:.002,sH:1,sA:1,sD:0},
+  normal:{hp:65,mAr:24,wD:3,aD:2,sr:.17,sg:.003,sH:2,sA:1,sD:0},
+  hard:{hp:50,mAr:20,wD:3,aD:2,sr:.21,sg:.005,sH:3,sA:1,sD:0},
+  hell:{hp:35,mAr:16,wD:2,aD:1,sr:.27,sg:.008,sH:4,sA:2,sD:1}
+};
+
+
+// ================================================================
+//  SOUND EFFECTS (Web Audio API — synthesized, no files needed)
+// ================================================================
+const SFX=(()=>{
+  let ctx;
+  function init(){if(!ctx)ctx=new(window.AudioContext||window.webkitAudioContext)();if(ctx.state==='suspended')ctx.resume();}
+  function play(fn){try{init();fn(ctx);}catch(e){}}
+
+  // Utility: quick oscillator note
+  function osc(ctx,type,freq,start,dur,vol=0.15,detune=0){
+    const o=ctx.createOscillator(),g=ctx.createGain();
+    o.type=type;o.frequency.value=freq;o.detune.value=detune;
+    g.gain.setValueAtTime(vol,start);
+    g.gain.exponentialRampToValueAtTime(0.001,start+dur);
+    o.connect(g);g.connect(ctx.destination);
+    o.start(start);o.stop(start+dur);
+  }
+
+  // Utility: noise burst
+  function noise(ctx,start,dur,vol=0.08){
+    const buf=ctx.createBuffer(1,ctx.sampleRate*dur,ctx.sampleRate);
+    const d=buf.getChannelData(0);
+    for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1);
+    const s=ctx.createBufferSource(),g=ctx.createGain();
+    s.buffer=buf;g.gain.setValueAtTime(vol,start);
+    g.gain.exponentialRampToValueAtTime(0.001,start+dur);
+    s.connect(g);g.connect(ctx.destination);
+    s.start(start);s.stop(start+dur);
+  }
+
+  return {
+    // Tile select — low metallic tap
+    tick:()=>play(c=>{const t=c.currentTime;osc(c,'triangle',180,t,.04,.05);noise(c,t,.02,.03);}),
+    // Path extend — chain drag
+    pathAdd:()=>play(c=>{const t=c.currentTime;noise(c,t,.03,.04);osc(c,'sawtooth',400+Math.random()*200,t,.04,.03);}),
+    // Match confirm — heavy lock click
+    match:()=>play(c=>{const t=c.currentTime;noise(c,t,.06,.1);osc(c,'square',150,t,.06,.08);osc(c,'triangle',300,t+.04,.08,.06);}),
+    // Sword hit — blade slash impact
+    swordHit:()=>play(c=>{const t=c.currentTime;noise(c,t,.15,.22);osc(c,'sawtooth',100,t,.2,.15);osc(c,'sawtooth',70,t+.05,.18,.12);osc(c,'square',250,t,.04,.08);}),
+    // Kill — bone crack + low thud
+    kill:()=>play(c=>{const t=c.currentTime;noise(c,t,.12,.2);osc(c,'sawtooth',80,t,.15,.15);osc(c,'square',160,t+.02,.06,.1);osc(c,'triangle',60,t+.08,.2,.1);}),
+    // Shield — heavy metal clang
+    shield:()=>play(c=>{const t=c.currentTime;noise(c,t,.04,.08);osc(c,'triangle',220,t,.12,.1);osc(c,'triangle',180,t+.04,.15,.08);osc(c,'sawtooth',110,t+.08,.1,.05);}),
+    // Potion heal — dark bubbling
+    potion:()=>play(c=>{const t=c.currentTime;osc(c,'sine',180,t,.2,.08);osc(c,'sine',220,t+.08,.15,.08);osc(c,'sine',160,t+.16,.2,.06);noise(c,t,.08,.04);}),
+    // Coin collect — heavy clink
+    coin:()=>play(c=>{const t=c.currentTime;osc(c,'triangle',800,t,.06,.08);osc(c,'triangle',600,t+.04,.08,.06);osc(c,'sawtooth',200,t+.08,.06,.04);}),
+    // Enemy attack — dark rumble impact
+    hurt:()=>play(c=>{const t=c.currentTime;noise(c,t,.25,.25);osc(c,'sawtooth',60,t,.3,.2);osc(c,'sawtooth',40,t+.1,.25,.15);osc(c,'square',100,t,.08,.1);}),
+    // Blocked — shield deflect
+    block:()=>play(c=>{const t=c.currentTime;noise(c,t,.08,.1);osc(c,'triangle',250,t,.06,.1);osc(c,'sawtooth',150,t+.03,.1,.08);osc(c,'triangle',180,t+.06,.08,.05);}),
+    // Level up — dark church bell
+    levelUp:()=>play(c=>{const t=c.currentTime;osc(c,'sine',196,t,.4,.12);osc(c,'sine',262,t+.3,.4,.1);osc(c,'triangle',131,t,.6,.08);osc(c,'sine',392,t+.6,.5,.08);}),
+    // Upgrade — anvil strike
+    upgrade:()=>play(c=>{const t=c.currentTime;noise(c,t,.06,.12);osc(c,'triangle',300,t,.1,.1);osc(c,'sawtooth',200,t+.06,.12,.08);osc(c,'triangle',400,t+.12,.08,.06);}),
+    // Shop — chest creak open
+    shop:()=>play(c=>{const t=c.currentTime;noise(c,t,.1,.08);osc(c,'sawtooth',120,t,.15,.06);osc(c,'sawtooth',180,t+.1,.12,.06);noise(c,t+.15,.08,.05);}),
+    // Game over — death toll
+    gameOver:()=>play(c=>{const t=c.currentTime;osc(c,'sawtooth',100,t,.6,.18);osc(c,'sawtooth',75,t+.4,.6,.15);osc(c,'sawtooth',50,t+.8,.8,.12);osc(c,'sine',60,t+1,.6,.08);noise(c,t+1.2,.4,.06);}),
+    // Skill activate — dark pulse
+    skill:()=>play(c=>{const t=c.currentTime;osc(c,'sawtooth',150,t,.08,.12);noise(c,t,.05,.08);osc(c,'square',300,t+.04,.06,.08);osc(c,'sawtooth',100,t+.08,.12,.06);}),
+    // Button click — stone tap
+    click:()=>play(c=>{const t=c.currentTime;osc(c,'triangle',250,t,.03,.05);noise(c,t,.02,.04);}),
+    // Game start — war horn
+    start:()=>play(c=>{const t=c.currentTime;osc(c,'sawtooth',130,t,.5,.12);osc(c,'sawtooth',131,t,.5,.1,8);osc(c,'sawtooth',196,t+.4,.5,.1);osc(c,'sawtooth',197,t+.4,.5,.08,8);osc(c,'triangle',65,t,.8,.06);}),
+    // Tile drop — thud
+    drop:()=>play(c=>{const t=c.currentTime;osc(c,'sine',80+Math.random()*40,t,.06,.04);noise(c,t,.02,.02);}),
+    // Cancel — low buzz
+    cancel:()=>play(c=>{const t=c.currentTime;osc(c,'square',100,t,.12,.08);osc(c,'sawtooth',80,t+.06,.1,.06);}),
+    // Heavy kill — skull shatter
+    heavyKill:()=>play(c=>{const t=c.currentTime;noise(c,t,.2,.3);osc(c,'sawtooth',60,t,.15,.2);osc(c,'sawtooth',45,t+.04,.2,.18);osc(c,'square',120,t+.08,.08,.12);noise(c,t+.12,.15,.15);osc(c,'triangle',40,t+.2,.3,.1);}),
+    // Combo — dark power surge
+    combo:()=>play(c=>{const t=c.currentTime;osc(c,'sawtooth',130,t,.1,.12);osc(c,'sawtooth',195,t+.08,.1,.1);osc(c,'sawtooth',260,t+.16,.12,.1);noise(c,t+.2,.08,.08);osc(c,'square',390,t+.24,.15,.08);}),
+    // Life steal — dark drain
+    lifeSteal:()=>play(c=>{const t=c.currentTime;osc(c,'sawtooth',200,t,.15,.06);osc(c,'sawtooth',150,t+.06,.15,.06);osc(c,'sine',100,t+.12,.2,.04);}),
+    // Poison tick — acid drip
+    poisonTick:()=>play(c=>{const t=c.currentTime;osc(c,'square',80,t,.12,.05);noise(c,t+.05,.06,.04);osc(c,'sawtooth',120,t+.08,.1,.03);}),
+    // Burn tick
+    burnTick:()=>play(c=>{const t=c.currentTime;noise(c,t,.1,.08);osc(c,'sawtooth',250,t,.08,.06);osc(c,'sawtooth',300,t+.04,.06,.04);}),
+  };
+})();
+
+// ================================================================
+//  BGM — Dark Dungeon Ambient Loop (Web Audio API synthesized)
+// ================================================================
+const BGM=(()=>{
+  let ctx,master,playing=false;
+  const nodes=[];
+
+  function getCtx(){
+    if(!ctx)ctx=new(window.AudioContext||window.webkitAudioContext)();
+    if(ctx.state==='suspended')ctx.resume();
+    return ctx;
+  }
+
+  // Dark drone: low frequency oscillators with slow LFO modulation
+  function createDrone(c,freq,vol=0.04){
+    const o=c.createOscillator();
+    const g=c.createGain();
+    const lfo=c.createOscillator();
+    const lfoG=c.createGain();
+    o.type='sawtooth';o.frequency.value=freq;
+    // Slow wobble
+    lfo.type='sine';lfo.frequency.value=0.08+Math.random()*0.05;
+    lfoG.gain.value=freq*0.015;
+    lfo.connect(lfoG);lfoG.connect(o.frequency);
+    // Filter for warmth
+    const f=c.createBiquadFilter();
+    f.type='lowpass';f.frequency.value=200+Math.random()*80;f.Q.value=2;
+    g.gain.value=vol;
+    o.connect(f);f.connect(g);g.connect(master);
+    o.start();lfo.start();
+    nodes.push(o,lfo);
+    return{o,lfo,g};
+  }
+
+  // Eerie pad: filtered noise with slow volume sweep
+  function createPad(c,freq,vol=0.012){
+    const o=c.createOscillator();
+    const g=c.createGain();
+    const lfo=c.createOscillator();
+    const lfoG=c.createGain();
+    o.type='sine';o.frequency.value=freq;
+    lfo.type='sine';lfo.frequency.value=0.03+Math.random()*0.02;
+    lfoG.gain.value=vol*0.7;
+    lfo.connect(lfoG);lfoG.connect(g.gain);
+    g.gain.value=vol;
+    const f=c.createBiquadFilter();
+    f.type='lowpass';f.frequency.value=400;f.Q.value=1;
+    o.connect(f);f.connect(g);g.connect(master);
+    o.start();lfo.start();
+    nodes.push(o,lfo);
+  }
+
+  // Cave drip: randomized periodic water drop sounds
+  function scheduleDrips(c){
+    if(!playing)return;
+    const t=c.currentTime;
+    const delay=2+Math.random()*5;
+    const freq=1800+Math.random()*1200;
+    const o=c.createOscillator();
+    const g=c.createGain();
+    o.type='sine';o.frequency.value=freq;
+    o.frequency.exponentialRampToValueAtTime(freq*0.4,t+delay+0.12);
+    g.gain.setValueAtTime(0,t+delay);
+    g.gain.linearRampToValueAtTime(0.025+Math.random()*0.015,t+delay+0.01);
+    g.gain.exponentialRampToValueAtTime(0.001,t+delay+0.25);
+    // Reverb-like tail via delay
+    const dl=c.createDelay();dl.delayTime.value=0.15+Math.random()*0.1;
+    const dlG=c.createGain();dlG.gain.value=0.015;
+    o.connect(g);g.connect(master);
+    g.connect(dl);dl.connect(dlG);dlG.connect(master);
+    o.start(t+delay);o.stop(t+delay+0.4);
+    // Schedule next drip
+    setTimeout(()=>scheduleDrips(c),(delay+0.5)*1000);
+  }
+
+  // Wind/breath: filtered noise loop
+  function createWind(c,vol=0.018){
+    const bufSize=c.sampleRate*2;
+    const buf=c.createBuffer(1,bufSize,c.sampleRate);
+    const d=buf.getChannelData(0);
+    for(let i=0;i<bufSize;i++)d[i]=(Math.random()*2-1);
+    const s=c.createBufferSource();
+    s.buffer=buf;s.loop=true;
+    const f=c.createBiquadFilter();
+    f.type='bandpass';f.frequency.value=150;f.Q.value=0.5;
+    // Slow volume modulation for breathing effect
+    const lfo=c.createOscillator();
+    const lfoG=c.createGain();
+    lfo.type='sine';lfo.frequency.value=0.06;
+    lfoG.gain.value=vol*0.6;
+    const g=c.createGain();g.gain.value=vol;
+    lfo.connect(lfoG);lfoG.connect(g.gain);
+    s.connect(f);f.connect(g);g.connect(master);
+    s.start();lfo.start();
+    nodes.push(s,lfo);
+  }
+
+  // Distant rumble: very low sub-bass
+  function createRumble(c,vol=0.025){
+    const o=c.createOscillator();
+    const g=c.createGain();
+    const lfo=c.createOscillator();
+    const lfoG=c.createGain();
+    o.type='sine';o.frequency.value=32;
+    lfo.type='sine';lfo.frequency.value=0.04;
+    lfoG.gain.value=vol*0.5;
+    lfo.connect(lfoG);lfoG.connect(g.gain);
+    g.gain.value=vol;
+    o.connect(g);g.connect(master);
+    o.start();lfo.start();
+    nodes.push(o,lfo);
+  }
+
+  // Metallic chain clinks: sparse random
+  function scheduleChains(c){
+    if(!playing)return;
+    const t=c.currentTime;
+    const delay=4+Math.random()*8;
+    const freq=3000+Math.random()*2000;
+    const o=c.createOscillator();
+    const g=c.createGain();
+    o.type='square';o.frequency.value=freq;
+    o.frequency.exponentialRampToValueAtTime(freq*0.3,t+delay+0.06);
+    g.gain.setValueAtTime(0,t+delay);
+    g.gain.linearRampToValueAtTime(0.008+Math.random()*0.006,t+delay+0.005);
+    g.gain.exponentialRampToValueAtTime(0.001,t+delay+0.1);
+    o.connect(g);g.connect(master);
+    o.start(t+delay);o.stop(t+delay+0.15);
+    setTimeout(()=>scheduleChains(c),(delay+0.2)*1000);
+  }
+
+  return{
+    start(){
+      if(playing)return;
+      const c=getCtx();playing=true;
+      master=c.createGain();master.gain.value=bgmVol;master.connect(c.destination);BGM._master=master;
+      // Layers
+      createDrone(c,55,0.035);      // Deep bass drone A
+      createDrone(c,82.5,0.02);     // Fifth above, quieter
+      createDrone(c,110,0.012);     // Octave harmonic
+      createPad(c,220,0.01);        // Eerie mid pad
+      createPad(c,330,0.006);       // Haunting fifth
+      createPad(c,165,0.008);       // Dark minor third
+      createWind(c,0.015);          // Cave wind
+      createRumble(c,0.02);         // Sub rumble
+      scheduleDrips(c);             // Water drips
+      scheduleChains(c);            // Distant chains
+      // Fade in
+      master.gain.setValueAtTime(0,c.currentTime);
+      master.gain.linearRampToValueAtTime(0.7,c.currentTime+3);
+    },
+    stop(){
+      if(!playing||!ctx)return;playing=false;
+      // Fade out
+      master.gain.linearRampToValueAtTime(0,ctx.currentTime+1.5);
+      setTimeout(()=>{
+        nodes.forEach(n=>{try{n.stop();}catch(e){}});
+        nodes.length=0;
+        master=null;
+      },2000);
+    },
+    toggle(){if(playing)this.stop();else this.start();return playing;},
+    _master:null,
+    isPlaying(){return playing;}
+  };
+})();
+let G={},board=[],drag=false,path=[],pty=null,busy=false,selCls='warrior';
+let bestScore=0,bestInitials='---';
+try{bestScore=parseInt(localStorage.getItem('dr_best'))||0;bestInitials=localStorage.getItem('dr_ini')||'---';}catch(e){}
+
+function calcScore(){return G.kills*10+G.totGold+G.level*50+G.turn*2;}
+function updateScore(){
+  const s=calcScore();
+  document.getElementById('v-score').textContent=s;
+  document.getElementById('v-best').textContent=bestScore;
+  document.getElementById('v-ini').textContent=bestInitials;
+}
+
+// ================================================================
+//  CLASS SELECT UI
+// ================================================================
+// Class fixed to warrior (class select removed)
+
+
+// ================================================================
+//  SETTINGS
+// ================================================================
+let sfxVol=0.7,bgmVol=0.7;
+function showSettings(){
+  const m=document.getElementById('m-set');
+  m.classList.add('show');
+  // Update active lang btn
+  document.querySelectorAll('.set-lang-btn').forEach(b=>{
+    b.classList.toggle('active',b.textContent==='한국어'&&curLang==='ko'||b.textContent==='EN'&&curLang==='en'||b.textContent==='ES'&&curLang==='es');
+  });
+  // Update labels
+  document.getElementById('set-h2').textContent=T('setTitle');
+  document.getElementById('set-l-lang').textContent=T('setLang');
+  document.getElementById('set-l-bgm').textContent=T('setBgm');
+  document.getElementById('set-l-sfx').textContent=T('setSfx');
+}
+function closeSettings(){document.getElementById('m-set').classList.remove('show');}
+function setLang(l){
+  curLang=l;
+  try{localStorage.setItem('dr_lang',l);}catch(e){}
+  // Update static UI labels
+  const chips=document.querySelectorAll('.st-label');
+  if(chips.length>=4){chips[0].textContent=T('str');chips[1].textContent=T('dex');chips[2].textContent=T('vit');chips[3].textContent=T('lck');}
+  // Update settings UI
+  document.querySelectorAll('.set-lang-btn').forEach(b=>{
+    b.classList.toggle('active',b.textContent==='한국어'&&l==='ko'||b.textContent==='EN'&&l==='en'||b.textContent==='ES'&&l==='es');
+  });
+  document.getElementById('set-h2').textContent=T('setTitle');
+  document.getElementById('set-l-lang').textContent=T('setLang');
+  document.getElementById('set-l-bgm').textContent=T('setBgm');
+  document.getElementById('set-l-sfx').textContent=T('setSfx');
+  SFX.click();
+}
+function setBgmVol(v){bgmVol=v/100;try{if(BGM._master)BGM._master.gain.value=bgmVol;}catch(e){}}
+function setSfxVol(v){sfxVol=v/100;}
+
+
+let _titleSfxDone=false;
+function titleSfx(){
+  if(_titleSfxDone)return;
+  _titleSfxDone=true;
+  try{
+    const c=new(window.AudioContext||window.webkitAudioContext)();
+    if(c.state==='suspended')c.resume();
+    const t=c.currentTime;
+    // Metallic sword unsheathe — dark heavy
+    const buf=c.createBuffer(1,c.sampleRate*0.5,c.sampleRate);
+    const d=buf.getChannelData(0);
+    for(let i=0;i<d.length;i++){d[i]=(Math.random()*2-1)*Math.exp(-i/(c.sampleRate*0.25));}
+    const s=c.createBufferSource(),g=c.createGain(),f=c.createBiquadFilter();
+    s.buffer=buf;f.type='bandpass';f.frequency.value=2500;f.Q.value=1.5;
+    g.gain.setValueAtTime(0.2,t);g.gain.exponentialRampToValueAtTime(0.001,t+0.6);
+    s.connect(f);f.connect(g);g.connect(c.destination);s.start(t);
+    // Low rumble
+    const o=c.createOscillator(),g2=c.createGain();
+    o.type='sawtooth';o.frequency.setValueAtTime(80,t);o.frequency.exponentialRampToValueAtTime(40,t+0.5);
+    g2.gain.setValueAtTime(0.1,t);g2.gain.exponentialRampToValueAtTime(0.001,t+0.6);
+    o.connect(g2);g2.connect(c.destination);o.start(t);o.stop(t+0.6);
+    // Metal ring
+    const o2=c.createOscillator(),g3=c.createGain();
+    o2.type='triangle';o2.frequency.setValueAtTime(1800,t);o2.frequency.exponentialRampToValueAtTime(600,t+0.4);
+    g3.gain.setValueAtTime(0.04,t);g3.gain.exponentialRampToValueAtTime(0.001,t+0.5);
+    o2.connect(g3);g3.connect(c.destination);o2.start(t);o2.stop(t+0.5);
+  }catch(e){}
+}
+
+function pickLang(l){
+  curLang=l;
+  try{localStorage.setItem('dr_lang',l);}catch(e){}
+  document.querySelectorAll('.start-lang-btn').forEach(b=>{
+    b.classList.toggle('active',
+      (b.textContent==='한국어'&&l==='ko')||
+      (b.textContent==='English'&&l==='en')||
+      (b.textContent==='Español'&&l==='es'));
+  });
+  // Show START button
+  const btn=document.getElementById('start-btn');
+  btn.style.display='block';
+  btn.style.opacity='0';
+  btn.style.animation='startBtnReveal .4s ease-out forwards';
+  SFX.click();
+}
+// Auto-select if language was previously saved
+(function(){
+  try{
+    const saved=localStorage.getItem('dr_lang');
+    if(saved){
+      setTimeout(()=>pickLang(saved),2200);
+    }
+  }catch(e){}
+})();
+
+// ================================================================
+//  GAME INIT
+// ================================================================
+function go(diff){
+  const d=DIFF[diff],cls=CLASSES.find(c=>c.id===selCls),m=cls.mods;
+  G={
+    diff,cls:cls.id,clsMods:m,turn:0,kills:0,totGold:0,comboCount:0,maxCombo:0,
+    hp:d.hp+(m.maxHpBonus||0),maxHp:d.hp+(m.maxHpBonus||0),
+    armor:0,maxArmor:d.mAr+(m.armorBonus||0),armDur:.5,
+    str:1,dex:1,vit:1,lck:1,
+    wDmg:d.wD+(m.baseDmgBonus||0),aDef:d.aD,
+    level:1,xp:0,xpN:18,
+    gold:0,goldN:100,
+    upgPt:0,upgN:20,
+    skills:[],maxSkills:4,
+    // passives from equipment
+    eqQuicken:false,eqLifeSteal:0,eqRegen:0,eqSpikes:0,eqBlunt:0,eqPierce:0,
+    wTier:0,aTier:0,wName:WNAMES()[0],aName:ANAMES()[0],
+    frozen:false,poisoned:0,
+    // special skull tracking
+    skWeak:0, // skull weaken from upgrades
+    // === Diablo-style mechanics ===
+    vampiric:.10,      // base life steal: 10% of combat damage → HP
+    thornsDmg:0,       // thorns: reflect dmg to all skulls on shield collect
+    poisonStacks:0,    // poison DoT stacks (each = 1 dmg/turn, decays -1/turn)
+    burnStacks:0,      // burn DoT stacks (each = 1 dmg + armor erosion, decays -1/turn)
+    curseStacks:0,     // curse: reduces healing effectiveness
+  };
+  rc();
+  board=[];
+  for(let r=0;r<R;r++){board[r]=[];for(let c=0;c<C;c++)board[r][c]=mt(r,c);}
+  SFX.start();BGM.start();
+  
+  document.getElementById('scr-start').classList.add('hide');
+  document.getElementById('root').classList.add('active');
+  renderFull();rsk();ui();
+  // Apply language to stat labels
+  document.getElementById('sl-str').textContent=T('str');
+  document.getElementById('sl-dex').textContent=T('dex');
+  document.getElementById('sl-vit').textContent=T('vit');
+  document.getElementById('sl-lck').textContent=T('lck');
+  // Tutorial on first game of session
+  showTutorial();
+}
+
+function showTutorial(){
+  busy=true;
+  const ov=document.createElement('div');ov.id='tut-overlay';
+  ov.innerHTML=`
+    <div class="tut-box">
+      <div class="tut-step">
+        <div class="tut-icon"><svg width="28" height="28" viewBox="0 0 32 32"><g transform="rotate(-45 16 16)"><path d="M16 4L14 8V18H18V8L16 4Z" fill="#bbb" stroke="#888" stroke-width=".5"/><line x1="10" y1="18" x2="22" y2="18" stroke="#ddd" stroke-width="2.5" stroke-linecap="round"/><rect x="14.5" y="20" width="3" height="5" rx=".5" fill="#666"/></g></svg>
+        <span>+</span>
+        <svg width="28" height="28" viewBox="0 0 32 32"><path d="M7 15.5C7 8 10.5 2.5 16 2.5C21.5 2.5 25 8 25 15.5C25 19.5 23.5 22 21.5 23.5V26C21.5 27 20.5 28 19.5 28H12.5C11.5 28 10.5 27 10.5 26V23.5C8.5 22 7 19.5 7 15.5Z" fill="#999" stroke="#666" stroke-width="1"/><ellipse cx="12" cy="14.5" rx="2.5" ry="3" fill="#300" stroke="#555" stroke-width=".8"/><ellipse cx="20" cy="14.5" rx="2.5" ry="3" fill="#300" stroke="#555" stroke-width=".8"/></svg></div>
+        <div class="tut-text" id="tut-t1"></div>
+        <div class="tut-sub" id="tut-t2"></div>
+      </div>
+      <div class="tut-hand">
+        <svg width="40" height="50" viewBox="0 0 40 50"><path d="M20 45C20 45 8 38 8 28V15C8 12 10 10 12 10C14 10 16 12 16 14V22H18V8C18 5 20 3 22 3C24 3 26 5 26 8V22H28V12C28 9 30 7 32 7C34 7 36 9 36 12V30C36 38 28 45 20 45Z" fill="none" stroke="#555" stroke-width="1.5"/><animateTransform attributeName="transform" type="translate" values="0 0;15 8;15 8;0 0" dur="2.5s" repeatCount="indefinite"/></svg>
+      </div>
+      <div class="tut-ok" onclick="closeTutorial()">OK</div>
+    </div>
+  `;
+  document.body.appendChild(ov);
+  document.getElementById('tut-t1').textContent=T('tutText');
+  document.getElementById('tut-t2').textContent=T('tutSub');
+}
+function closeTutorial(){
+  const el=document.getElementById('tut-overlay');
+  if(el){el.style.opacity='0';setTimeout(()=>{try{el.remove();}catch(e){}},300);}
+  setTimeout(()=>tutDemo(),600);
+}
+async function tutDemo(){
+  await sl(200); // wait for layout to settle
+  try{
+    const found=findDemoPath();
+    if(!found||found.length<3){busy=false;return;}
+    const svg=document.getElementById('lsvg');
+    if(!svg){busy=false;return;}
+    const sr=svg.getBoundingClientRect();
+    if(sr.width===0){busy=false;return;}
+    for(let i=0;i<found.length;i++){
+      const p=found[i];
+      const e=tEl(p.r,p.c);
+      if(e)e.classList.add(i===found.length-1?'sel':'inp');
+      if(i>=1){
+        let pts='';
+        for(let j=0;j<=i;j++){
+          const e2=tEl(found[j].r,found[j].c);
+          if(!e2)continue;
+          const r2=e2.getBoundingClientRect();
+          pts+=`${r2.left+r2.width/2-sr.left},${r2.top+r2.height/2-sr.top} `;
+        }
+        svg.innerHTML='';
+        const pl=document.createElementNS('http://www.w3.org/2000/svg','polyline');
+        pl.setAttribute('points',pts.trim());svg.appendChild(pl);
+      }
+      await sl(400);
+    }
+    await sl(1500);
+    document.querySelectorAll('.tile').forEach(t=>{t.classList.remove('sel','inp');});
+    svg.innerHTML='';
+  }catch(e){console.log('tutDemo err',e);}
+  busy=false;
+}
+function findDemoPath(){
+  // Find sword+skull adjacent combat path (sword-sword-skull or sword-skull-sword etc)
+  const isCombat=t=>t==='sword'||t==='skull';
+  // Scan all directions for 3 adjacent combat tiles with at least 1 sword and 1 skull
+  const dirs=[[0,1],[1,0],[1,1],[1,-1]];
+  for(const[dr,dc]of dirs){
+    for(let r=0;r<R;r++){for(let c=0;c<C;c++){
+      const cells=[];
+      for(let k=0;k<3;k++){
+        const nr=r+dr*k,nc=c+dc*k;
+        if(nr<0||nr>=R||nc<0||nc>=C)break;
+        if(!isCombat(board[nr][nc].type))break;
+        cells.push({r:nr,c:nc});
+      }
+      if(cells.length>=3){
+        const types=cells.map(p=>board[p.r][p.c].type);
+        if(types.includes('sword')&&types.includes('skull'))return cells;
+      }
+    }}
+  }
+  // Fallback: find any sword adjacent to skull, build path manually
+  for(let r=0;r<R;r++){for(let c=0;c<C;c++){
+    if(board[r][c].type!=='sword')continue;
+    for(const[dr,dc]of[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]]){
+      const nr=r+dr,nc=c+dc;
+      if(nr<0||nr>=R||nc<0||nc>=C)continue;
+      if(board[nr][nc].type!=='skull')continue;
+      // Found sword+skull pair, find one more sword or skull adjacent
+      for(const[dr2,dc2]of[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]]){
+        const nr2=nr+dr2,nc2=nc+dc2;
+        if(nr2<0||nr2>=R||nc2<0||nc2>=C)continue;
+        if(nr2===r&&nc2===c)continue;
+        if(isCombat(board[nr2][nc2].type))return[{r,c},{r:nr,c:nc},{r:nr2,c:nc2}];
+      }
+    }
+  }}
+  return null;
+}
+
+function rc(){
+  const m=G.clsMods;
+  G.bXp=.05*G.str;// bonus xp chance per extra tile
+  G.bSh=Math.max(0,.05*G.dex-(m.shieldPenalty||0));
+  G.bPo=.05*G.vit;
+  G.bCo=.05*G.lck;
+  G.defPS=2+Math.floor(G.dex*.5);// defense per shield
+  G.hpPP=7+G.lck;// hp per potion
+}
+
+// Make tile
+function mt(r,c){
+  const d=DIFF[G.diff],m=G.clsMods;
+  const sr=Math.min(.45,d.sr+G.turn*d.sg);
+  let type;
+  if(Math.random()<sr)type='skull';
+  else{const o=['sword','shield','potion','coin'];type=o[Math.floor(Math.random()*4)];}
+  const t={type,r,c,_id:++uid};
+
+  // Mage: mana potions
+  if(type==='potion'&&m.manaChance&&Math.random()<m.manaChance)t.mana=true;
+
+  // Ranger: arrows
+  if(type==='sword'&&m.arrowChance&&Math.random()<m.arrowChance)t.arrow=true;
+
+  if(type==='skull'){
+    const pg=Math.floor(G.turn/7);
+    t.hp=Math.max(1,d.sH+pg-G.skWeak+(m.skHpBonus||0));
+    t.mhp=t.hp;
+    t.atk=d.sA+Math.floor(pg/3);
+    t.def=d.sD+Math.floor(pg/4);
+    t.wait=1; // wait 1 turn after spawn before attacking
+
+    // Special skulls
+    const specTurn=12-(m.specialEarly||0);
+    const specRate=.09*(m.specialRate!==undefined?m.specialRate:1);
+    if(G.turn>specTurn&&Math.random()<specRate){
+      const types=['poison','thief','freeze'];
+      t.spec=types[Math.floor(Math.random()*3)];
+      t.hp+=2;t.mhp=t.hp;t.atk+=1;t.def+=1;
+      if(m.skSpecialHpMult)t.hp=Math.ceil(t.hp*m.skSpecialHpMult);t.mhp=t.hp;
+    }
+    // Boss
+    if(G.turn>25&&Math.random()<.04){
+      t.boss=true;t.hp+=10;t.mhp=t.hp;t.atk+=3;t.def+=3;
+    }
+  }
+  return t;
+}
+
+// ================================================================
+//  RENDER
+// ================================================================
+function cellEl(r,c){return document.getElementById('board').children[r*C+c];}
+
+function mkEl(t,anim){
+  const d=document.createElement('div');
+  let cls='tile tile-'+t.type;
+  if(t.spec)cls+=' sk-'+t.spec;
+  if(t.boss)cls+=' sk-boss';
+  if(anim)cls+=' '+anim;
+  d.className=cls;
+  d.dataset.r=t.r;d.dataset.c=t.c;d.dataset.id=t._id;
+
+  // Icon — SVG based
+  let iconSvg;
+  if(t.mana)iconSvg=SVG_ICONS.mana();
+  else if(t.arrow)iconSvg=SVG_ICONS.arrow();
+  else if(t.type==='skull'){
+    // Calculate threat level based on total power
+    const power=t.atk+t.def+t.hp;
+    let threat=0;
+    if(power>=12)threat=3;
+    else if(power>=8)threat=2;
+    else if(power>=4)threat=1;
+    else threat=0;
+    iconSvg=SVG_ICONS.skull(undefined,threat,t.spec||null,!!t.boss);
+  }
+  else iconSvg=SVG_ICONS[t.type]();
+  let h=`<span class="t-icon">${iconSvg}</span>`;
+
+  if(t.type==='skull'){
+    h+=`<div class="sk-st"><span class="sk-a">${t.atk}</span><span class="sk-d">${t.def}</span><span class="sk-h">${t.hp}</span></div>`;
+    
+    if(t.spec)h+=`<span class="sk-type">${t.spec==='poison'?SVG_ICONS.poison_mark():t.spec==='thief'?SVG_ICONS.thief_mark():SVG_ICONS.freeze_mark()}</span>`;
+    if(t.boss)h+=`<span class="sk-type">${SVG_ICONS.boss_mark()}</span>`;
+  }
+  if(t.type==='skull'&&t.wait>0)d.style.opacity='.5';
+  d.innerHTML=h;
+  d.addEventListener('mousedown',e=>{e.preventDefault();onD(t.r,t.c);});
+  return d;
+}
+
+function renderFull(){
+  const el=document.getElementById('board');
+  el.innerHTML='';
+  for(let r=0;r<R;r++)for(let c=0;c<C;c++){
+    const cell=document.createElement('div');
+    cell.style.position='relative';
+    if(board[r][c])cell.appendChild(mkEl(board[r][c],'a-spawn'));
+    el.appendChild(cell);
+  }
+}
+
+function tEl(r,c){const cell=cellEl(r,c);return cell?cell.querySelector('.tile'):null;}
+
+function refreshCell(r,c){
+  const cell=cellEl(r,c);if(!cell)return;
+  cell.innerHTML='';
+  if(board[r][c])cell.appendChild(mkEl(board[r][c],''));
+}
+
+async function animRem(keys,animClass='a-pop'){
+  for(const k of keys){const[r,c]=k.split(',').map(Number);const e=tEl(r,c);if(e){e.classList.remove('a-pop','a-kill','a-slash');e.classList.add(animClass);}}
+  await sl(300);
+  for(const k of keys){const[r,c]=k.split(',').map(Number);const cell=cellEl(r,c);if(cell)cell.innerHTML='';}
+}
+
+// Soft screen glow effect
+function screenFx(color='rgba(255,50,50,.08)',dur=300){
+  const el=document.getElementById('board-frame');
+  const ov=document.createElement('div');
+  ov.style.cssText=`position:absolute;inset:0;background:${color};pointer-events:none;z-index:50;opacity:0;transition:opacity ${Math.floor(dur*.3)}ms ease-in;border-radius:2px;`;
+  el.appendChild(ov);
+  requestAnimationFrame(()=>{ov.style.opacity='1';setTimeout(()=>{ov.style.transition=`opacity ${Math.floor(dur*.7)}ms ease-out`;ov.style.opacity='0';setTimeout(()=>ov.remove(),dur);},dur*.3);});
+}
+
+// Haptic-like vibration (mobile)
+function haptic(ms=30){try{navigator.vibrate?.(ms);}catch(e){}}
+
+// Animate hit on specific tiles (slash/damage visual)
+function animHitTiles(positions,cls='a-slash'){
+  for(const p of positions){const e=tEl(p.r,p.c);if(e){e.classList.remove(cls);void e.offsetWidth;e.classList.add(cls);}}
+}
+
+// Board frame type-specific pulse
+function framePulse(cls,dur=500){
+  const f=document.getElementById('board-frame');
+  f.classList.add(cls);setTimeout(()=>f.classList.remove(cls),dur);
+}
+
+async function collapse(newIds){
+  newIds=newIds||new Set();
+  const falls=[];
+  for(let c=0;c<C;c++){
+    let w=R-1;
+    for(let r=R-1;r>=0;r--){
+      if(board[r][c]){
+        if(r!==w){falls.push({t:board[r][c],fr:r,to:w,c});board[w][c]=board[r][c];board[w][c].r=w;board[r][c]=null;}
+        w--;
+      }
+    }
+    for(let r=w;r>=0;r--){
+      const nt=mt(r,c);board[r][c]=nt;newIds.add(nt._id);
+      falls.push({t:nt,fr:r-(w+1)-1,to:r,c,isNew:true});
+    }
+  }
+  // Rebuild DOM
+  for(let r=0;r<R;r++)for(let c=0;c<C;c++){
+    const cell=cellEl(r,c);cell.innerHTML='';
+    const t=board[r][c];if(!t)continue;
+    const isNew=newIds.has(t._id);
+    const fi=falls.find(f=>f.t===t);
+    const fell=fi&&fi.fr!==fi.to;
+    let anim='';
+    if(fell||isNew){
+      anim='a-fall';
+      const el2=mkEl(t,anim);
+      const dist=fi?Math.abs(fi.to-fi.fr):1;
+      el2.style.setProperty('--fd',dist);
+      cell.appendChild(el2);
+    }else{
+      cell.appendChild(mkEl(t,''));
+    }
+  }
+  SFX.drop();await sl(300);
+}
+
+function rsk(){
+  const bar=document.getElementById('skill-bar');bar.innerHTML='';
+  G.skills.forEach((s,i)=>{
+    const rdy=s.cd<=0;
+    const b=document.createElement('div');
+    b.className='sk-btn'+(rdy?' rdy':' cd');
+    b.innerHTML=`<span>${s.icon}</span>${!rdy?`<span class="cdn">${s.cd}</span>`:''}<span class="sn">${s.name}</span>`;
+    b.title=s.desc;
+    if(rdy)b.onclick=()=>useSk(i);
+    bar.appendChild(b);
+  });
+}
+
+function ui(){
+  const pct=(a,b)=>Math.min(100,(a/b)*100)+'%';
+  document.getElementById('lvl-badge').textContent=G.level;
+  document.getElementById('t-hp').textContent=G.hp+'/'+G.maxHp;
+  const hpEl=document.getElementById('b-hp');
+  hpEl.style.width=pct(G.hp,G.maxHp);
+  hpEl.classList.toggle('critical',G.hp<=G.maxHp*.25);
+  document.getElementById('t-arm').textContent=G.armor+'/'+G.maxArmor;
+  document.getElementById('b-arm').style.width=pct(G.armor,G.maxArmor);
+  document.getElementById('b-xp').style.width=pct(G.xp,G.xpN);
+  document.getElementById('b-up').style.width=pct(G.upgPt,G.upgN);
+  document.getElementById('b-gd').style.width=pct(G.gold,G.goldN);
+  document.getElementById('v-tn').textContent=G.turn;
+  // === Top HUD: equipment + stats ===
+  document.getElementById('eq-wpn-name').textContent=WNAMES()[G.wTier];
+  document.getElementById('eq-wpn-val').textContent=T('atk')+' '+G.wDmg;
+  document.getElementById('eq-arm-name').textContent=ANAMES()[G.aTier];
+  document.getElementById('eq-arm-val').textContent=T('def')+' '+G.aDef;
+  document.getElementById('s-str').textContent=G.str;
+  document.getElementById('s-dex').textContent=G.dex;
+  document.getElementById('s-vit').textContent=G.vit;
+  document.getElementById('s-lck').textContent=G.lck;
+  // === Score ===
+  updateScore();
+  // === Status effects ===
+  const se=document.getElementById('status-fx');
+  let sfx='';
+  if(G.poisonStacks>0)sfx+=`<span class="sfx-chip" style="color:#44cc22;border-color:#335522;"><svg width="10" height="10" viewBox="0 0 12 12"><circle cx="6" cy="6" r="5" fill="none" stroke="#44cc22" stroke-width="1.5"/><circle cx="4.5" cy="5.5" r="1" fill="#44cc22"/><circle cx="7.5" cy="5.5" r="1" fill="#44cc22"/></svg>${G.poisonStacks}</span>`;
+  if(G.burnStacks>0)sfx+=`<span class="sfx-chip" style="color:#ff8833;border-color:#553316;"><svg width="10" height="10" viewBox="0 0 12 12"><path d="M6 1C4 4 2 6 4 9C5 10.5 7 10.5 8 9C10 6 8 4 6 1Z" fill="#ff8833" stroke="#cc6622" stroke-width=".8"/></svg>${G.burnStacks}</span>`;
+  if(G.curseStacks>0)sfx+=`<span class="sfx-chip" style="color:#aa66dd;border-color:#443366;"><svg width="10" height="10" viewBox="0 0 12 12"><circle cx="6" cy="5" r="4" fill="none" stroke="#aa66dd" stroke-width="1.5"/><circle cx="4.5" cy="4.5" r="1" fill="#aa66dd"/><circle cx="7.5" cy="4.5" r="1" fill="#aa66dd"/></svg>${G.curseStacks}</span>`;
+  se.innerHTML=sfx;
+}
+
+// ================================================================
+//  INPUT
+// ================================================================
+function onD(r,c){
+  if(busy)return;drag=true;SFX.tick();
+  const t=board[r][c];if(!t)return;
+  path=[{r,c}];
+  pty=(t.type==='sword'||t.type==='skull')?'combat':t.type;
+  hl();
+}
+function onE(r,c){
+  if(!drag||busy)return;
+  const l=path[path.length-1];
+  if(Math.abs(r-l.r)>1||Math.abs(c-l.c)>1||(!r&&!c&&r===l.r&&c===l.c))return;
+  if(r===l.r&&c===l.c)return;
+  const pi=path.findIndex(p=>p.r===r&&p.c===c);
+  if(pi>=0){if(pi===path.length-2){path.pop();hl();}return;}
+  const t=board[r][c];if(!t)return;
+  if(pty==='combat'){if(t.type!=='sword'&&t.type!=='skull')return;}
+  else if(t.type!==pty)return;
+  path.push({r,c});SFX.pathAdd();hl();
+}
+function onU(){
+  if(!drag)return;drag=false;clr();
+  if(path.length>=3)proc();
+  else{path=[];pty=null;msg('&nbsp;');SFX.cancel();}
+}
+
+function hl(){
+  document.querySelectorAll('.tile').forEach(t=>{t.classList.remove('sel','inp');});
+  path.forEach((p,i)=>{const e=tEl(p.r,p.c);if(e)e.classList.add(i===path.length-1?'sel':'inp');});
+  // Draw line
+  const svg=document.getElementById('lsvg');svg.innerHTML='';
+  if(path.length>=2){
+    const sr=svg.getBoundingClientRect();
+    let pts='';
+    path.forEach(p=>{const e=tEl(p.r,p.c);if(!e)return;const r2=e.getBoundingClientRect();pts+=`${r2.left+r2.width/2-sr.left},${r2.top+r2.height/2-sr.top} `;});
+    const pl=document.createElementNS('http://www.w3.org/2000/svg','polyline');
+    pl.setAttribute('points',pts.trim());svg.appendChild(pl);
+  }
+  // Info
+  if(path.length>=3&&pty==='combat'){
+    const sw=path.filter(p=>board[p.r][p.c].type==='sword').length;
+    const sk=path.filter(p=>board[p.r][p.c].type==='skull').length;
+    const dmg=sw*G.wDmg+G.str*sw;
+    msg(T('dmgMsg',sw,sk,dmg));
+  }else if(path.length>=3){msg(T('typeCount',pty==='shield'?T('shields'):pty==='potion'?T('potions'):pty==='coin'?T('coins'):T('swords'),path.length));}
+  else msg(T('pathCount',path.length));
+}
+function clr(){
+  document.querySelectorAll('.tile').forEach(t=>{t.classList.remove('sel','inp');});
+  document.getElementById('lsvg').innerHTML='';
+}
+
+// ================================================================
+//  MATCH PROCESSING
+// ================================================================
+async function proc(){
+  busy=true;
+  const p=[...path];path=[];pty=null;
+  const m=G.clsMods;
+  SFX.match();
+
+  // Raider cocky penalty: 3 tiles only = nothing
+  if(m.cockyPenalty&&p.length===3){msg(T('cocky'));await sl(400);busy=false;return;}
+
+  const sw=p.filter(x=>board[x.r][x.c]?.type==='sword');
+  const sk=p.filter(x=>board[x.r][x.c]?.type==='skull');
+  const sh=p.filter(x=>board[x.r][x.c]?.type==='shield');
+  const po=p.filter(x=>board[x.r][x.c]?.type==='potion');
+  const co=p.filter(x=>board[x.r][x.c]?.type==='coin');
+
+  let xp=0,kills=0;
+  const rem=new Set();
+
+  // Raider daring bonus
+  const bonusMult=(m.daringBonus&&p.length>=10)?2:1;
+
+  // --- COMBAT ---
+  if(sw.length>0&&sk.length>0){
+    let dmg=sw.length*G.wDmg+G.str*sw.length;
+    if(G.eqBlunt>0)dmg+=G.eqBlunt;
+    if(p.length>3)dmg+=Math.floor((p.length-3)*1);
+    const pierceMod=1-(G.eqPierce*.05)-(m.piercePenalty||0);
+    let totalDealt=0;
+    // === HIT ANIMATION: flash swords first ===
+    animHitTiles(sw,'a-slash');
+    screenFx('rgba(255,200,150,.06)',200);
+    await sl(150);
+    // === DAMAGE each skull with staggered hit ===
+    for(let si=0;si<sk.length;si++){
+      const sp=sk[si];
+      const s=board[sp.r][sp.c];let d=dmg;
+      const effDef=Math.max(0,Math.floor(s.def*pierceMod));
+      if(effDef>0){const ab=Math.min(effDef,d);d-=ab;}
+      s.hp-=d;totalDealt+=d;
+      // Hit flash on skull
+      const se=tEl(sp.r,sp.c);
+      if(se){se.classList.add('a-slash');}
+      if(s.hp<=0){
+        kills++;xp+=s.boss?5:s.spec?3:2;
+        rem.add(`${sp.r},${sp.c}`);
+        if(G.eqLifeSteal>0)G.hp=Math.min(G.maxHp,G.hp+G.eqLifeSteal);
+      }
+      if(sk.length>1)await sl(80);
+    }
+    // === VAMPIRIC ===
+    if(G.vampiric>0&&totalDealt>0){
+      const curseReduce=G.curseStacks>0?(1-Math.min(.6,G.curseStacks*.1)):1;
+      let steal=Math.max(1,Math.floor(totalDealt*G.vampiric*curseReduce));
+      G.hp=Math.min(G.maxHp,G.hp+steal);
+      framePulse('a-vamp',400);SFX.lifeSteal();
+      flt(sw[0],T('vampMsg',steal),'#ff6688','ft-big');
+    }
+    sw.forEach(s=>rem.add(`${s.r},${s.c}`));
+    SFX.swordHit();
+    flt(sw[0],T('dmgFlt',dmg),'#ff6666',kills>2?'ft-crit':'ft-big');
+    if(kills>0){
+      if(kills>2)SFX.heavyKill(); else SFX.kill();
+      haptic(30);
+      screenFx('rgba(255,150,50,.08)',250);
+      for(const sp of sk){if(rem.has(`${sp.r},${sp.c}`)){const e=tEl(sp.r,sp.c);if(e){e.classList.remove('a-slash');e.classList.add('a-kill');}}}
+      await sl(200);
+      flt(sk[0],T('killMsg',kills),'#ffaa00',kills>2?'ft-crit':'ft-big');
+    }
+  }
+
+  // --- SHIELDS ---
+  if(sh.length>0){
+    let val=sh.length*G.defPS;
+    const extra=sh.length>3?sh.length-3:0;
+    for(let i=0;i<extra;i++){if(Math.random()<G.bSh)val+=G.defPS;}
+    val=Math.floor(val*bonusMult);
+    const ag=Math.min(G.maxArmor-G.armor,val);
+    G.armor+=ag;
+    const of2=val-ag;if(of2>0)G.upgPt+=of2;
+    // === THORNS: shield collect reflects damage to all skulls ===
+    if(G.thornsDmg>0){
+      let thornKills=0;
+      for(let r2=0;r2<R;r2++)for(let c2=0;c2<C;c2++){
+        if(board[r2][c2]?.type==='skull'&&!rem.has(`${r2},${c2}`)){
+          board[r2][c2].hp-=G.thornsDmg;
+          if(board[r2][c2].hp<=0){thornKills++;G.kills++;rem.add(`${r2},${c2}`);}
+        }
+      }
+      if(thornKills>0)flt(sh[0],T('thornFlt',thornKills),'#aaddaa');
+    }
+    sh.forEach(s=>rem.add(`${s.r},${s.c}`));
+    SFX.shield();
+    screenFx('rgba(80,130,220,.05)',300);
+    animHitTiles(sh,'a-shield');
+    xp+=sh.length;
+    flt(sh[0],T('shieldFlt',ag,of2),'#6699ff');
+  }
+
+  // --- POTIONS ---
+  if(po.length>0){
+    let val=po.length*G.hpPP;
+    const extra=po.length>3?po.length-3:0;
+    for(let i=0;i<extra;i++){if(Math.random()<G.bPo)val+=G.hpPP;}
+    val=Math.floor(val*bonusMult);
+    // === CURSE reduces healing ===
+    if(G.curseStacks>0){
+      const reduce=Math.min(.6,G.curseStacks*.1);
+      val=Math.max(1,Math.floor(val*(1-reduce)));
+    }
+    // Mana potions reduce cooldowns
+    const manas=po.filter(x=>board[x.r][x.c].mana);
+    if(manas.length>0)G.skills.forEach(s=>{s.cd=Math.max(0,s.cd-manas.length);});
+    const heal=Math.min(G.maxHp-G.hp,val);
+    G.hp+=heal;
+    // === CLEANSE: potions reduce poison/burn stacks ===
+    const cleanse=po.length;
+    let cleanseMsg='';
+    if(G.poisonStacks>0){const r2=Math.min(G.poisonStacks,cleanse);G.poisonStacks-=r2;cleanseMsg+=' '+T('cleanPoison',r2);}
+    if(G.burnStacks>0){const r2=Math.min(G.burnStacks,Math.max(0,cleanse-1));G.burnStacks-=r2;if(r2>0)cleanseMsg+=' '+T('cleanBurn',r2);}
+    if(G.curseStacks>0&&po.length>=4){G.curseStacks=Math.max(0,G.curseStacks-1);cleanseMsg+=' '+T('cleanCurse');}
+    po.forEach(s=>rem.add(`${s.r},${s.c}`));
+    SFX.potion();
+    screenFx('rgba(80,220,80,.05)',300);
+    animHitTiles(po,'a-heal');
+    // HP bar flash
+    const hpBar=document.getElementById('b-hp');hpBar.style.animation='hpBarFlash .4s ease';setTimeout(()=>hpBar.style.animation='',400);
+    xp+=po.length;
+    flt(po[0],T('healFlt',heal,cleanseMsg,manas.length),'#66ff66');
+  }
+
+  // --- COINS ---
+  if(co.length>0){
+    let val=co.length*(2+(m.coinBonus||0));
+    const extra=co.length>3?co.length-3:0;
+    for(let i=0;i<extra;i++){if(Math.random()<G.bCo)val+=2;}
+    val=Math.floor(val*bonusMult);
+    G.gold+=val;G.totGold+=val;
+    co.forEach(s=>rem.add(`${s.r},${s.c}`));
+    SFX.coin();
+    screenFx('rgba(220,180,50,.05)',250);
+    animHitTiles(co,'a-coin');
+    xp+=co.length;
+    flt(co[0],T('goldFlt',val),'#ffcc00');
+  }
+
+  G.kills+=kills;
+  // === COMBO SYSTEM ===
+  if(kills>=2){
+    const comboMult=kills>=5?4:kills>=4?3:kills>=3?2:1.5;
+    const comboBonus=Math.floor(kills*10*(comboMult-1));
+    G.comboCount=(G.comboCount||0)+1;
+    const chainBonus=G.comboCount>=3?G.comboCount*5:0;
+    const totalBonus=comboBonus+chainBonus;
+    G.totGold+=totalBonus;
+    G.maxCombo=Math.max(G.maxCombo||0,kills);
+    xp+=Math.floor(kills*comboMult);
+    const comboName=kills>=5?'MASSACRE':kills>=4?'OVERKILL':kills>=3?'TRIPLE KILL':'DOUBLE KILL';
+    const comboColor=kills>=5?'#ff2222':kills>=4?'#ff6622':kills>=3?'#ffaa22':'#ffcc44';
+    await sl(300);
+    flt(sk[0]||sw[0],`${comboName} x${comboMult}!`,comboColor,'ft-crit');
+    if(kills>=3)SFX.combo();
+    msg(T('comboMsg',comboName,totalBonus,G.comboCount));
+    haptic(kills>=4?80:50);
+    screenFx(kills>=4?'rgba(255,100,0,.12)':'rgba(255,200,0,.08)',400);
+  }else{
+    G.comboCount=0;
+  }
+  // Bonus XP for long chains
+  if(p.length>3){const b=Math.floor((p.length-3)*(1+G.bXp));xp+=b;}
+  xp=Math.floor(xp*bonusMult);
+  G.xp+=xp;
+
+  // --- SPECIAL SKULL EFFECTS (on surviving skulls) ---
+  // Thief: steals coins from board
+  for(let r=0;r<R;r++)for(let c=0;c<C;c++){
+    const t=board[r][c];
+    if(t?.type==='skull'&&t.spec==='thief'&&t.hp>0&&!rem.has(`${r},${c}`)){
+      // Steal up to 2 coins from board
+      let stolen=0;
+      for(let r2=0;r2<R&&stolen<2;r2++)for(let c2=0;c2<C&&stolen<2;c2++){
+        if(board[r2][c2]?.type==='coin'&&!rem.has(`${r2},${c2}`)){
+          rem.add(`${r2},${c2}`);stolen++;
+        }
+      }
+      if(stolen>0)msg(T('thiefMsg',stolen));
+    }
+  }
+
+  // Animate & remove — separate kill animations from regular pops
+  const killKeys=new Set();const popKeys=new Set();
+  for(const k of rem){
+    const[rr,cc]=k.split(',').map(Number);
+    if(board[rr][cc]?.type==='skull'&&board[rr][cc].hp<=0)killKeys.add(k);
+    else popKeys.add(k);
+  }
+  // Kill skulls with death animation, others with pop
+  if(killKeys.size>0){
+    for(const k of killKeys){const[r,c]=k.split(',').map(Number);const e=tEl(r,c);if(e){e.classList.remove('a-slash','a-pop');e.classList.add('a-kill');}}
+  }
+  if(popKeys.size>0){
+    for(const k of popKeys){const[r,c]=k.split(',').map(Number);const e=tEl(r,c);if(e){e.classList.remove('a-slash');e.classList.add('a-pop');}}
+  }
+  await sl(350);
+  for(const k of rem){const[rr,cc]=k.split(',').map(Number);const cell=cellEl(rr,cc);if(cell)cell.innerHTML='';board[rr][cc]=null;}
+  // Refresh surviving skulls
+  for(const sp of sk){if(board[sp.r]?.[sp.c]?.type==='skull'&&board[sp.r][sp.c].hp>0)refreshCell(sp.r,sp.c);}
+
+  // === COMBO message for big chains ===
+  if(p.length>=6){
+    msg(T('chainMsg',p.length));
+    SFX.combo();
+    screenFx('rgba(255,220,100,.12)',250);
+    const msgEl=document.getElementById('msg');msgEl.style.animation='comboGlow .6s ease-in-out';setTimeout(()=>msgEl.style.animation='',600);
+    await sl(300);
+  }
+
+  await collapse();
+
+  // --- ENEMY TURN ---
+  G.turn++;
+  await enemyTurn();
+  ui();
+  if(G.hp<=0){gameOver();return;}
+
+  // Regen from equipment
+  if(G.eqRegen>0){
+    const rg=G.eqRegen*(G.clsMods.regenMult||1);
+    G.hp=Math.min(G.maxHp,G.hp+rg);
+  }
+
+  // --- LEVEL UP ---
+  while(G.xp>=G.xpN){
+    G.xp-=G.xpN;G.level++;G.xpN=Math.floor(G.xpN*1.45)+8;
+    SFX.levelUp();screenFx('rgba(255,255,200,.15)',400);haptic(50);
+    const badge=document.getElementById('lvl-badge');badge.style.animation='comboGlow .8s ease';setTimeout(()=>badge.style.animation='',800);
+    await showLvl();ui();
+  }
+  // --- UPGRADE ---
+  if(G.upgPt>=G.upgN){G.upgPt-=G.upgN;G.upgN=Math.floor(G.upgN*1.3)+5;SFX.upgrade();screenFx('rgba(180,180,255,.1)',300);await showUpg();ui();}
+  // --- GOLD SHOP ---
+  if(G.gold>=G.goldN){G.gold-=G.goldN;G.goldN=Math.floor(G.goldN*1.4)+20;SFX.shop();screenFx('rgba(255,200,80,.12)',300);await showShop();ui();}
+
+  // Skill cooldowns
+  G.skills.forEach(s=>{if(s.cd>0)s.cd--;});
+  rsk();
+  setTimeout(()=>msg('&nbsp;'),2000);busy=false;
+}
+
+// ================================================================
+//  ENEMY TURN
+// ================================================================
+async function enemyTurn(){
+  if(G.frozen){G.frozen=false;msg(T('frozen'));await sl(500);return;}
+  let tot=0;
+  let freezeActive=false;
+  let poisonSkulls=0,bossSkulls=0;
+  for(let r=0;r<R;r++)for(let c=0;c<C;c++){
+    const t=board[r][c];
+    if(t?.type==='skull'){
+      // waiting skulls don't attack, just decrement wait
+      if(t.wait>0){t.wait--;continue;}
+      tot+=t.atk;
+      if(t.spec==='freeze')freezeActive=true;
+      if(t.spec==='poison')poisonSkulls++;
+      if(t.boss)bossSkulls++;
+    }
+  }
+
+  // Freeze skull: halves base damage output
+  if(freezeActive)G.wDmgFrozen=true; else G.wDmgFrozen=false;
+
+  // Spikes: skulls take damage when attacking (exclude waiting skulls)
+  if(G.eqSpikes>0){
+    for(let r=0;r<R;r++)for(let c=0;c<C;c++){
+      if(board[r][c]?.type==='skull'&&!board[r][c].wait){board[r][c].hp-=G.eqSpikes;if(board[r][c].hp<=0){G.kills++;board[r][c]=null;}}
+    }
+    let anyDead=false;
+    for(let r=0;r<R;r++)for(let c=0;c<C;c++){if(!board[r][c]&&cellEl(r,c).querySelector('.tile')){anyDead=true;break;}}
+    if(anyDead)await collapse();
+  }
+
+  // === POISON STACKS: each poison skull adds +2 stacks per turn ===
+  if(poisonSkulls>0){
+    G.poisonStacks+=poisonSkulls*2;
+  }
+  // === BOSS: inflicts burn (+2) and curse (+1) ===
+  if(bossSkulls>0){
+    G.burnStacks+=bossSkulls*2;
+    G.curseStacks+=bossSkulls;
+  }
+
+  // === DoT DAMAGE: poison + burn ===
+  let dotDmg=0;
+  let dotMsg='';
+  if(G.poisonStacks>0){
+    dotDmg+=G.poisonStacks;
+    dotMsg+=T('poisonDot',G.poisonStacks);
+    SFX.poisonTick();
+    G.poisonStacks=Math.max(0,G.poisonStacks-1-(G.poisonResist||0));
+  }
+  if(G.burnStacks>0){
+    dotDmg+=G.burnStacks;
+    const armorBurn=Math.min(G.armor,G.burnStacks);
+    G.armor=Math.max(0,G.armor-armorBurn);
+    dotMsg+=(dotMsg?'+':'')+T('burnDot',G.burnStacks,armorBurn);
+    SFX.burnTick();
+    G.burnStacks=Math.max(0,G.burnStacks-1-(G.burnResist||0));
+  }
+  if(G.curseStacks>0){
+    dotMsg+=(dotMsg?'+':'')+T('curseDot',G.curseStacks);
+    // Curse decays slowly
+    if(G.turn%3===0)G.curseStacks=Math.max(0,G.curseStacks-1);
+  }
+
+  // === MAIN ATTACK DAMAGE ===
+  let dmg2hp=tot;
+  if(G.armor>0&&tot>0){
+    const ab=Math.min(G.armor,dmg2hp);
+    dmg2hp-=ab;
+    let lost=0;for(let i=0;i<ab;i++){if(Math.random()>G.armDur)lost++;}
+    G.armor=Math.max(0,G.armor-lost);
+  }
+
+  // Add DoT damage (bypasses armor)
+  dmg2hp+=dotDmg;
+
+  if(dmg2hp>0){
+    G.hp=Math.max(0,G.hp-dmg2hp);
+    const fr=document.getElementById('board-frame');
+    fr.classList.add('a-shake','a-dmg');
+    SFX.hurt();
+    haptic(40);
+    screenFx('rgba(255,30,30,.1)',350);
+    const atkPart=tot>0?T('atkPart',tot):'';
+    const dotPart=dotDmg>0?(atkPart?' + ':'')+T('dotPart',dotDmg):'';
+    msg(T('atkMsg',atkPart,dotPart,dmg2hp));
+    await sl(500);fr.classList.remove('a-shake','a-dmg');
+  }else if(tot>0){
+    SFX.block();
+    screenFx('rgba(100,150,255,.06)',250);
+    msg(T('defMsg',tot,dotMsg));
+  }else if(dotDmg>0){
+    G.hp=Math.max(0,G.hp-dotDmg);
+    SFX.hurt();haptic(20);
+    screenFx('rgba(150,100,50,.06)',300);
+    const fr2=document.getElementById('board-frame');fr2.classList.add('a-shake');setTimeout(()=>fr2.classList.remove('a-shake'),350);
+    msg(T('dotMsg',dotDmg));
+  }
+  await sl(400);
+}
+
+// ================================================================
+//  LEVEL UP (choose 2 of 4: 2 skills + 2 stats)
+// ================================================================
+function showLvl(){
+  return new Promise(res=>{
+    const m=document.getElementById('m-lvl');
+    
+    const d=document.getElementById('ml-c');d.innerHTML='';
+    const avail=ALL_SK.filter(s=>!G.skills.find(x=>x.id===s.id));
+    const skPool=[...avail].sort(()=>Math.random()-.5).slice(0,2);
+    const stPool=[...STAT_UP].sort(()=>Math.random()-.5).slice(0,2);
+    const skills=skPool.map(s=>({...s,cType:'skill'}));
+    const stats=stPool.map(s=>({...s,cType:'stat'}));
+    const ch=[...skills,...stats];
+    const selected=new Set();
+    const btns=[];
+    const okBtn=document.createElement('div');
+    okBtn.className='ch-ok disabled';
+    okBtn.innerHTML='OK';
+    okBtn.onclick=()=>{
+      if(selected.size<2)return;
+      SFX.click();
+      selected.forEach(idx=>{
+        const c=ch[idx];
+        if(c.cType==='skill'){
+          const cdVal=G.eqQuicken?Math.min(c.maxCd,5):c.maxCd;
+          G.skills.push({...c,cd:0,maxCd:cdVal});
+          if(G.clsMods.skillCdBonus&&G.skills.length===4){G.skills[3].maxCd=Math.max(1,G.skills[3].maxCd-1);}
+        }else c.fn();
+      });
+      m.classList.remove('show');rsk();ui();res();
+    };
+    // SKILL section
+    if(skills.length>0){
+      const sh=document.createElement('div');sh.className='lvl-section';sh.innerHTML='SKILL';d.appendChild(sh);
+      skills.forEach((c,si)=>{
+        const idx=si;
+        const b=document.createElement('div');b.className='cbtn cbtn-skill';
+        b.innerHTML=`<div class="ct">${c.icon} ${c.name}</div><div class="cd2">${c.desc} (CD: ${c.maxCd})</div>`;
+        b.onclick=()=>{
+          SFX.click();
+          if(selected.has(idx)){selected.delete(idx);b.classList.remove('picked');}
+          else if(selected.size<2){selected.add(idx);b.classList.add('picked');}
+          okBtn.classList.toggle('disabled',selected.size<2);
+        };
+        btns.push(b);d.appendChild(b);
+      });
+    }
+    // STAT section
+    if(stats.length>0){
+      const sh=document.createElement('div');sh.className='lvl-section';sh.innerHTML='STAT';d.appendChild(sh);
+      stats.forEach((c,si)=>{
+        const idx=skills.length+si;
+        const b=document.createElement('div');b.className='cbtn cbtn-stat';
+        b.innerHTML=`<div class="ct">${c.name}</div><div class="cd2">${c.desc}</div>`;
+        b.onclick=()=>{
+          SFX.click();
+          if(selected.has(idx)){selected.delete(idx);b.classList.remove('picked');}
+          else if(selected.size<2){selected.add(idx);b.classList.add('picked');}
+          okBtn.classList.toggle('disabled',selected.size<2);
+        };
+        btns.push(b);d.appendChild(b);
+      });
+    }
+    d.appendChild(okBtn);
+    m.classList.add('show');
+  });
+}
+
+// ================================================================
+//  EQUIPMENT SHOP
+// ================================================================
+function showShop(){
+  return new Promise(res=>{
+    const m=document.getElementById('m-eq');const d=document.getElementById('me-c');d.innerHTML='';
+    const items=[];
+    for(let i=0;i<3;i++){
+      const isW=Math.random()<.5;
+      if(isW){
+        const tier=Math.min(WNAMES().length-1,G.wTier+1+Math.floor(Math.random()*2));
+        const dmg=G.wDmg+1+Math.floor(Math.random()*2);
+        const attr=EQ_ATTRS[Math.floor(Math.random()*EQ_ATTRS.length)];
+        items.push({isW:true,tier,name:WNAMES()[tier],dmg,attr,icon:SVG_ICONS.swordSm(16),
+          desc:T('shopWpnDesc',G.wDmg,dmg,dmg-G.wDmg,T(EQ_DESC_K[attr]))});
+      }else{
+        const tier=Math.min(ANAMES().length-1,G.aTier+1+Math.floor(Math.random()*2));
+        const def=G.aDef+1+Math.floor(Math.random()*2);
+        const mA=G.maxArmor+3+Math.floor(Math.random()*5);
+        const attr=EQ_ATTRS[Math.floor(Math.random()*EQ_ATTRS.length)];
+        items.push({isW:false,tier,name:ANAMES()[tier],def,mA,attr,icon:SVG_ICONS.shieldSm(16),
+          desc:T('shopArmDesc',G.aDef,def,def-G.aDef,mA,T(EQ_DESC_K[attr]))});
+      }
+    }
+    items.push({skip:true,name:'PASS',icon:'—',desc:T('shopPass')});
+    let selIdx=-1;
+    const btns=[];
+    const okBtn=document.createElement('div');
+    okBtn.className='ch-ok disabled';
+    okBtn.innerHTML='OK';
+    okBtn.onclick=()=>{
+      if(selIdx<0)return;
+      SFX.click();
+      const it=items[selIdx];
+      if(!it.skip){
+        if(it.isW){G.wDmg=it.dmg;G.wTier=it.tier;G.wName=it.name;}
+        else{G.aDef=it.def;G.maxArmor=it.mA;G.aTier=it.tier;G.aName=it.name;}
+        applyAttr(it.attr);
+      }
+      m.classList.remove('show');ui();res();
+    };
+    items.forEach((it,idx)=>{
+      const b=document.createElement('div');b.className='cbtn';
+      b.innerHTML=`<div class="ct">${it.icon} ${it.name}</div><div class="cd2">${it.desc}</div>`;
+      b.onclick=()=>{
+        SFX.click();
+        if(selIdx===idx){selIdx=-1;b.classList.remove('picked');}
+        else{btns.forEach(x=>x.classList.remove('picked'));selIdx=idx;b.classList.add('picked');}
+        okBtn.classList.toggle('disabled',selIdx<0);
+      };
+      btns.push(b);
+      d.appendChild(b);
+    });
+    d.appendChild(okBtn);
+    m.classList.add('show');
+  });
+}
+function applyAttr(attr){
+  if(attr==='Quicken')G.eqQuicken=true;
+  if(attr==='LifeSteal')G.eqLifeSteal++;
+  if(attr==='Regen')G.eqRegen++;
+  if(attr==='Spikes')G.eqSpikes++;
+  if(attr==='Blunt')G.eqBlunt+=2;
+  if(attr==='Pierce')G.eqPierce++;
+}
+
+// ================================================================
+//  UPGRADE
+// ================================================================
+function showUpg(){
+  return new Promise(res=>{
+    const m=document.getElementById('m-up');const d=document.getElementById('mu-c');d.innerHTML='';
+    const ups=[
+      {name:'WEAPON UP',desc:T('upgWpnDesc',G.wDmg,G.wDmg+1),fn:()=>{G.wDmg++;}},
+      {name:'ARMOR UP',desc:T('upgArmDesc',G.aDef,G.aDef+1),fn:()=>{G.aDef++;}},
+      {name:'DURABILITY',desc:T('upgDurDesc',Math.round(G.armDur*100),Math.round((G.armDur+.1)*100)),fn:()=>{G.armDur=Math.min(.9,G.armDur+.1);}},
+      {name:'HP +8',desc:T('upgHpDesc',G.maxHp,G.maxHp+8),fn:()=>{G.maxHp+=8;G.hp=Math.min(G.hp+8,G.maxHp);}},
+    ].sort(()=>Math.random()-.5).slice(0,3);
+    let selIdx=-1;
+    const btns=[];
+    const okBtn=document.createElement('div');
+    okBtn.className='ch-ok disabled';
+    okBtn.innerHTML='OK';
+    okBtn.onclick=()=>{
+      if(selIdx<0)return;
+      SFX.click();ups[selIdx].fn();
+      m.classList.remove('show');ui();res();
+    };
+    ups.forEach((u,idx)=>{
+      const b=document.createElement('div');b.className='cbtn';
+      b.innerHTML=`<div class="ct">${u.name}</div><div class="cd2">${u.desc}</div>`;
+      b.onclick=()=>{
+        SFX.click();
+        if(selIdx===idx){selIdx=-1;b.classList.remove('picked');}
+        else{btns.forEach(x=>x.classList.remove('picked'));selIdx=idx;b.classList.add('picked');}
+        okBtn.classList.toggle('disabled',selIdx<0);
+      };
+      btns.push(b);
+      d.appendChild(b);
+    });
+    d.appendChild(okBtn);
+    m.classList.add('show');
+  });
+}
+
+// ================================================================
+//  SKILLS (15 abilities)
+// ================================================================
+async function useSk(i){
+  if(busy)return;const s=G.skills[i];if(s.cd>0)return;
+  busy=true;s.cd=s.maxCd;SFX.skill();
+  framePulse('a-skill',400);screenFx('rgba(180,130,255,.06)',250);
+  await s.fn();rsk();ui();busy=false;
+}
+
+// Helper: collect all tiles of type
+async function collectType(type,effect){
+  const rem=new Set();let ct=0;
+  for(let r=0;r<R;r++)for(let c=0;c<C;c++){if(board[r][c]?.type===type){rem.add(`${r},${c}`);ct++;}}
+  if(ct===0)return 0;
+  await animRem(rem);
+  for(const k of rem){const[rr,cc]=k.split(',').map(Number);board[rr][cc]=null;}
+  await collapse();
+  return ct;
+}
+// Helper: convert tiles
+async function convertTiles(from,to){
+  for(let r=0;r<R;r++)for(let c=0;c<C;c++){
+    if(board[r][c]?.type===from){board[r][c].type=to;delete board[r][c].mana;delete board[r][c].arrow;delete board[r][c].spec;delete board[r][c].boss;delete board[r][c].hp;delete board[r][c].atk;delete board[r][c].def;refreshCell(r,c);}
+  }
+  await sl(300);
+}
+
+async function skHeal(){const n=await collectType('potion');G.hp=Math.min(G.maxHp,G.hp+n*G.hpPP);msg(T('healMsg',n*G.hpPP));}
+async function skRepair(){const n=await collectType('shield');const v=n*G.defPS;G.armor=Math.min(G.maxArmor,G.armor+v);msg(T('repairMsg',v));}
+async function skTreasure(){const n=await collectType('coin');G.gold+=n*2;G.totGold+=n*2;msg(T('treasureMsg',n*2));}
+
+async function skSlash(){
+  const row=Math.floor(Math.random()*R);const rem=new Set();
+  for(let c=0;c<C;c++){
+    const t=board[row][c];if(!t)continue;
+    if(t.type==='potion')G.hp=Math.min(G.maxHp,G.hp+G.hpPP);
+    if(t.type==='coin'){G.gold+=2;G.totGold+=2;}
+    if(t.type==='shield')G.armor=Math.min(G.maxArmor,G.armor+G.defPS);
+    if(t.type==='skull'){t.hp-=G.wDmg*3;if(t.hp<=0){G.kills++;rem.add(`${row},${c}`);}}
+    if(t.type!=='skull'||t.hp<=0)rem.add(`${row},${c}`);
+  }
+  await animRem(rem);
+  for(const k of rem){const[r,c]=k.split(',').map(Number);board[r][c]=null;}
+  for(let c=0;c<C;c++){if(board[row]?.[c]?.type==='skull'&&board[row][c].hp>0)refreshCell(row,c);}
+  await collapse();msg(T('slashMsg',row+1));
+}
+
+async function skCharge(){
+  const rem=new Set();
+  for(let r=0;r<R;r++)for(let c=0;c<C;c++){
+    if(r===0||r===R-1||c===0||c===C-1){
+      const t=board[r][c];if(!t)continue;
+      if(t.type==='potion')G.hp=Math.min(G.maxHp,G.hp+G.hpPP);
+      if(t.type==='coin'){G.gold+=2;G.totGold+=2;}
+      if(t.type==='shield')G.armor=Math.min(G.maxArmor,G.armor+G.defPS);
+      if(t.type==='skull'){t.hp-=G.wDmg*2;if(t.hp<=0){G.kills++;rem.add(`${r},${c}`);}}
+      if(t.type!=='skull'||t.hp<=0)rem.add(`${r},${c}`);
+    }
+  }
+  await animRem(rem);
+  for(const k of rem){const[r,c]=k.split(',').map(Number);board[r][c]=null;}
+  await collapse();msg(T('skMsgCharge'));
+}
+
+async function skCounter(){
+  const rem=new Set();
+  for(let r=0;r<R;r++)for(let c=0;c<C;c++){
+    if(board[r][c]?.type==='skull'){board[r][c].hp-=board[r][c].atk;if(board[r][c].hp<=0){G.kills++;rem.add(`${r},${c}`);}}
+  }
+  await animRem(rem);
+  for(const k of rem){const[r,c]=k.split(',').map(Number);board[r][c]=null;}
+  for(let r=0;r<R;r++)for(let c=0;c<C;c++){if(board[r][c]?.type==='skull'&&board[r][c].hp>0)refreshCell(r,c);}
+  await collapse();msg(T('skMsgCounter'));
+}
+
+async function skShatter(){
+  for(let r=0;r<R;r++)for(let c=0;c<C;c++){
+    if(board[r][c]?.type==='skull'){board[r][c].def=1;board[r][c].atk=1;refreshCell(r,c);}
+  }
+  await sl(300);msg(T('skMsgShatter'));
+}
+
+async function skTeleport(){
+  const rem=new Set();
+  for(let r=0;r<R;r++)for(let c=0;c<C;c++){if(board[r][c]?.type!=='skull')rem.add(`${r},${c}`);}
+  await animRem(rem);
+  for(const k of rem){const[r,c]=k.split(',').map(Number);board[r][c]=null;}
+  const nIds=new Set();
+  for(let r=0;r<R;r++)for(let c=0;c<C;c++){
+    if(!board[r][c]){const t=mt(r,c);while(t.type==='skull'){Object.assign(t,mt(r,c));}board[r][c]=t;nIds.add(t._id);}
+  }
+  await collapse(nIds);msg(T('skMsgTeleport'));
+}
+
+async function skGolden(){await convertTiles('sword','coin');msg(T('skMsgGolden'));}
+async function skScavenge(){await convertTiles('sword','shield');msg(T('skMsgScavenge'));}
+async function skDazzle(){await convertTiles('coin','sword');msg(T('skMsgDazzle'));}
+
+async function skDisarm(){
+  const rem=new Set();
+  for(let r=0;r<R;r++)for(let c=0;c<C;c++){
+    if(board[r][c]?.type==='skull'){
+      board[r][c]={type:'sword',r,c,_id:++uid};
+      refreshCell(r,c);
+    }
+  }
+  await sl(300);msg(T('skMsgDisarm'));
+}
+
+async function skEnchant(){await showUpg();msg(T('skMsgEnchant'));}
+
+async function skExplosive(){
+  // Convert potions to explosives, damage adjacent skulls
+  const rem=new Set();
+  for(let r=0;r<R;r++)for(let c=0;c<C;c++){
+    if(board[r][c]?.type==='potion'){
+      rem.add(`${r},${c}`);
+      // Damage adjacent skulls
+      const dirs=[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]];
+      for(const[dr,dc]of dirs){
+        const nr=r+dr,nc=c+dc;
+        if(nr>=0&&nr<R&&nc>=0&&nc<C&&board[nr][nc]?.type==='skull'){
+          board[nr][nc].hp-=5;
+          if(board[nr][nc].hp<=0){G.kills++;rem.add(`${nr},${nc}`);}
+        }
+      }
+    }
+  }
+  await animRem(rem);
+  for(const k of rem){const[r,c]=k.split(',').map(Number);board[r][c]=null;}
+  for(let r=0;r<R;r++)for(let c=0;c<C;c++){if(board[r][c]?.type==='skull'&&board[r][c].hp>0)refreshCell(r,c);}
+  await collapse();msg(T('skMsgExplosive'));
+}
+
+async function skPoison(){
+  const rem=new Set();
+  for(let r=0;r<R;r++)for(let c=0;c<C;c++){
+    if(board[r][c]?.type==='skull'){board[r][c].hp-=3;if(board[r][c].hp<=0){G.kills++;rem.add(`${r},${c}`);}}
+  }
+  await animRem(rem);
+  for(const k of rem){const[r,c]=k.split(',').map(Number);board[r][c]=null;}
+  for(let r=0;r<R;r++)for(let c=0;c<C;c++){if(board[r][c]?.type==='skull'&&board[r][c].hp>0)refreshCell(r,c);}
+  await collapse();msg(T('skMsgPoison'));
+}
+
+// ================================================================
+//  GAME OVER
+// ================================================================
+function gameOver(){
+  SFX.gameOver();BGM.stop();
+  haptic(50);
+  screenFx('rgba(255,0,0,.12)',400);
+  setTimeout(()=>screenFx('rgba(0,0,0,.15)',500),400);
+  const finalScore=calcScore();
+  const isNewBest=finalScore>bestScore;
+  if(isNewBest){bestScore=finalScore;try{localStorage.setItem('dr_best',bestScore);}catch(e){}}
+  let goHTML=`
+    <b>${T('goScore')}:</b> ${finalScore}${isNewBest?' · '+T('goNewBest'):''}<br>
+    <b>${T('goClass')}:</b> ${CLASSES.find(c=>c.id===G.cls).name} · <b>${T('goLv')}:</b> ${G.level} · <b>${T('goTurn')}:</b> ${G.turn}<br>
+    <b>${T('goKills')}:</b> ${G.kills} · <b>${T('goMaxCombo')}:</b> ${G.maxCombo||0}<br>
+    <b>${T('goWeapon')}:</b> ${WNAMES()[G.wTier]} · <b>${T('goArmor')}:</b> ${ANAMES()[G.aTier]}
+  `;
+  if(isNewBest){
+    goHTML+=`<div id="ini-input">
+      <div class="ini-label">${T("tutLabel")}</div>
+      <div class="ini-slots">
+        <span class="ini-char" id="ic0" onclick="iniNext(0)">A</span>
+        <span class="ini-char" id="ic1" onclick="iniNext(1)">A</span>
+        <span class="ini-char" id="ic2" onclick="iniNext(2)">A</span>
+      </div>
+      <div class="ini-ok" onclick="saveInitials()">OK</div>
+    </div>`;
+  }
+  document.getElementById('go-st').innerHTML=goHTML;
+  setTimeout(()=>document.getElementById('scr-over').classList.add('show'),600);
+}
+
+
+// ================================================================
+//  INITIALS INPUT
+// ================================================================
+const _iniChars='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+let _ini=[0,0,0];
+function iniNext(slot){
+  _ini[slot]=(_ini[slot]+1)%_iniChars.length;
+  document.getElementById('ic'+slot).textContent=_iniChars[_ini[slot]];
+  SFX.click();
+}
+function saveInitials(){
+  bestInitials=_iniChars[_ini[0]]+_iniChars[_ini[1]]+_iniChars[_ini[2]];
+  try{localStorage.setItem('dr_ini',bestInitials);}catch(e){}
+  document.getElementById('v-ini').textContent=bestInitials;
+  document.getElementById('v-best').textContent=bestScore;
+  const el=document.getElementById('ini-input');
+  if(el)el.innerHTML='<div style="color:var(--sv-hi);font-size:14px;margin-top:8px;">'+T('iniSaved',bestInitials)+'</div>';
+  SFX.levelUp();
+}
+
+// ================================================================
+//  UTILITY
+// ================================================================
+function sl(ms){return new Promise(r=>setTimeout(r,ms));}
+function msg(t){document.getElementById('msg').innerHTML=t;}
+let _fltY=0;
+function flt(pos,text,color,sizeClass){
+  const e=tEl(pos.r,pos.c);if(!e)return;
+  const frame=document.getElementById('board-frame');
+  const fr=frame.getBoundingClientRect();
+  const er=e.getBoundingClientRect();
+  const f=document.createElement('div');f.className='ft'+(sizeClass?' '+sizeClass:'');f.textContent=text;f.style.color=color;
+  const x=er.left+er.width/2-fr.left;
+  const y=er.top-fr.top-4-(_fltY*18);
+  f.style.left=x+'px';f.style.top=Math.max(4,y)+'px';
+  frame.appendChild(f);
+  _fltY++;
+  setTimeout(()=>{f.remove();_fltY=Math.max(0,_fltY-1);},2000);
+}
+// === iOS-compatible touch/pointer input on board ===
+function getTileAt(x,y){
+  const el=document.elementFromPoint(x,y);
+  if(!el)return null;
+  const tile=el.closest('.tile');
+  if(!tile)return null;
+  const r=parseInt(tile.dataset.r),c=parseInt(tile.dataset.c);
+  if(isNaN(r)||isNaN(c))return null;
+  return{r,c};
+}
+const boardEl=document.getElementById('board-frame');
+boardEl.addEventListener('touchstart',e=>{
+  if(busy)return;
+  const t=e.touches[0];
+  const p=getTileAt(t.clientX,t.clientY);
+  if(p)onD(p.r,p.c);
+},{passive:false});
+boardEl.addEventListener('touchmove',e=>{
+  e.preventDefault();
+  if(!drag)return;
+  const t=e.touches[0];
+  const p=getTileAt(t.clientX,t.clientY);
+  if(p)onE(p.r,p.c);
+},{passive:false});
+boardEl.addEventListener('touchend',e=>{
+  if(drag)onU();
+},{passive:false});
+boardEl.addEventListener('touchcancel',e=>{
+  if(drag)onU();
+},{passive:false});
+// Mouse fallback for desktop
+boardEl.addEventListener('mousemove',e=>{
+  if(!drag)return;
+  const p=getTileAt(e.clientX,e.clientY);
+  if(p)onE(p.r,p.c);
+});
+document.addEventListener('mouseup',e=>{if(drag)onU();});
+// === iOS gesture prevention ===
+document.addEventListener('gesturestart',e=>e.preventDefault());
+document.addEventListener('gesturechange',e=>e.preventDefault());
+document.addEventListener('gestureend',e=>e.preventDefault());
+document.getElementById('root').addEventListener('touchmove',e=>{
+  if(!e.target.closest('.mbox'))e.preventDefault();
+},{passive:false});
+// Prevent double-tap zoom
+let lastTap=0;document.addEventListener('touchend',e=>{const now=Date.now();if(now-lastTap<300&&!e.target.closest('.mbox,.mbg,.cbtn,.rbtn,.dbtn,.cls-btn'))e.preventDefault();lastTap=now;},false);
+document.body.style.overscrollBehavior='none';
+</script>
+</body>
+</html>
