@@ -120,7 +120,7 @@ body{display:flex;align-items:center;justify-content:center;padding:env(safe-are
 .st-val{font-size:14px;color:var(--sv-hi);font-weight:900;}
 /* Skill row */
 #skill-row{display:flex;align-items:center;justify-content:center;gap:4px;}
-#skill-bar{display:flex;gap:4px;justify-content:center;flex-wrap:nowrap;}
+#skill-bar{display:flex;gap:3px;justify-content:center;flex-wrap:nowrap;width:100%;}
 
 /* ===== BOARD ===== */
 #board-wrap{flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:4px;position:relative;background:#000;}
@@ -157,9 +157,14 @@ body{display:flex;align-items:center;justify-content:center;padding:env(safe-are
 .fill-arm{background:linear-gradient(90deg,rgba(0,180,60,0.4),rgba(0,220,80,0.4));}
 .fill-mana{background:linear-gradient(90deg,#152040,#2050aa);}
 @keyframes manaPulse{0%,100%{box-shadow:none}50%{box-shadow:inset 0 0 8px rgba(60,120,255,.25);}}
-.sk-ult{width:40px;height:40px;flex-shrink:0;background:linear-gradient(180deg,#1a0a30,#0a0520);border:1px solid #6633cc;border-radius:0;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;transition:all .15s;animation:ultGlow 1.2s ease-in-out infinite;}
+.sk-ult{flex:1;min-width:0;height:44px;background:linear-gradient(180deg,#1a0a30,#0a0520);border:1px solid #6633cc;border-radius:0;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;position:relative;transition:all .15s;animation:ultGlow 1.2s ease-in-out infinite;gap:1px;padding:2px 2px 2px;}
+.sk-ult .sk-lb{font-family:'Noto Serif KR',Georgia,serif;font-size:9px;color:#9977cc;letter-spacing:.5px;line-height:1;}
 .sk-ult:active{transform:scale(.92);filter:brightness(1.5);}
 @keyframes ultGlow{0%,100%{box-shadow:0 0 6px rgba(100,50,200,.4),inset 0 0 4px rgba(100,50,200,.2);border-color:#6633cc;}50%{box-shadow:0 0 14px rgba(140,80,255,.6),inset 0 0 8px rgba(140,80,255,.3);border-color:#9966ff;}}
+.sk-ult-empty{animation:none;border-color:#1a1a2a;cursor:default;background:linear-gradient(180deg,#0a0a15,#050510);}
+.sk-ult-empty:active{transform:none;filter:none;}
+.sk-empty{cursor:default;border-color:#1a1a1a;background:#050505;}
+.sk-empty:active{transform:none;}
 /* Resource row */
 #res-row{display:flex;gap:4px;margin-bottom:5px;}
 .res{flex:1;display:flex;align-items:center;gap:4px;background:linear-gradient(180deg,#0a0a0a,#060606);border:1px solid #252525;padding:4px 6px;overflow:hidden; 0,100% 4px,100% calc(100% - 4px),calc(100% - 4px) 100%,4px 100%,0 calc(100% - 4px),0 4px);}
@@ -179,10 +184,12 @@ body{display:flex;align-items:center;justify-content:center;padding:env(safe-are
 /* Message */
 #msg{text-align:center;min-height:22px;font-size:14px;color:var(--sv);margin-bottom:4px;letter-spacing:.5px;font-weight:700;}
 /* Skill buttons */
-.sk-btn{width:40px;height:40px;flex-shrink:0;background:linear-gradient(180deg,#0c0c0c,#060606);border:1px solid #2a2a2a;border-radius:0; 0,100% 4px,100% calc(100% - 4px),calc(100% - 4px) 100%,4px 100%,0 calc(100% - 4px),0 4px);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;position:relative;transition:all .15s;}
-.sk-btn>span:first-child{display:flex;align-items:center;justify-content:center;}
+.sk-btn{flex:1;min-width:0;height:44px;background:linear-gradient(180deg,#0c0c0c,#060606);border:1px solid #2a2a2a;border-radius:0;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;position:relative;transition:all .15s;gap:1px;padding:2px 2px 2px;}
+.sk-ic{display:flex;align-items:center;justify-content:center;line-height:1;}
+.sk-lb{font-family:'Noto Serif KR',Georgia,serif;font-size:9px;color:#888;letter-spacing:0;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%;text-align:center;}
 .sk-btn:hover{border-color:#585858;background:#121212;box-shadow:0 0 6px rgba(200,196,188,.1);}
-.sk-btn .sn{display:none;}
+.sk-btn.rdy .sk-lb{color:#bbb;}
+.sk-btn.cd .sk-lb{color:#555;}
 #restart-btn{position:absolute;top:calc(8px + env(safe-area-inset-top));left:calc(8px + env(safe-area-inset-left));z-index:100;width:32px;height:32px;background:rgba(10,10,10,.8);border:1px solid #333;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .12s;}
 #restart-btn:hover{border-color:#666;background:rgba(30,30,30,.9);}
 #restart-btn:active{transform:scale(.9);}
@@ -199,8 +206,8 @@ body{display:flex;align-items:center;justify-content:center;padding:env(safe-are
 .restart-confirm-btns .rc-no:hover{background:#1a0a0a;border-color:#cc4444;box-shadow:0 0 10px rgba(204,68,68,.2);}
 .sk-btn:active{transform:scale(.92);filter:brightness(1.2);}
 .sk-btn.cd{opacity:.25;cursor:default;}
-.sk-btn.rdy{border-color:var(--sv-lo);box-shadow:0 0 6px rgba(200,196,188,.15);animation:skBtnReady 1.5s ease-in-out infinite;}
-@keyframes skBtnReady{0%,100%{box-shadow:0 0 6px rgba(200,196,188,.15)}50%{box-shadow:0 0 12px rgba(200,196,188,.3),0 0 2px rgba(255,255,255,.1)}}
+.sk-btn.rdy{border-color:var(--sv-lo);box-shadow:0 0 6px rgba(200,196,188,.15);animation:skBtnReady 1.2s ease-in-out infinite;}
+@keyframes skBtnReady{0%,100%{box-shadow:0 0 4px rgba(200,196,188,.1);border-color:#3a3a3a;}50%{box-shadow:0 0 10px rgba(220,210,190,.4),0 0 3px rgba(255,255,255,.15);border-color:#999;}}
 .sk-btn .cdn{position:absolute;top:1px;right:3px;font-size:11px;color:#aa4444;font-weight:900;}
 .sk-confirm{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(2px);animation:skConfIn .15s ease-out;}
 @keyframes skConfIn{from{opacity:0}to{opacity:1}}
@@ -356,6 +363,7 @@ body{display:flex;align-items:center;justify-content:center;padding:env(safe-are
 .cls-card-desc{font-size:12px;color:#999;}
 /* Level up sections */
 .lvl-section{font-family:'Noto Serif KR',Georgia,serif;font-size:13px;color:var(--sv-lo);letter-spacing:3px;text-align:center;padding:6px 0 3px;border-bottom:1px solid #1a1a1a;margin-bottom:3px;}
+.lvl-hint{font-size:11px;color:#666;text-align:center;padding:2px 0 6px;letter-spacing:1px;}
 .cbtn-skill{border-left:2px solid #555;}
 .cbtn-stat{border-left:2px solid #444;}
 .cbtn-skill.picked{border-left:2px solid var(--sv-hi);}
@@ -719,6 +727,19 @@ ko:{
   ultMage:'아케인 노바',ultMageDesc:'보드 전체 폭발 + 스킬 쿨다운 전부 리셋',ultMsgMage:'아케인 노바! 마력 해방!',
   ultRogue:'데스 마크',ultRogueDesc:'가장 강한 해골 즉사 + 코인 대량 획득',ultMsgRogue:'데스 마크! 처형!',
   ultReady:'궁극기 준비됨!',
+  pickTwoStat:'2가지를 선택하여 강화하세요',
+  pickTwo:'2가지를 선택하세요',
+  secSkill:'기술',
+  secStat:'강화',
+  snHeal:'생명수집',snRepair:'방패수집',snSlash:'칼바람',snTreasure:'금화수집',snCharge:'전방위공격',
+  snCounter:'자멸유도',snShatter:'약화의눈',snTeleport:'타일재배치',snGolden:'황금변환',snScavenge:'방패변환',
+  snDazzle:'검으로변환',snDisarm:'해골제거',snEnchant:'즉시강화',snExplosive:'물약폭발',snPoison:'전체독공격',
+  snCleave:'이중칼바람',snWarcry:'전투함성',snFortify:'철벽방어',snExecute:'즉사처형',
+  snFireball:'화염폭발',snFrostNova:'빙결마법',snArcaneShift:'쿨다운초기화',snManaShield:'마나보호막',
+  snSnipe:'급소저격',snLootStorm:'황금폭풍',snShadowStep:'그림자습격',snPoisonTrap:'독안개',
+  pickSkill:'SKILL',
+  pickOne:'1개 선택',
+  ultNotReady:'마나가 부족합니다',
   // Class skills - Rogue
   skSnipe:'가장 약한 해골 2마리에 6배 데미지',
   skLootStorm:'타일 40%를 코인으로 변환 후 전부 수집',
@@ -843,6 +864,19 @@ en:{
   ultMage:'Arcane Nova',ultMageDesc:'Board-wide blast + reset all skill CD',ultMsgMage:'Arcane Nova! Power unleashed!',
   ultRogue:'Death Mark',ultRogueDesc:'Instant kill strongest skull + bonus gold',ultMsgRogue:'Death Mark! Executed!',
   ultReady:'Ultimate ready!',
+  pickTwoStat:'Choose 2 to enhance',
+  pickTwo:'Choose 2',
+  secSkill:'SKILL',
+  secStat:'ENHANCE',
+  snHeal:'Heal',snRepair:'Repair',snSlash:'Slash',snTreasure:'Treasure',snCharge:'Charge',
+  snCounter:'Counter',snShatter:'Shatter',snTeleport:'Teleport',snGolden:'Golden Touch',snScavenge:'Scavenge',
+  snDazzle:'Dazzle',snDisarm:'Disarm',snEnchant:'Enchant',snExplosive:'Explosive',snPoison:'Poison',
+  snCleave:'Cleave',snWarcry:'War Cry',snFortify:'Fortify',snExecute:'Execute',
+  snFireball:'Fireball',snFrostNova:'Frost Nova',snArcaneShift:'Arcane Shift',snManaShield:'Mana Shield',
+  snSnipe:'Snipe',snLootStorm:'Loot Storm',snShadowStep:'Shadow Step',snPoisonTrap:'Poison Trap',
+  pickSkill:'SKILL',
+  pickOne:'Pick 1',
+  ultNotReady:'Mana not full',
   skSnipe:'6x DMG to 2 weakest skulls',
   skLootStorm:'Convert 40% tiles to coins + collect all',
   skShadowStep:'8x DMG to special skulls + LCK +1',
@@ -961,6 +995,19 @@ es:{
   ultMage:'Nova Arcana',ultMageDesc:'Explosión total + reiniciar CD',ultMsgMage:'¡Nova Arcana! ¡Poder liberado!',
   ultRogue:'Marca Mortal',ultRogueDesc:'Matar calavera más fuerte + oro extra',ultMsgRogue:'¡Marca Mortal! ¡Ejecutado!',
   ultReady:'¡Definitiva lista!',
+  pickTwoStat:'Elige 2 para mejorar',
+  pickTwo:'Elige 2',
+  secSkill:'HABILIDAD',
+  secStat:'MEJORA',
+  snHeal:'Curar',snRepair:'Reparar',snSlash:'Tajo',snTreasure:'Tesoro',snCharge:'Carga',
+  snCounter:'Contra',snShatter:'Romper',snTeleport:'Teletrans.',snGolden:'Toque Dorado',snScavenge:'Buscar',
+  snDazzle:'Destello',snDisarm:'Desarmar',snEnchant:'Encantar',snExplosive:'Explosivo',snPoison:'Veneno',
+  snCleave:'Hender',snWarcry:'Grito',snFortify:'Fortificar',snExecute:'Ejecutar',
+  snFireball:'Bola Fuego',snFrostNova:'Nova Hielo',snArcaneShift:'Cambio Arc.',snManaShield:'Escudo Maná',
+  snSnipe:'Francotirar',snLootStorm:'Lluvia Oro',snShadowStep:'Paso Sombra',snPoisonTrap:'Trampa Ven.',
+  pickSkill:'HABILIDAD',
+  pickOne:'Elige 1',
+  ultNotReady:'Maná insuficiente',
   skSnipe:'6x daño a 2 calaveras más débiles',
   skLootStorm:'40% fichas → monedas + recoger todo',
   skShadowStep:'8x daño a calaveras especiales + LCK +1',
@@ -1105,43 +1152,62 @@ const SK_IC={
   ultMage:`<svg width="18" height="18" viewBox="0 0 18 18"><path d="M9 1L11 6L16 6L12 10L13.5 16L9 12.5L4.5 16L6 10L2 6L7 6Z" fill="#6644ff" stroke="#aa88ff" stroke-width="1"/></svg>`,
   ultRogue:`<svg width="18" height="18" viewBox="0 0 18 18"><path d="M9 1L11 6L16 6L12 10L13.5 16L9 12.5L4.5 16L6 10L2 6L7 6Z" fill="#33cc66" stroke="#88ffaa" stroke-width="1"/></svg>`,
 };
+const SK_LB={
+  heal:'생명수집',repair:'방패수집',slash:'칼바람',treasure:'금화수집',charge:'전방위',
+  counter:'자멸유도',shatter:'약화',teleport:'재배치',golden:'금화변환',scavenge:'방패변환',
+  dazzle:'검변환',disarm:'해골제거',enchant:'즉시강화',explosive:'물약폭발',poison:'독공격',
+  cleave:'이중참격',warcry:'전투함성',fortify:'철벽방어',execute:'즉사처형',
+  fireball:'화염폭발',frostNova:'빙결마법',arcaneShift:'쿨초기화',manaShield:'마나막',
+  snipe:'급소저격',lootStorm:'황금폭풍',shadowStep:'그림자',poisonTrap:'독안개',
+  ultWarrior:'분노폭발',ultMage:'멸망의빛',ultRogue:'암살일격',
+};
+const SK_LB_EN={
+  heal:'HEAL',repair:'ARMOR',slash:'SLASH',treasure:'GOLD',charge:'BURST',
+  counter:'SELF-D',shatter:'WEAK',teleport:'SHIFT',golden:'MIDAS',scavenge:'FORGE',
+  dazzle:'BLADE',disarm:'PURGE',enchant:'BOOST',explosive:'BOMB',poison:'TOXIC',
+  cleave:'CLEAV',warcry:'WRCRY',fortify:'FORT',execute:'EXEC',
+  fireball:'FIRE',frostNova:'FROST',arcaneShift:'RESET',manaShield:'MSHLD',
+  snipe:'SNIPE',lootStorm:'STORM',shadowStep:'SHADE',poisonTrap:'VENOM',
+  ultWarrior:'ULT',ultMage:'ULT',ultRogue:'ULT',
+};
+function skLabel(id){return curLang==='ko'?(SK_LB[id]||id.slice(0,3)):(SK_LB_EN[id]||id.slice(0,3).toUpperCase());}
 const ALL_SK=[
-  {id:'heal',icon:SK_IC.heal,name:'Heal',get desc(){return T('skHeal')},maxCd:10,fn:skHeal},
-  {id:'repair',icon:SK_IC.repair,name:'Repair',get desc(){return T('skRepair')},maxCd:10,fn:skRepair},
-  {id:'slash',icon:SK_IC.slash,name:'Slash',get desc(){return T('skSlash')},maxCd:8,fn:skSlash},
-  {id:'treasure',icon:SK_IC.treasure,name:'Treasure',get desc(){return T('skTreasure')},maxCd:10,fn:skTreasure},
-  {id:'charge',icon:SK_IC.charge,name:'Charge',get desc(){return T('skCharge')},maxCd:12,fn:skCharge},
-  {id:'counter',icon:SK_IC.counter,name:'Counter',get desc(){return T('skCounter')},maxCd:12,fn:skCounter},
-  {id:'shatter',icon:SK_IC.shatter,name:'Shatter',get desc(){return T('skShatter')},maxCd:14,fn:skShatter},
-  {id:'teleport',icon:SK_IC.teleport,name:'Teleport',get desc(){return T('skTeleport')},maxCd:13,fn:skTeleport},
-  {id:'golden',icon:SK_IC.golden,name:'Golden Touch',get desc(){return T('skGolden')},maxCd:9,fn:skGolden},
-  {id:'scavenge',icon:SK_IC.scavenge,name:'Scavenge',get desc(){return T('skScavenge')},maxCd:9,fn:skScavenge},
-  {id:'dazzle',icon:SK_IC.dazzle,name:'Dazzle',get desc(){return T('skDazzle')},maxCd:9,fn:skDazzle},
-  {id:'disarm',icon:SK_IC.disarm,name:'Disarm',get desc(){return T('skDisarm')},maxCd:16,fn:skDisarm},
-  {id:'enchant',icon:SK_IC.enchant,name:'Enchant',get desc(){return T('skEnchant')},maxCd:14,fn:skEnchant},
-  {id:'explosive',icon:SK_IC.explosive,name:'Explosive',get desc(){return T('skExplosive')},maxCd:11,fn:skExplosive},
-  {id:'poison',icon:SK_IC.poison,name:'Poison',get desc(){return T('skPoison')},maxCd:9,fn:skPoison},
+  {id:'heal',icon:SK_IC.heal,get name(){return T('snHeal')||'Heal'},get desc(){return T('skHeal')},maxCd:10,fn:skHeal},
+  {id:'repair',icon:SK_IC.repair,get name(){return T('snRepair')||'Repair'},get desc(){return T('skRepair')},maxCd:10,fn:skRepair},
+  {id:'slash',icon:SK_IC.slash,get name(){return T('snSlash')||'Slash'},get desc(){return T('skSlash')},maxCd:8,fn:skSlash},
+  {id:'treasure',icon:SK_IC.treasure,get name(){return T('snTreasure')||'Treasure'},get desc(){return T('skTreasure')},maxCd:10,fn:skTreasure},
+  {id:'charge',icon:SK_IC.charge,get name(){return T('snCharge')||'Charge'},get desc(){return T('skCharge')},maxCd:12,fn:skCharge},
+  {id:'counter',icon:SK_IC.counter,get name(){return T('snCounter')||'Counter'},get desc(){return T('skCounter')},maxCd:12,fn:skCounter},
+  {id:'shatter',icon:SK_IC.shatter,get name(){return T('snShatter')||'Shatter'},get desc(){return T('skShatter')},maxCd:14,fn:skShatter},
+  {id:'teleport',icon:SK_IC.teleport,get name(){return T('snTeleport')||'Teleport'},get desc(){return T('skTeleport')},maxCd:13,fn:skTeleport},
+  {id:'golden',icon:SK_IC.golden,get name(){return T('snGolden')||'Golden Touch'},get desc(){return T('skGolden')},maxCd:9,fn:skGolden},
+  {id:'scavenge',icon:SK_IC.scavenge,get name(){return T('snScavenge')||'Scavenge'},get desc(){return T('skScavenge')},maxCd:9,fn:skScavenge},
+  {id:'dazzle',icon:SK_IC.dazzle,get name(){return T('snDazzle')||'Dazzle'},get desc(){return T('skDazzle')},maxCd:9,fn:skDazzle},
+  {id:'disarm',icon:SK_IC.disarm,get name(){return T('snDisarm')||'Disarm'},get desc(){return T('skDisarm')},maxCd:16,fn:skDisarm},
+  {id:'enchant',icon:SK_IC.enchant,get name(){return T('snEnchant')||'Enchant'},get desc(){return T('skEnchant')},maxCd:14,fn:skEnchant},
+  {id:'explosive',icon:SK_IC.explosive,get name(){return T('snExplosive')||'Explosive'},get desc(){return T('skExplosive')},maxCd:11,fn:skExplosive},
+  {id:'poison',icon:SK_IC.poison,get name(){return T('snPoison')||'Poison'},get desc(){return T('skPoison')},maxCd:9,fn:skPoison},
 ];
 
 // ===== CLASS-SPECIFIC SKILLS =====
 const CLS_SK={
   warrior:[
-    {id:'cleave',icon:SK_IC.cleave,name:'Cleave',get desc(){return T('skCleave')},maxCd:9,fn:skCleave},
-    {id:'warcry',icon:SK_IC.warcry,name:'War Cry',get desc(){return T('skWarcry')},maxCd:12,fn:skWarcry},
-    {id:'fortify',icon:SK_IC.fortify,name:'Fortify',get desc(){return T('skFortify')},maxCd:11,fn:skFortify},
-    {id:'execute',icon:SK_IC.execute,name:'Execute',get desc(){return T('skExecute')},maxCd:14,fn:skExecute},
+    {id:'cleave',icon:SK_IC.cleave,get name(){return T('snCleave')||'Cleave'},get desc(){return T('skCleave')},maxCd:9,fn:skCleave},
+    {id:'warcry',icon:SK_IC.warcry,get name(){return T('snWarcry')||'War Cry'},get desc(){return T('skWarcry')},maxCd:12,fn:skWarcry},
+    {id:'fortify',icon:SK_IC.fortify,get name(){return T('snFortify')||'Fortify'},get desc(){return T('skFortify')},maxCd:11,fn:skFortify},
+    {id:'execute',icon:SK_IC.execute,get name(){return T('snExecute')||'Execute'},get desc(){return T('skExecute')},maxCd:14,fn:skExecute},
   ],
   mage:[
-    {id:'fireball',icon:SK_IC.fireball,name:'Fireball',get desc(){return T('skFireball')},maxCd:8,fn:skFireball},
-    {id:'frostNova',icon:SK_IC.frostNova,name:'Frost Nova',get desc(){return T('skFrostNova')},maxCd:10,fn:skFrostNova},
-    {id:'arcaneShift',icon:SK_IC.arcaneShift,name:'Arcane Shift',get desc(){return T('skArcaneShift')},maxCd:9,fn:skArcaneShift},
-    {id:'manaShield',icon:SK_IC.manaShield,name:'Mana Shield',get desc(){return T('skManaShield')},maxCd:11,fn:skManaShield},
+    {id:'fireball',icon:SK_IC.fireball,get name(){return T('snFireball')||'Fireball'},get desc(){return T('skFireball')},maxCd:8,fn:skFireball},
+    {id:'frostNova',icon:SK_IC.frostNova,get name(){return T('snFrostNova')||'Frost Nova'},get desc(){return T('skFrostNova')},maxCd:10,fn:skFrostNova},
+    {id:'arcaneShift',icon:SK_IC.arcaneShift,get name(){return T('snArcaneShift')||'Arcane Shift'},get desc(){return T('skArcaneShift')},maxCd:9,fn:skArcaneShift},
+    {id:'manaShield',icon:SK_IC.manaShield,get name(){return T('snManaShield')||'Mana Shield'},get desc(){return T('skManaShield')},maxCd:11,fn:skManaShield},
   ],
   rogue:[
-    {id:'snipe',icon:SK_IC.snipe,name:'Snipe',get desc(){return T('skSnipe')},maxCd:8,fn:skSnipe},
-    {id:'lootStorm',icon:SK_IC.lootStorm,name:'Loot Storm',get desc(){return T('skLootStorm')},maxCd:10,fn:skLootStorm},
-    {id:'shadowStep',icon:SK_IC.shadowStep,name:'Shadow Step',get desc(){return T('skShadowStep')},maxCd:13,fn:skShadowStep},
-    {id:'poisonTrap',icon:SK_IC.poisonTrap,name:'Poison Trap',get desc(){return T('skPoisonTrap')},maxCd:9,fn:skPoisonTrap},
+    {id:'snipe',icon:SK_IC.snipe,get name(){return T('snSnipe')||'Snipe'},get desc(){return T('skSnipe')},maxCd:8,fn:skSnipe},
+    {id:'lootStorm',icon:SK_IC.lootStorm,get name(){return T('snLootStorm')||'Loot Storm'},get desc(){return T('skLootStorm')},maxCd:10,fn:skLootStorm},
+    {id:'shadowStep',icon:SK_IC.shadowStep,get name(){return T('snShadowStep')||'Shadow Step'},get desc(){return T('skShadowStep')},maxCd:13,fn:skShadowStep},
+    {id:'poisonTrap',icon:SK_IC.poisonTrap,get name(){return T('snPoisonTrap')||'Poison Trap'},get desc(){return T('skPoisonTrap')},maxCd:9,fn:skPoisonTrap},
   ],
 };
 
@@ -1166,17 +1232,17 @@ const CLS_STAT={
 
 // ===== STAT UPGRADES =====
 const STAT_UP=[
-  {name:'STR +1',get desc(){return T('descStr')},fn:()=>{G.str++;rc();}},
-  {name:'DEX +1',get desc(){return T('descDex')},fn:()=>{G.dex++;rc();}},
-  {name:'VIT +1',get desc(){return T('descVit')},fn:()=>{G.vit++;G.maxHp+=5;G.hp=Math.min(G.hp+5,G.maxHp);rc();}},
-  {name:'LCK +1',get desc(){return T('descLck')},fn:()=>{G.lck++;rc();}},
+  {name:'힘 +1',get desc(){return T('descStr')},fn:()=>{G.str++;rc();}},
+  {name:'민첩 +1',get desc(){return T('descDex')},fn:()=>{G.dex++;rc();}},
+  {name:'체력 +1',get desc(){return T('descVit')},fn:()=>{G.vit++;G.maxHp+=5;G.hp=Math.min(G.hp+5,G.maxHp);rc();}},
+  {name:'행운 +1',get desc(){return T('descLck')},fn:()=>{G.lck++;rc();}},
   {name:'HP +10',get desc(){return T('descHp10')},fn:()=>{G.maxHp+=10;G.hp=Math.min(G.hp+10,G.maxHp);}},
-  {name:'ARMOR +8',get desc(){return T('descArm8')},fn:()=>{G.maxArmor+=8;}},
-  {name:'ARMOR DUR',get desc(){return T('descArmDur')},fn:()=>{G.armDur=Math.min(.9,G.armDur+.08);}},
+  {name:'방어 +8',get desc(){return T('descArm8')},fn:()=>{G.maxArmor+=8;}},
+  {name:'내구력',get desc(){return T('descArmDur')},fn:()=>{G.armDur=Math.min(.9,G.armDur+.08);}},
   // === Diablo-style passives ===
   {get name(){return '<svg width="12" height="12" viewBox="0 0 12 12" style="vertical-align:middle"><path d="M6 2C6 2 3 5 3 7.5C3 9.5 4.5 11 6 11C7.5 11 9 9.5 9 7.5C9 5 6 2 6 2Z" fill="#ff6688" stroke="#cc4466" stroke-width=\".8\"/></svg> '+T('vampName');},get desc(){return T('descVamp')},fn:()=>{G.vampiric=Math.min(.4,G.vampiric+.05);}},
-  {name:'THORNS',get desc(){return T('descThorns')},fn:()=>{G.thornsDmg++;}},
-  {name:'ANTIDOTE',get desc(){return T('descAnti')},fn:()=>{G.poisonResist=(G.poisonResist||0)+1;}},
+  {name:'가시',get desc(){return T('descThorns')},fn:()=>{G.thornsDmg++;}},
+  {name:'해독',get desc(){return T('descAnti')},fn:()=>{G.poisonResist=(G.poisonResist||0)+1;}},
   {get name(){return '<svg width="12" height="12" viewBox="0 0 12 12" style="vertical-align:middle"><path d="M6 1C4 4 2 6 4 9C5 10.5 7 10.5 8 9C10 6 8 4 6 1Z" fill="#ff8833" stroke="#cc6622" stroke-width=\".8\"/></svg> '+T('burnResist');},get desc(){return T('descFire')},fn:()=>{G.burnResist=(G.burnResist||0)+1;}},
 ];
 
@@ -1667,7 +1733,7 @@ function go(diff,skipTut){
     level:1,xp:0,xpN:18,
     gold:0,goldN:100,
     upgPt:0,upgN:20,
-    skills:[],maxSkills:4,
+    skills:[],maxSkills:5,
     // passives from equipment
     eqQuicken:false,eqLifeSteal:0,eqRegen:0,eqSpikes:0,eqBlunt:0,eqPierce:0,
     wTier:0,aTier:0,wName:WNAMES()[0],aName:ANAMES()[0],
@@ -1712,12 +1778,15 @@ function showTutorial(){
       <div class="tut-ok" onclick="closeTutorial()">OK</div>
     </div>
   `;
+  ov.addEventListener('click',()=>closeTutorial());
+  ov.addEventListener('touchstart',()=>closeTutorial(),{passive:true});
   document.body.appendChild(ov);
   document.getElementById('tut-t1').textContent=T('tutText');
   document.getElementById('tut-t2').textContent=T('tutSub');
   requestAnimationFrame(()=>{ov.style.opacity='1';});
 }
 function closeTutorial(){
+  if(closeTutorial._done)return;closeTutorial._done=true;
   const el=document.getElementById('tut-overlay');
   if(el){el.style.transition='opacity .5s ease-out';el.style.opacity='0';setTimeout(()=>{try{el.remove();}catch(e){}},500);}
   setTimeout(()=>tutDemo(),800);
@@ -2015,26 +2084,38 @@ async function collapse(newIds){
 
 function rsk(){
   const bar=document.getElementById('skill-bar');bar.innerHTML='';
-  G.skills.forEach((s,i)=>{
-    const rdy=s.cd<=0;
+  // Always render 5 skill slots
+  for(let i=0;i<5;i++){
+    const s=G.skills[i];
     const b=document.createElement('div');
-    b.className='sk-btn'+(rdy?' rdy':' cd');
-    b.innerHTML=`<span>${s.icon}</span>${!rdy?`<span class="cdn">${s.cd}</span>`:''}<span class="sn">${s.name}</span>`;
-    b.title=s.desc;
-    if(rdy)b.onclick=()=>confirmSk(i);
+    if(s){
+      const rdy=s.cd<=0;
+      b.className='sk-btn'+(rdy?' rdy':' cd');
+      b.innerHTML=`<span class="sk-ic">${s.icon}</span>${!rdy?`<span class="cdn">${s.cd}</span>`:''}<span class="sk-lb">${skLabel(s.id)}</span>`;
+      b.title=s.desc;
+      if(rdy)b.onclick=(()=>{const idx=i;return()=>confirmSk(idx);})();
+    }else{
+      b.className='sk-btn sk-empty';
+      b.innerHTML=`<span class="sk-ic" style="opacity:.15">—</span><span class="sk-lb" style="opacity:.15">—</span>`;
+    }
     bar.appendChild(b);
-  });
-  // Ultimate button
+  }
+  // Ultimate button (always show slot, active when ready)
+  const ultKey=G.cls==='warrior'?'ultWarrior':G.cls==='mage'?'ultMage':'ultRogue';
+  const ultIcon=SK_IC[ultKey]||'⚡';
+  const ultLb=skLabel(ultKey);
+  const ub=document.createElement('div');
   if(G.ultReady){
-    const ultKey=G.cls==='warrior'?'ultWarrior':G.cls==='mage'?'ultMage':'ultRogue';
-    const ultIcon=SK_IC[ultKey];
-    const ub=document.createElement('div');
     ub.className='sk-ult';
-    ub.innerHTML=`<span>${ultIcon}</span>`;
+    ub.innerHTML=`<span class="sk-ic">${ultIcon}</span><span class="sk-lb">${ultLb}</span>`;
     ub.title=T(ultKey)+' - '+T(ultKey+'Desc');
     ub.onclick=()=>useUltimate();
-    bar.appendChild(ub);
+  }else{
+    ub.className='sk-ult sk-ult-empty';
+    ub.innerHTML=`<span class="sk-ic" style="opacity:.2">${ultIcon}</span><span class="sk-lb" style="opacity:.2">${ultLb}</span>`;
+    ub.title=T('ultNotReady')||'Mana not full';
   }
+  bar.appendChild(ub);
 }
 
 function ui(){
@@ -2580,15 +2661,6 @@ function showClassPick(){
           G.hp=G.maxHp; // Full heal on class change
           // === Class-optimized starting skill ===
           G.skills=[];
-          let startSkId='heal';
-          if(cid==='warrior')startSkId='slash';
-          else if(cid==='mage')startSkId='charge';
-          else if(cid==='rogue')startSkId='golden';
-          const sk=ALL_SK.find(s=>s.id===startSkId);
-          if(sk){
-            const cdVal=G.eqQuicken?Math.min(sk.maxCd,5):sk.maxCd;
-            G.skills.push({...sk,cd:0,maxCd:cdVal});
-          }
           ui();rsk();
           // Flip animation for rogue/mage: sword→bow/wand
           const flipIcon=cid==='rogue'?SVG_ICONS.bow:cid==='mage'?SVG_ICONS.wand:null;
@@ -2632,34 +2704,39 @@ function showLvl(){
     const lvlH2=document.getElementById('lvl-h2');if(lvlH2)lvlH2.textContent='LEVEL '+G.level;
     
     const d=document.getElementById('ml-c');d.innerHTML='';
+    const hasClass=G.level>=3;
     const avail=ALL_SK.filter(s=>!G.skills.find(x=>x.id===s.id));
     // After class selection (lv3+), mix in class-specific skills & stats
-    const clsSk=(G.level>=3&&CLS_SK[G.cls])?CLS_SK[G.cls].filter(s=>!G.skills.find(x=>x.id===s.id)):[];
-    const clsSt=(G.level>=3&&CLS_STAT[G.cls])?CLS_STAT[G.cls]:[];
-    // Build skill pool: 1 class skill (if available) + 1 general
+    const clsSk=(hasClass&&CLS_SK[G.cls])?CLS_SK[G.cls].filter(s=>!G.skills.find(x=>x.id===s.id)):[];
+    const clsSt=(hasClass&&CLS_STAT[G.cls])?CLS_STAT[G.cls]:[];
+    // Build skill pool (only after class selection, max 5 skills)
     let skPool=[];
-    const clsSkShuf=[...clsSk].sort(()=>Math.random()-.5);
-    const genSkShuf=[...avail].sort(()=>Math.random()-.5);
-    if(clsSkShuf.length>0)skPool.push(clsSkShuf[0]);
-    for(const s of genSkShuf){if(skPool.length>=2)break;if(!skPool.find(x=>x.id===s.id))skPool.push(s);}
-    if(skPool.length<2)for(const s of clsSkShuf){if(skPool.length>=2)break;if(!skPool.find(x=>x.id===s.id))skPool.push(s);}
-    // Build stat pool: 1 class stat (if available) + 1 general
+    if(hasClass&&G.skills.length<G.maxSkills){
+      const clsSkShuf=[...clsSk].sort(()=>Math.random()-.5);
+      const genSkShuf=[...avail].sort(()=>Math.random()-.5);
+      if(clsSkShuf.length>0)skPool.push(clsSkShuf[0]);
+      for(const s of genSkShuf){if(skPool.length>=2)break;if(!skPool.find(x=>x.id===s.id))skPool.push(s);}
+      if(skPool.length<2)for(const s of clsSkShuf){if(skPool.length>=2)break;if(!skPool.find(x=>x.id===s.id))skPool.push(s);}
+    }
+    // Build stat pool: always show 4, pick 2
     let stPool=[];
     const clsStShuf=[...clsSt].sort(()=>Math.random()-.5);
     const genStShuf=[...STAT_UP].sort(()=>Math.random()-.5);
-    if(clsStShuf.length>0)stPool.push(clsStShuf[0]);
-    for(const s of genStShuf){if(stPool.length>=2)break;if(!stPool.find(x=>x.name===s.name))stPool.push(s);}
-    if(stPool.length<2)for(const s of clsStShuf){if(stPool.length>=2)break;if(!stPool.find(x=>x.name===s.name))stPool.push(s);}
+    if(hasClass&&clsStShuf.length>0)stPool.push(clsStShuf[0]);
+    for(const s of genStShuf){if(stPool.length>=4)break;if(!stPool.find(x=>x.name===s.name))stPool.push(s);}
+    if(stPool.length<4)for(const s of clsStShuf){if(stPool.length>=4)break;if(!stPool.find(x=>x.name===s.name))stPool.push(s);}
     const skills=skPool.map(s=>({...s,cType:'skill'}));
     const stats=stPool.map(s=>({...s,cType:'stat'}));
     const ch=[...skills,...stats];
+    const maxPick=2;
     const selected=new Set();
     const btns=[];
     const okBtn=document.createElement('div');
     okBtn.className='ch-ok disabled';
     okBtn.innerHTML='OK';
+    const checkOk=()=>{okBtn.classList.toggle('disabled',selected.size<maxPick);};
     okBtn.onclick=()=>{
-      if(selected.size<2)return;
+      if(selected.size<maxPick)return;
       SFX.click();
       selected.forEach(idx=>{
         const c=ch[idx];
@@ -2671,9 +2748,12 @@ function showLvl(){
       });
       m.classList.remove('show');rsk();ui();res();
     };
-    // SKILL section
+    // Hint text
+    const hint=document.createElement('div');hint.className='lvl-hint';
+    hint.textContent=T('pickTwo')||'Choose 2 to enhance';d.appendChild(hint);
+    // SKILL section (only after class selection)
     if(skills.length>0){
-      const sh=document.createElement('div');sh.className='lvl-section';sh.innerHTML='SKILL';d.appendChild(sh);
+      const sh=document.createElement('div');sh.className='lvl-section';sh.innerHTML=T('secSkill')||'기술';d.appendChild(sh);
       skills.forEach((c,si)=>{
         const idx=si;
         const b=document.createElement('div');b.className='cbtn cbtn-skill';
@@ -2681,15 +2761,15 @@ function showLvl(){
         b.onclick=()=>{
           SFX.click();
           if(selected.has(idx)){selected.delete(idx);b.classList.remove('picked');}
-          else if(selected.size<2){selected.add(idx);b.classList.add('picked');}
-          okBtn.classList.toggle('disabled',selected.size<2);
+          else if(selected.size<maxPick){selected.add(idx);b.classList.add('picked');}
+          checkOk();
         };
         btns.push(b);d.appendChild(b);
       });
     }
     // STAT section
     if(stats.length>0){
-      const sh=document.createElement('div');sh.className='lvl-section';sh.innerHTML='STAT';d.appendChild(sh);
+      const sh=document.createElement('div');sh.className='lvl-section';sh.innerHTML=T('secStat')||'강화';d.appendChild(sh);
       stats.forEach((c,si)=>{
         const idx=skills.length+si;
         const b=document.createElement('div');b.className='cbtn cbtn-stat';
@@ -2697,8 +2777,8 @@ function showLvl(){
         b.onclick=()=>{
           SFX.click();
           if(selected.has(idx)){selected.delete(idx);b.classList.remove('picked');}
-          else if(selected.size<2){selected.add(idx);b.classList.add('picked');}
-          okBtn.classList.toggle('disabled',selected.size<2);
+          else if(selected.size<maxPick){selected.add(idx);b.classList.add('picked');}
+          checkOk();
         };
         btns.push(b);d.appendChild(b);
       });
@@ -2781,9 +2861,9 @@ function showUpg(){
   return new Promise(res=>{
     const m=document.getElementById('m-up');const d=document.getElementById('mu-c');d.innerHTML='';
     const ups=[
-      {name:'WEAPON UP',desc:T('upgWpnDesc',G.wDmg,G.wDmg+1),fn:()=>{G.wDmg++;}},
-      {name:'ARMOR UP',desc:T('upgArmDesc',G.aDef,G.aDef+1),fn:()=>{G.aDef++;}},
-      {name:'DURABILITY',desc:T('upgDurDesc',Math.round(G.armDur*100),Math.round((G.armDur+.1)*100)),fn:()=>{G.armDur=Math.min(.9,G.armDur+.1);}},
+      {name:'무기 강화',desc:T('upgWpnDesc',G.wDmg,G.wDmg+1),fn:()=>{G.wDmg++;}},
+      {name:'방어구 강화',desc:T('upgArmDesc',G.aDef,G.aDef+1),fn:()=>{G.aDef++;}},
+      {name:'내구력 강화',desc:T('upgDurDesc',Math.round(G.armDur*100),Math.round((G.armDur+.1)*100)),fn:()=>{G.armDur=Math.min(.9,G.armDur+.1);}},
       {name:'HP +8',desc:T('upgHpDesc',G.maxHp,G.maxHp+8),fn:()=>{G.maxHp+=8;G.hp=Math.min(G.hp+8,G.maxHp);}},
     ].sort(()=>Math.random()-.5).slice(0,3);
     let selIdx=-1;
