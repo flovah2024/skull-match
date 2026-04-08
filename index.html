@@ -187,7 +187,7 @@ body{display:flex;align-items:center;justify-content:center;padding:env(safe-are
 #restart-btn:hover{border-color:#666;background:rgba(30,30,30,.9);}
 #restart-btn:active{transform:scale(.9);}
 #restart-btn svg{width:16px;height:16px;}
-.restart-confirm{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:700;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(2px);animation:skConfIn .15s ease-out;}
+.restart-confirm{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:800;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(2px);animation:skConfIn .15s ease-out;}
 .restart-confirm-box{background:linear-gradient(180deg,#111,#0a0a0a);border:1px solid #333;padding:24px 28px;text-align:center;max-width:260px;}
 .restart-confirm-text{font-family:'DS Cloister Black',Georgia,serif;font-size:20px;color:var(--sv-hi);letter-spacing:2px;margin-bottom:16px;}
 .restart-confirm-btns{display:flex;gap:16px;justify-content:center;}
@@ -521,8 +521,8 @@ body{display:flex;align-items:center;justify-content:center;padding:env(safe-are
 </svg><h2>Upgrade</h2><div id="mu-c"></div></div></div>
 
 <!-- ===== MAIN GAME ===== -->
-<div id="root">
-  <div id="restart-btn" onclick="confirmRestart()"><svg viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round"><path d="M3 12a9 9 0 1 1 3-6.5"/><polyline points="3 2 3 7 8 7"/></svg></div>
+<div id="root" role="application" aria-label="SKULL MATCH Game">
+  <div id="restart-btn" onclick="confirmRestart()" role="button" aria-label="Restart"><svg viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round"><path d="M3 12a9 9 0 1 1 3-6.5"/><polyline points="3 2 3 7 8 7"/></svg></div>
   <div id="hud-top"><div id="set-btn" onclick="showSettings()"><svg viewBox="0 0 24 24"><path d="M12 2C7.5 2 4 6 4 11c0 3 1.5 5.5 3.5 6.5V20c0 .5.5 1 1 1h7c.5 0 1-.5 1-1v-2.5C18.5 16.5 20 14 20 11c0-5-3.5-9-8-9z" fill="#888" stroke="#666" stroke-width=".5"/><ellipse cx="9" cy="11" rx="2.5" ry="3" fill="#222" stroke="#555" stroke-width=".5"/><ellipse cx="15" cy="11" rx="2.5" ry="3" fill="#222" stroke="#555" stroke-width=".5"/><path d="M9 17l1-1 1.5 1.5L12 16l.5 1.5L14 16l1 1" stroke="#666" stroke-width="1" stroke-linecap="round" fill="none"/></svg></div>
     <div id="score-bar">
       <div class="score-item"><span class="score-label">SCORE</span><span class="score-num" id="v-score">0</span></div>
@@ -548,13 +548,13 @@ body{display:flex;align-items:center;justify-content:center;padding:env(safe-are
       <div class="st-chip"><span class="st-label" id="sl-lck"></span><span class="st-val" id="s-lck">1</span></div>
     </div>
     <div id="skill-row">
-      <div id="skill-bar"></div>
+      <div id="skill-bar" role="toolbar" aria-label="Skills"></div>
 
     </div>
   </div>
   <div id="board-wrap">
     <div id="board-frame">
-      <div id="board"></div>
+      <div id="board" role="grid" aria-label="Game Board"></div>
       <svg id="lsvg"></svg>
     </div>
   </div>
@@ -1643,7 +1643,9 @@ function doRestart(){
 //  GAME INIT
 // ================================================================
 function go(diff){
-  const d=DIFF[diff],cls=CLASSES.find(c=>c.id===selCls),m=cls.mods;
+  const d=DIFF[diff];if(!d)return;
+  const cls=CLASSES.find(c=>c.id===selCls)||CLASSES[0];
+  const m=cls.mods||{};
   G={
     diff,cls:cls.id,clsMods:m,turn:0,kills:0,totGold:0,comboCount:0,maxCombo:0,
     hp:d.hp+(m.maxHpBonus||0),maxHp:d.hp+(m.maxHpBonus||0),
@@ -1877,7 +1879,7 @@ function mkEl(t,anim){
   // Icon — SVG based
   let iconSvg;
   if(t.mana)iconSvg=SVG_ICONS.mana();
-  else if(t.arrow)iconSvg=SVG_ICONS.arrow();
+  else if(t.arrow)iconSvg=SVG_ICONS.bow();
   else if(t.type==='skull'){
     // Calculate threat level based on total power
     const power=t.atk+t.def+t.hp;
@@ -1936,7 +1938,7 @@ function screenFx(color='rgba(255,50,50,.08)',dur=300){
   const ov=document.createElement('div');
   ov.style.cssText=`position:absolute;inset:0;background:${color};pointer-events:none;z-index:50;opacity:0;transition:opacity ${Math.floor(dur*.3)}ms ease-in;border-radius:2px;`;
   el.appendChild(ov);
-  requestAnimationFrame(()=>{ov.style.opacity='1';setTimeout(()=>{ov.style.transition=`opacity ${Math.floor(dur*.7)}ms ease-out`;ov.style.opacity='0';setTimeout(()=>ov.remove(),dur);},dur*.3);});
+  requestAnimationFrame(()=>{ov.style.opacity='1';setTimeout(()=>{ov.style.transition=`opacity ${Math.floor(dur*.7)}ms ease-out`;ov.style.opacity='0';setTimeout(()=>{if(ov.parentNode)ov.remove();},dur);},dur*.3);});
 }
 
 // Damage vignette - red edge gradient flash
@@ -1944,7 +1946,7 @@ function dmgVignette(dur=400){
   const ov=document.createElement('div');
   ov.style.cssText='position:fixed;inset:0;pointer-events:none;z-index:999;background:radial-gradient(ellipse at center,transparent 40%,rgba(180,0,0,0.45) 100%);opacity:0;transition:opacity 60ms ease-in;';
   document.body.appendChild(ov);
-  requestAnimationFrame(()=>{ov.style.opacity='1';setTimeout(()=>{ov.style.transition=`opacity ${Math.floor(dur*0.7)}ms ease-out`;ov.style.opacity='0';setTimeout(()=>ov.remove(),dur);},dur*0.3);});
+  requestAnimationFrame(()=>{ov.style.opacity='1';setTimeout(()=>{ov.style.transition=`opacity ${Math.floor(dur*0.7)}ms ease-out`;ov.style.opacity='0';setTimeout(()=>{if(ov.parentNode)ov.remove();},dur);},dur*0.3);});
 }
 
 // Haptic-like vibration (mobile)
@@ -2101,8 +2103,8 @@ function hl(){
   // Remove previous death-X markers
   document.querySelectorAll('.death-x').forEach(e=>e.classList.remove('death-x'));
   if(path.length>=3&&pty==='combat'){
-    const sw=path.filter(p=>board[p.r][p.c].type==='sword').length;
-    const sk=path.filter(p=>board[p.r][p.c].type==='skull').length;
+    const sw=path.filter(p=>board[p.r]?.[p.c]?.type==='sword').length;
+    const sk=path.filter(p=>board[p.r]?.[p.c]?.type==='skull').length;
     const dmg=sw>0?(sw*G.wDmg+G.str*sw):Math.max(1,Math.floor(G.str*0.5));
     // Mark skulls that would die
     const pierceMod=1-(G.eqPierce*.05)-((G.clsMods&&G.clsMods.piercePenalty)||0);
@@ -2129,8 +2131,9 @@ function clr(){
 // ================================================================
 async function proc(){
   busy=true;
+  try{
   const p=[...path];path=[];pty=null;
-  const m=G.clsMods;
+  const m=G.clsMods||{};
   SFX.match();
 
   // Raider cocky penalty: 3 tiles only = nothing
@@ -2386,7 +2389,8 @@ async function proc(){
   // Skill cooldowns
   G.skills.forEach(s=>{if(s.cd>0)s.cd--;});
   rsk();
-  setTimeout(()=>msg('&nbsp;'),2000);busy=false;
+  setTimeout(()=>msg('&nbsp;'),2000);
+  }catch(e){console.error('Proc error:',e);}finally{busy=false;}
 }
 
 // ================================================================
@@ -2937,10 +2941,12 @@ function confirmSk(i){
   document.getElementById('sk-no-btn').onclick=()=>{ov.remove();};
 }
 async function useSk(i){
-  if(busy)return;const s=G.skills[i];if(s.cd>0)return;
+  if(busy)return;const s=G.skills[i];if(!s||s.cd>0)return;
   busy=true;s.cd=s.maxCd;SFX.skill();
-  framePulse('a-skill',400);screenFx('rgba(180,130,255,.06)',250);
-  await s.fn();rsk();ui();busy=false;
+  try{
+    framePulse('a-skill',400);screenFx('rgba(180,130,255,.06)',250);
+    await s.fn();rsk();ui();
+  }catch(e){console.error('Skill error:',e);}finally{busy=false;}
 }
 
 // Helper: collect all tiles of type
@@ -3205,11 +3211,13 @@ async function useUltimate(){
   if(busy||!G.ultReady)return;
   busy=true;G.ultReady=false;G.mana=0;
   SFX.skill();
-  screenFx('rgba(140,80,255,.15)',500);
-  if(G.cls==='warrior')await ultWarrior();
-  else if(G.cls==='mage')await ultMage();
-  else await ultRogue();
-  rsk();ui();busy=false;
+  try{
+    screenFx('rgba(140,80,255,.15)',500);
+    if(G.cls==='warrior')await ultWarrior();
+    else if(G.cls==='mage')await ultMage();
+    else await ultRogue();
+    rsk();ui();
+  }catch(e){console.error('Ultimate error:',e);}finally{busy=false;}
 }
 async function ultWarrior(){
   // DMG all skulls + full armor
@@ -3370,7 +3378,7 @@ function flt(pos,text,color,sizeClass){
   f.style.left=x+'px';f.style.top=Math.max(4,y)+'px';
   frame.appendChild(f);
   _fltY++;
-  setTimeout(()=>{f.remove();_fltY=Math.max(0,_fltY-1);},2000);
+  setTimeout(()=>{if(f.parentNode)f.remove();_fltY=Math.max(0,_fltY-1);},2000);
 }
 // === iOS-compatible touch/pointer input on board ===
 function getTileAt(x,y){
@@ -3419,6 +3427,13 @@ document.getElementById('root').addEventListener('touchmove',e=>{
 // Prevent double-tap zoom
 let lastTap=0;document.addEventListener('touchend',e=>{const now=Date.now();if(now-lastTap<300&&!e.target.closest('.mbox,.mbg,.cbtn,.rbtn,.dbtn,.cls-btn'))e.preventDefault();lastTap=now;},false);
 document.body.style.overscrollBehavior='none';
+// ESC key to close modals
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){
+    const rc=document.querySelector('.restart-confirm');if(rc){rc.remove();return;}
+    const sk=document.querySelector('.sk-confirm');if(sk){sk.remove();return;}
+  }
+});
 </script>
 </body>
 </html>
