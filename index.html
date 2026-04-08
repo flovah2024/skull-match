@@ -159,7 +159,7 @@ body{display:flex;align-items:center;justify-content:center;padding:env(safe-are
     linear-gradient(-45deg,transparent 48%,rgba(40,40,50,.04) 49%,rgba(40,40,50,.04) 51%,transparent 52%);
   background-size:auto,18px 18px,18px 18px;border-bottom:1px solid #333;padding:calc(6px + env(safe-area-inset-top)) 8px 6px;gap:4px;}
 /* Score bar */
-#score-bar{display:flex;align-items:center;justify-content:center;gap:8px;padding:2px 0 4px;}
+#score-bar{display:flex;align-items:center;justify-content:center;gap:8px;padding:2px 0 0;}
 .score-item{display:flex;align-items:baseline;gap:4px;background:#060606;border:1px solid #252525;padding:2px 8px; 0,100% 4px,100% calc(100% - 4px),calc(100% - 4px) 100%,4px 100%,0 calc(100% - 4px),0 4px);}
 .score-label{font-size:10px;color:#585858;font-weight:700;letter-spacing:2px;}
 .score-num{font-size:18px;color:var(--sv-hi);font-weight:900;letter-spacing:1px;font-family:'DS Cloister Black','UnifrakturMaguntia',Georgia,serif;}
@@ -199,9 +199,9 @@ body{display:flex;align-items:center;justify-content:center;padding:env(safe-are
     radial-gradient(ellipse at 50% 50%,transparent 60%,rgba(40,40,50,.06) 61%,transparent 62%),
     linear-gradient(45deg,transparent 48%,rgba(40,40,50,.04) 49%,rgba(40,40,50,.04) 51%,transparent 52%),
     linear-gradient(-45deg,transparent 48%,rgba(40,40,50,.04) 49%,rgba(40,40,50,.04) 51%,transparent 52%);
-  background-size:auto,18px 18px,18px 18px;border-top:1px solid #333;padding:6px 8px 6px;}
+  background-size:auto,18px 18px,18px 18px;border-top:1px solid #333;padding:6px 8px 6px;gap:4px;}
 /* HP + ARM bars */
-#bars-row{display:flex;gap:8px;align-items:center;margin-bottom:5px;}
+#bars-row{display:flex;gap:8px;align-items:center;}
 #lvl-badge{width:40px;height:40px;background:transparent;border:none;display:flex;align-items:center;justify-content:center;font-family:'DS Cloister Black','UnifrakturMaguntia',Georgia,serif;font-size:36px;color:var(--sv-hi);flex-shrink:0;font-weight:400;}
 #bars-col{flex:1;display:flex;flex-direction:column;gap:4px;}
 .hbar{display:flex;align-items:center;gap:5px;}
@@ -241,7 +241,7 @@ body{display:flex;align-items:center;justify-content:center;padding:env(safe-are
 #status-fx{display:flex;gap:5px;justify-content:center;min-height:0;flex-wrap:wrap;margin-bottom:4px;}
 .sfx-chip{display:inline-flex;align-items:center;gap:3px;font-size:12px;font-weight:900;padding:3px 8px;border:1px solid #252525;background:#060606; 0,100% 4px,100% calc(100% - 4px),calc(100% - 4px) 100%,4px 100%,0 calc(100% - 4px),0 4px);}
 /* Message */
-#msg{width:min(calc(100vw - 8px), 420px);box-sizing:border-box;text-align:center;height:32px;line-height:32px;font-size:14px;color:var(--sv);margin:4px auto;padding:0 8px;letter-spacing:.5px;font-weight:700;border:1px solid #2a2a2a;background:#060606;}
+#msg{width:min(calc(100vw - 8px), 420px);box-sizing:border-box;text-align:center;height:32px;line-height:32px;font-size:14px;color:var(--sv);margin:0 auto;padding:0 8px;letter-spacing:.5px;font-weight:700;border:1px solid #2a2a2a;background:#060606;}
 /* Skill buttons */
 .sk-btn{flex:1;min-width:0;height:44px;background:linear-gradient(180deg,#0c0c0c,#060606);border:1px solid #2a2a2a;border-radius:0;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;position:relative;transition:all .15s;gap:1px;padding:2px 2px 2px;}
 .sk-ic{display:flex;align-items:center;justify-content:center;line-height:1;}
@@ -688,14 +688,14 @@ const fbDB = firebase.database();
           <span class="hbar-val" id="t-hp">50/50</span>
         </div>
         <div class="hbar">
-          <span class="hbar-icon"><svg viewBox="0 0 14 14"><path d="M7 1L2 3.5V8C2 11 4.5 13 7 13C9.5 13 12 11 12 8V3.5L7 1Z" fill="none" stroke="#888" stroke-width="1.5"/></svg></span>
-          <div class="hbar-track"><div class="hbar-fill fill-arm" id="b-arm" style="width:0%"></div></div>
-          <span class="hbar-val" id="t-arm">0/20</span>
-        </div>
-        <div class="hbar">
-          <span class="hbar-icon"><svg viewBox="0 0 14 14"><path d="M7 1L5.5 3.5L3 4L5 7L4 10L5 12L7 13L9 12L10 10L9 7L11 4L8.5 3.5Z" fill="#2255cc" stroke="#4488ff" stroke-width=".6"/><circle cx="7" cy="7" r="1.5" fill="#66aaff" opacity=".6"/></svg></span>
+          <span class="hbar-icon"><svg viewBox="0 0 14 14"><path d="M7 12C7 12 2 8.5 2 5.5C2 3.5 3.5 2 5.5 2C6.5 2 7 2.8 7 2.8S7.5 2 8.5 2C10.5 2 12 3.5 12 5.5C12 8.5 7 12 7 12Z" fill="#1a3a8a" stroke="#3060cc" stroke-width=".8"/></svg></span>
           <div class="hbar-track"><div class="hbar-fill fill-mana" id="b-mana" style="width:0%"></div></div>
           <span class="hbar-val" id="t-mana">0/100</span>
+        </div>
+        <div class="hbar">
+          <span class="hbar-icon"><svg viewBox="0 0 14 14"><path d="M7 1L2 3.5V8C2 11 4.5 13 7 13C9.5 13 12 11 12 8V3.5L7 1Z" fill="#555" stroke="#888" stroke-width=".8"/></svg></span>
+          <div class="hbar-track"><div class="hbar-fill fill-arm" id="b-arm" style="width:0%"></div></div>
+          <span class="hbar-val" id="t-arm">0/20</span>
         </div>
       </div>
     </div>
