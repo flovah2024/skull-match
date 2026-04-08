@@ -387,7 +387,7 @@ body{display:flex;align-items:center;justify-content:center;padding:0 env(safe-a
 /* ===== MODALS (compact) ===== */
 .mbg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.96);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
 .mbg.show{display:flex;animation:modalBgIn .3s ease-out;}
-.mbox{background:#0a0a0a;border:1px solid #2a2a2a;padding:16px 14px;max-width:370px;width:92%; 0,100% 6px,100% calc(100% - 6px),calc(100% - 6px) 100%,6px 100%,0 calc(100% - 6px),0 6px);box-shadow:0 0 40px rgba(0,0,0,.8),0 0 1px #555;animation:modalBoxIn .3s cubic-bezier(.34,1.2,.64,1);}
+.mbox{background:#0a0a0a;border:none;padding:16px 14px;max-width:370px;width:92%; 0,100% 6px,100% calc(100% - 6px),calc(100% - 6px) 100%,6px 100%,0 calc(100% - 6px),0 6px);box-shadow:0 0 40px rgba(0,0,0,.8),0 0 1px #555;animation:modalBoxIn .3s cubic-bezier(.34,1.2,.64,1);}
 @keyframes modalBgIn{from{opacity:0}to{opacity:1}}
 @keyframes modalBoxIn{from{opacity:0;transform:scale(.9) translateY(15px)}to{opacity:1;transform:scale(1) translateY(0)}}
 .mbox::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;
