@@ -88,7 +88,7 @@ body{display:flex;align-items:center;justify-content:center;padding:env(safe-are
 #first-time-q{display:flex;flex-direction:column;align-items:center;gap:0;position:relative;}
 .ftq-label{font-family:'Noto Serif KR',Georgia,serif;font-size:16px;color:#888;letter-spacing:2px;position:absolute;bottom:100%;margin-bottom:14px;white-space:nowrap;}
 .ftq-btns{display:flex;gap:10px;}
-.ftq-btns .dbtn{width:80px;min-width:0;padding:10px 0;font-size:14px;font-family:'Noto Serif KR',Georgia,serif;font-weight:normal;letter-spacing:1px;animation:none;opacity:1;text-align:center;color:#888;background:#0a0a0a;border:1px solid #2a2a2a;cursor:pointer;transition:all .12s;}
+#scr-start .ftq-btns .dbtn{width:80px;min-width:0;padding:10px 0;font-size:14px;font-family:'Noto Serif KR',Georgia,serif;font-weight:normal;letter-spacing:1px;animation:none !important;opacity:1 !important;text-align:center;color:#888;background:#0a0a0a;border:1px solid #2a2a2a;cursor:pointer;transition:all .12s;transform:none !important;}
 .ftq-btns .dbtn:active{transform:scale(.95);}
 .start-lang-btn{font-family:'Noto Serif KR',Georgia,serif;font-size:14px;color:#888;min-width:80px;padding:10px 24px;border:1px solid #2a2a2a;background:#0a0a0a;cursor:pointer;transition:all .12s;letter-spacing:1px;text-align:center;}
 .start-lang-btn:active{transform:scale(.95);}
@@ -752,7 +752,7 @@ ko:{
   snHeal:'생명수집',snRepair:'방패수집',snSlash:'칼바람',snTreasure:'금화수집',snCharge:'전방위공격',
   snCounter:'자멸유도',snShatter:'약화의눈',snTeleport:'타일재배치',snGolden:'황금변환',snScavenge:'방패변환',
   snDazzle:'검으로변환',snDisarm:'해골제거',snEnchant:'즉시강화',snExplosive:'물약폭발',snPoison:'전체독공격',
-  snCleave:'이중칼바람',snWarcry:'전투함성',snFortify:'철벽방어',snExecute:'즉사처형',
+  snCleave:'이중칼바람',snWarcry:'전투함성',snFortify:'철벽방어',snExecute:'즉시처형',
   snFireball:'화염폭발',snFrostNova:'빙결마법',snArcaneShift:'쿨다운초기화',snManaShield:'마나보호막',
   snSnipe:'급소저격',snLootStorm:'황금폭풍',snShadowStep:'그림자습격',snPoisonTrap:'독안개',
   pickSkill:'SKILL',
@@ -1192,7 +1192,7 @@ const SK_LB={
   heal:'생명수집',repair:'방패수집',slash:'칼바람',treasure:'금화수집',charge:'전방위',
   counter:'자멸유도',shatter:'약화',teleport:'재배치',golden:'금화변환',scavenge:'방패변환',
   dazzle:'검변환',disarm:'해골제거',enchant:'즉시강화',explosive:'물약폭발',poison:'독공격',
-  cleave:'이중참격',warcry:'전투함성',fortify:'철벽방어',execute:'즉사처형',
+  cleave:'이중참격',warcry:'전투함성',fortify:'철벽방어',execute:'즉시처형',
   fireball:'화염폭발',frostNova:'빙결마법',arcaneShift:'쿨초기화',manaShield:'마나막',
   snipe:'급소저격',lootStorm:'황금폭풍',shadowStep:'그림자',poisonTrap:'독안개',
   ultWarrior:'분노폭발',ultMage:'멸망의빛',ultRogue:'암살일격',
