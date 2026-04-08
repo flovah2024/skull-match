@@ -85,10 +85,11 @@ body{display:flex;align-items:center;justify-content:center;padding:env(safe-are
 
 #start-lang{display:flex;gap:10px;justify-content:center;}
 #start-actions{display:flex;flex-direction:column;align-items:center;gap:16px;}
-#first-time-q{display:flex;flex-direction:column;align-items:center;gap:16px;}
-.ftq-label{font-family:'Noto Serif KR',Georgia,serif;font-size:14px;color:#888;letter-spacing:2px;}
+#first-time-q{display:flex;flex-direction:column;align-items:center;gap:0;position:relative;}
+.ftq-label{font-family:'Noto Serif KR',Georgia,serif;font-size:16px;color:#888;letter-spacing:2px;position:absolute;bottom:100%;margin-bottom:14px;white-space:nowrap;}
 .ftq-btns{display:flex;gap:10px;}
-.ftq-btns .dbtn{width:auto;min-width:80px;padding:10px 24px;font-size:14px;letter-spacing:3px;animation:none;opacity:1;text-align:center;}
+.ftq-btns .dbtn{width:80px;min-width:0;padding:10px 0;font-size:14px;font-family:'Noto Serif KR',Georgia,serif;font-weight:normal;letter-spacing:1px;animation:none;opacity:1;text-align:center;color:#888;background:#0a0a0a;border:1px solid #2a2a2a;cursor:pointer;transition:all .12s;}
+.ftq-btns .dbtn:active{transform:scale(.95);}
 .start-lang-btn{font-family:'Noto Serif KR',Georgia,serif;font-size:14px;color:#888;min-width:80px;padding:10px 24px;border:1px solid #2a2a2a;background:#0a0a0a;cursor:pointer;transition:all .12s;letter-spacing:1px;text-align:center;}
 .start-lang-btn:active{transform:scale(.95);}
 .start-lang-btn.active{border-color:var(--sv);color:var(--sv-hi);background:#141414;}
@@ -1709,7 +1710,7 @@ function showFirstTimeQ(){
     +'<div class="dbtn" onclick="startWithoutTutorial()">'+(T('firstNo')||'아니요')+'</div>'
     +'</div>';
   ftDiv.style.display='flex';ftDiv.style.opacity='0';
-  requestAnimationFrame(()=>{ftDiv.style.transition='opacity .25s ease-in';ftDiv.style.opacity='1';});
+  requestAnimationFrame(()=>{ftDiv.style.transition='opacity 1s ease-in';ftDiv.style.opacity='1';});
 }
 function startWithTutorial(){
   SFX.click();
