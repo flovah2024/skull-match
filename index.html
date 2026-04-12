@@ -186,12 +186,12 @@ body.silver .set-lang-btn.on{border-color:#aaa;color:#ddd;background:#2a2a2a;}
     radial-gradient(ellipse at 50% 50%,transparent 60%,rgba(40,40,50,.06) 61%,transparent 62%),
     linear-gradient(45deg,transparent 48%,rgba(40,40,50,.04) 49%,rgba(40,40,50,.04) 51%,transparent 52%),
     linear-gradient(-45deg,transparent 48%,rgba(40,40,50,.04) 49%,rgba(40,40,50,.04) 51%,transparent 52%);
-  background-size:auto,18px 18px,18px 18px;border-bottom:none;padding:calc(8px + env(safe-area-inset-top)) calc(6px + env(safe-area-inset-right)) 2px calc(6px + env(safe-area-inset-left));gap:2px;}
+  background-size:auto,18px 18px,18px 18px;border-bottom:none;padding:calc(14px + env(safe-area-inset-top)) calc(6px + env(safe-area-inset-right)) 2px calc(6px + env(safe-area-inset-left));gap:2px;}
 /* Score bar */
 #app-bar{display:flex;align-items:center;justify-content:space-between;gap:3px;padding:0 4px;}
 #app-bar-left,#app-bar-right{display:flex;align-items:center;gap:3px;flex-shrink:0;}
 #score-bar{display:flex;align-items:center;gap:3px;justify-content:center;flex:1;}
-.score-item{display:flex;align-items:center;justify-content:center;gap:4px;background:#060606;border:1px solid #252525;padding:0 10px;height:36px;flex:1;box-sizing:border-box;}
+.score-item{display:flex;align-items:center;justify-content:center;gap:4px;background:#060606;border:1px solid #252525;padding:0 10px;height:44px;flex:1;box-sizing:border-box;}
 .score-label{font-size:10px;color:#585858;font-weight:700;letter-spacing:1px;}
 .score-num{font-size:17px;color:var(--sv-hi);font-weight:900;letter-spacing:0px;font-family:'DS Cloister Black','UnifrakturMaguntia',Georgia,serif;}
 .score-ini{font-size:10px;color:var(--sv-lo);font-weight:900;letter-spacing:1px;margin-right:4px;max-width:60px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;vertical-align:middle;}
@@ -199,13 +199,13 @@ body.silver .set-lang-btn.on{border-color:#aaa;color:#ddd;background:#2a2a2a;}
 .score-div{display:flex;align-items:center;opacity:.5;}
 /* Equipment row */
 #equip-row{display:flex;gap:2px;}
-.eq-slot{flex:1;display:flex;align-items:center;gap:4px;background:linear-gradient(180deg,#0e0e0e,#080808);border:1px solid #2a2a2a;padding:3px 10px;overflow:hidden; 0,100% 4px,100% calc(100% - 4px),calc(100% - 4px) 100%,4px 100%,0 calc(100% - 4px),0 4px);}
+.eq-slot{flex:1;display:flex;align-items:center;gap:4px;background:linear-gradient(180deg,#0e0e0e,#080808);border:1px solid #2a2a2a;padding:3px 10px;overflow:hidden;}
 .eq-slot span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 #eq-wpn-name,#eq-arm-name{font-size:11px;color:#888;font-weight:700;flex:1;}
 .eq-val{font-size:12px;color:var(--sv-hi);font-weight:900;flex-shrink:0;}
 /* Stat chips */
 #stat-chips{display:flex;gap:2px;justify-content:center;}
-.st-chip{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;background:linear-gradient(180deg,#0c0c0c,#060606);border:1px solid #282828;padding:3px 0; 0,100% 4px,100% calc(100% - 4px),calc(100% - 4px) 100%,4px 100%,0 calc(100% - 4px),0 4px);}
+.st-chip{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;background:linear-gradient(180deg,#0c0c0c,#060606);border:1px solid #282828;padding:3px 0;}
 .st-ic{opacity:.5;flex-shrink:0;}
 .st-label{font-size:10px;color:#585858;font-weight:700;letter-spacing:1px;}
 .st-val{font-size:14px;color:var(--sv-hi);font-weight:900;}
@@ -269,7 +269,7 @@ body.silver .set-lang-btn.on{border-color:#aaa;color:#ddd;background:#2a2a2a;}
 .sk-empty:active{transform:none;}
 /* Resource row */
 #res-row{display:flex;gap:4px;margin-bottom:5px;}
-.res{flex:1;display:flex;align-items:center;gap:4px;background:linear-gradient(180deg,#0a0a0a,#060606);border:1px solid #252525;padding:4px 6px;overflow:hidden; 0,100% 4px,100% calc(100% - 4px),calc(100% - 4px) 100%,4px 100%,0 calc(100% - 4px),0 4px);}
+.res{flex:1;display:flex;align-items:center;gap:4px;background:linear-gradient(180deg,#0a0a0a,#060606);border:1px solid #252525;padding:4px 6px;overflow:hidden;}
 .res-icon{flex-shrink:0;display:flex;align-items:center;}
 .res-icon svg{width:16px;height:16px;}
 .res-bar{flex:1;height:8px;background:#0a0a0a;border:1px solid #202020;overflow:hidden;}
@@ -278,7 +278,7 @@ body.silver .set-lang-btn.on{border-color:#aaa;color:#ddd;background:#2a2a2a;}
 .fill-upg{background:linear-gradient(90deg,#3a3a3a,#777);}
 .fill-gold{background:linear-gradient(90deg,#555,#aaa);}
 /* Turn counter in res-row */
-.res-turn{display:flex;align-items:center;gap:3px;background:#060606;border:1px solid #202020;padding:4px 8px; 0,100% 4px,100% calc(100% - 4px),calc(100% - 4px) 100%,4px 100%,0 calc(100% - 4px),0 4px);font-size:13px;color:#666;font-weight:900;letter-spacing:.5px;}
+.res-turn{display:flex;align-items:center;gap:3px;background:#060606;border:1px solid #202020;padding:4px 8px;font-size:13px;color:#666;font-weight:900;letter-spacing:.5px;}
 .res-turn b{color:var(--sv-hi);font-size:15px;}
 /* Status effects */
 #status-fx{display:flex;gap:4px;justify-content:center;min-height:0;flex-wrap:wrap;margin-top:auto;}
@@ -287,7 +287,7 @@ body.silver .set-lang-btn.on{border-color:#aaa;color:#ddd;background:#2a2a2a;}
 .rs-chip svg,.rs-chip img{width:14px;height:14px;pointer-events:none;}
 .rs-chip.active{opacity:1;border-color:#282828;}
 .rs-chip .rs-val{font-size:10px;font-weight:900;color:var(--sv-hi);}
-.sfx-chip{display:inline-flex;align-items:center;gap:3px;font-size:12px;font-weight:900;padding:3px 8px;border:1px solid #252525;background:#060606; 0,100% 4px,100% calc(100% - 4px),calc(100% - 4px) 100%,4px 100%,0 calc(100% - 4px),0 4px);}
+.sfx-chip{display:inline-flex;align-items:center;gap:3px;font-size:12px;font-weight:900;padding:3px 8px;border:1px solid #252525;background:#060606;}
 /* Buff tile — diamond shape */
 .tile-buff{background:#000;border:none !important;overflow:visible;position:relative;animation:buffBreathe 2.4s ease-in-out infinite;}
 .tile-buff .buff-diamond{display:none;}
@@ -434,12 +434,12 @@ body.silver .set-lang-btn.on{border-color:#aaa;color:#ddd;background:#2a2a2a;}
 @keyframes skillFlash{0%{filter:brightness(1)}50%{filter:brightness(1.3)}100%{filter:brightness(1)}}
 @keyframes hpBarFlash{0%{filter:brightness(1)}50%{filter:brightness(1.5)}100%{filter:brightness(1)}}
 .a-spawn{animation:spawn .3s cubic-bezier(.25,.1,.25,1)}
-.a-pop{animation:pop .3s ease-out forwards}
-.a-fall{animation:fall .35s cubic-bezier(.25,.46,.45,.94) both}
+.a-pop{animation:pop .12s ease-out forwards}
+.a-fall{animation:fall .18s cubic-bezier(.25,.46,.45,.94) both}
 .a-shake{animation:shake .35s ease-in-out}
 .a-dmg{animation:dmgf .45s ease-in-out}
 .a-slash{animation:slashHit .25s ease-in-out}
-.a-kill{animation:skullDeath .4s cubic-bezier(.2,.8,.3,1) forwards}
+.a-kill{animation:skullDeath .15s cubic-bezier(.2,.8,.3,1) forwards}
 @keyframes burstP{0%{transform:translate(0,0) scale(1);opacity:1}100%{opacity:0}}
 .a-heal{animation:healPulse .5s ease-in-out}
 .a-shield{animation:shieldPulse .5s ease-in-out}
@@ -461,7 +461,7 @@ body.silver .set-lang-btn.on{border-color:#aaa;color:#ddd;background:#2a2a2a;}
 /* ===== MODALS (compact) ===== */
 .mbg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.96);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
 .mbg.show{display:flex;animation:modalBgIn .3s ease-out;}
-.mbox{background:#0a0a0a;border:1px solid #3a3a3a;padding:16px 14px;max-width:370px;width:92%; 0,100% 6px,100% calc(100% - 6px),calc(100% - 6px) 100%,6px 100%,0 calc(100% - 6px),0 6px);box-shadow:0 0 40px rgba(0,0,0,.8),0 0 1px #555;animation:modalBoxIn .3s cubic-bezier(.34,1.2,.64,1);}
+.mbox{background:#0a0a0a;border:1px solid #3a3a3a;padding:16px 14px;max-width:370px;width:92%;box-shadow:0 0 40px rgba(0,0,0,.8),0 0 1px #555;animation:modalBoxIn .3s cubic-bezier(.34,1.2,.64,1);}
 @keyframes modalBgIn{from{opacity:0}to{opacity:1}}
 @keyframes modalBoxIn{from{opacity:0;transform:scale(.9) translateY(15px)}to{opacity:1;transform:scale(1) translateY(0)}}
 .mbox::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;
@@ -471,7 +471,7 @@ body.silver .set-lang-btn.on{border-color:#aaa;color:#ddd;background:#2a2a2a;}
     linear-gradient(-45deg,transparent 48%,rgba(50,50,60,.08) 49%,rgba(50,50,60,.08) 51%,transparent 52%);
   background-size:16px 16px;opacity:.5;}
 .mbox h2{text-align:center;color:var(--sv-hi);position:relative;font-family:'DS Cloister Black','UnifrakturMaguntia',Georgia,serif;font-size:20px;margin-bottom:8px;letter-spacing:2px;font-weight:400;}
-.cbtn{background:linear-gradient(180deg,#0c0c0c,#060606);border:1px solid #282828;padding:8px 12px; 0,100% 4px,100% calc(100% - 4px),calc(100% - 4px) 100%,4px 100%,0 calc(100% - 4px),0 4px);cursor:pointer;color:#999;text-align:left;width:100%;margin-bottom:3px;transition:all .12s;}
+.cbtn{background:linear-gradient(180deg,#0c0c0c,#060606);border:1px solid #282828;padding:8px 12px;cursor:pointer;color:#999;text-align:left;width:100%;margin-bottom:3px;transition:all .12s;-webkit-tap-highlight-color:transparent;}
 .cbtn:hover{border-color:#585858;background:#0e0e0e;}
 .cbtn:hover .cd2{color:#ffffff;}
 .cbtn:hover .ct{color:#ffffff;}
@@ -482,7 +482,7 @@ body.silver .set-lang-btn.on{border-color:#aaa;color:#ddd;background:#2a2a2a;}
 .cbtn.picked{border-color:var(--sv);background:#121212;box-shadow:0 0 8px rgba(200,196,188,.1);}
 .cbtn.picked .cd2{color:#cccccc;}
 .cbtn.picked .ct{color:#fff;}
-.ch-ok{font-family:'Noto Serif KR','Noto Serif SC','Noto Serif JP',Georgia,serif;font-size:22px;color:var(--sv-hi);text-align:center;padding:10px;margin-top:6px;border:1px solid #444;background:linear-gradient(180deg,#0e0e0e,#080808); 0,100% 6px,100% calc(100% - 6px),calc(100% - 6px) 100%,6px 100%,0 calc(100% - 6px),0 6px);cursor:pointer;letter-spacing:6px;transition:all .15s;}
+.ch-ok{font-family:'Noto Serif KR','Noto Serif SC','Noto Serif JP',Georgia,serif;font-size:22px;color:var(--sv-hi);text-align:center;padding:10px;margin-top:6px;border:1px solid #444;background:linear-gradient(180deg,#0e0e0e,#080808);cursor:pointer;letter-spacing:6px;transition:all .15s;}
 .ch-ok:hover{border-color:#666;}
 .ch-ok:active{transform:scale(.96);}
 .ch-ok.disabled{opacity:.15;cursor:default;pointer-events:none;}
@@ -567,7 +567,7 @@ body.silver .set-lang-btn.on{border-color:#aaa;color:#ddd;background:#2a2a2a;}
 #dissolve-overlay.dissolve-in{opacity:1;pointer-events:all;}
 #dissolve-overlay.dissolve-out{opacity:0;pointer-events:none;}
 /* Logo skull eye glow pulse */
-.dbtn{display:block;width:210px;background:#0a0a0a;border:1px solid #2a2a2a;padding:13px; 0,100% 6px,100% calc(100% - 6px),calc(100% - 6px) 100%,6px 100%,0 calc(100% - 6px),0 6px);color:var(--sv-hi);font-size:16px;cursor:pointer;margin:4px auto;text-align:center;transition:all .15s;letter-spacing:4px;font-weight:900;animation:dbtnPulse 2s ease-in-out infinite;}
+.dbtn{display:block;width:210px;background:#0a0a0a;border:1px solid #2a2a2a;padding:13px;color:var(--sv-hi);font-size:16px;cursor:pointer;margin:4px auto;text-align:center;transition:all .15s;letter-spacing:4px;font-weight:900;animation:dbtnPulse 2s ease-in-out infinite;}
 .dbtn:hover{border-color:#666;background:#121212;box-shadow:0 0 12px rgba(200,196,188,.08);transform:translateY(-1px);}
 .dbtn:active{transform:scale(.95);filter:brightness(1.3);}
 @keyframes dbtnPulse{0%,100%{box-shadow:0 0 4px rgba(200,196,188,.05)}50%{box-shadow:0 0 15px rgba(200,196,188,.12),0 0 3px rgba(200,196,188,.1)}}
@@ -593,7 +593,7 @@ body.silver .set-lang-btn.on{border-color:#aaa;color:#ddd;background:#2a2a2a;}
 .go-cell:last-child{border-right:none;}
 .go-val{font-family:'Noto Serif KR','Noto Serif SC','Noto Serif JP',Georgia,serif;font-size:13px;color:var(--sv-hi);letter-spacing:1px;white-space:nowrap;}
 .go-key{font-size:9px;color:#777;letter-spacing:1px;margin-top:2px;}
-.rbtn{margin-top:20px;background:#0a0a0a;border:1px solid #444; 0,100% 6px,100% calc(100% - 6px),calc(100% - 6px) 100%,6px 100%,0 calc(100% - 6px),0 6px);color:var(--sv-hi);font-family:'Noto Serif KR','Noto Serif SC','Noto Serif JP',Georgia,serif;font-size:17px;padding:16px 44px;cursor:pointer;letter-spacing:5px;font-weight:900;transition:all .12s;text-transform:uppercase;}
+.rbtn{margin-top:20px;background:#0a0a0a;border:1px solid #444;color:var(--sv-hi);font-family:'Noto Serif KR','Noto Serif SC','Noto Serif JP',Georgia,serif;font-size:17px;padding:16px 44px;cursor:pointer;letter-spacing:5px;font-weight:900;transition:all .12s;text-transform:uppercase;}
 .rbtn:hover{border-color:#888;box-shadow:0 0 15px rgba(200,196,188,.1);transform:translateY(-2px);}
 
 /* ===== iPad layout ===== */
@@ -846,30 +846,30 @@ ko:{
   // Tutorial
   tutText:'같은 종류를 3개 이상 이어서 드래그',
   tutSub:()=>wpnWord()+'+해골을 함께 이으면 전투!',
-  tutHint:'같은 배경색 카드끼리 연결해봐',
-  logDanger:['물약 먹어!','약 마셔!','회복 급해!','물약 어딨어!','물약 연결해!','약부터!','한 방이면 끝!','맞으면 죽어!','회복 아니면 끝!','물약 우선!','다음 턴 못 버텨!','체력 바닥!','약 없으면 죽어!','물약만 봐!','생존 우선!'],
-  logLowHp:['물약 연결해!','방패 올려!','해골 피해!','약부터 챙겨!','방어 먼저!','공격 자제!','물약 모아!','방패 연결!','큰 놈 피해!','약 타이밍!','방어 쌓고 공격!','체력 먼저!','리스크 줄여!','안전하게!','약 확보!'],
-  logBoss:['방패 쌓고 버텨!','한놈만 집중!','방어부터 올려!','보스 무시 마!','스킬 아껴둬!','장기전 준비!','방패 먼저!','한 턴씩 깎아!','방어 없이 안 돼!','보스한테 집중!','다른 놈 먼저 치워!','풀 방어로!','스킬 쓸 타이밍!','보스 공격 대비!','약 남겨둬!'],
-  logPoison:['빨리 처치해!','해골 연결 우선!','턴 끌면 죽어!','속전속결!','시간 없어!','빨리 끝내!','매 턴 피 빠져!','독 중첩 위험!','약 써!','해독 필요!','느리면 죽어!','끌면 불리해!','공격 집중!','해골 빨리!','독 데미지 중!'],
-  logBurn:['화상 데미지 중!','방어 깎인다!','방패 연결해!','화상 심하다!','방어력 녹아!','빨리 끝내!','방패 쌓아!','갑옷 녹는다!','방어 유지해!','화상 중첩!','턴 끌지 마!','속전속결!','장기전 불리!','방어 보충!','화상 위험!'],
-  logNoShield:['방패 연결해!','방어 0이야!','방패부터 챙겨!','한 대 맞으면 끝!','방패 타일 찾아!','방어 없이 위험!','방패 우선!','맞으면 큰일!','방어력 올려!','방패 급해!','갑옷 비었어!','방패 먼저!','무방비 상태!','방어 시급!','방패 확보!'],
-  logAlmostLv:['경험치 거의 참!','해골 처치해!','레벨업 직전!','해골 연결!','경험치 채워!','한 마리면 돼!','레벨업 우선!','해골 노려!','강화 임박!','해골 잡아!','곧 레벨업!','경험치 마무리!','한 턴이면!','처치 우선!','올릴 수 있어!'],
-  logEarly:['무기 연결해!','해골부터 처치!','방패도 챙겨!','물약 위치 파악!','무기 타일 모아!','해골 먼저!','긴 경로 노려!','주변 탐색!','무기+해골!','타일 파악!','길게 연결해!','큰 연결 노려!','해골 공격!','경로 확인!','전장 파악!'],
-  logElite:['엘리트 주의!','붉은 놈 조심!','엘리트 먼저!','붉은 해골 위험!','엘리트 공격력!','저놈 센 놈!','엘리트 우선!','붉은 놈 처치!','엘리트 무시 마!','붉은 테두리!','엘리트 집중!','강화 해골!','위험 대상!','붉은 적 주의!','엘리트 대비!'],
-  logManySkull:['해골 정리해!','해골 너무 많아!','보드 정리!','해골 줄여!','둘러싸여!','해골 처치 우선!','수 줄여!','포위당해!','정리 시급!','해골 밀려온다!','눌려!','해골 청소!','숫자 줄여!','밀리고 있어!','압도당해!'],
-  logSafe:['무기 모아둬!','방패 비축!','물약 챙겨둬!','자원 확보!','스킬 충전!','여유 있을 때!','비축해!','다음 대비!','자원 모아!','안전할 때 준비!','물약 저장!','방패 쌓아!','여유 부릴 때!','체력 채워!','다음 파 대비!'],
-  logHighDef:['방어 충분해!','공격 집중!','해골 때려!','무기 연결!','지금 공격!','방어 있을 때!','적극 공세!','해골 처치!','밀어붙여!','공격 기회!','방어 탄탄!','무기 우선!','때릴 때!','해골 잡아!','공세로 전환!'],
-  logHighAtk:['저놈 먼저 처치!','강한 놈 우선!','저놈 집중!','큰 놈부터!','저놈 공격력!','방치하면 죽어!','우선 처리!','저놈 위험!','집중 공격!','타겟 집중!','먼저 잡아!','저놈 못 놔둬!','센 놈 먼저!','최우선 대상!','저놈 처치!'],
-  logGoodCombo:['판 뒤집었다!','전세 역전!','압도 중!','주도권 잡았다!','몰아치고 있어!','전장 지배!','적 밀리고 있어!','완벽한 연결!','치명적 일격!','정리 중!','수 줄었다!','해골 쓸려!','판 정리됐다!','적 무너진다!','돌파 중!'],
-  logSkillReady:['스킬 써!','기술 발동해!','쓸 때다!','스킬 타이밍!','지금 발동!','기회다!','기술 쏴!','스킬 가능!','발동해!','필살기!','이때다!','스킬 활용!','스킬 찬스!','발동 가능!','스킬!'],
-  logRich:['상점 곧 열려!','금화 거의 참!','장비 살 수 있어!','상점 대비!','금화 충분!','장비 업그레이드!','상점 임박!','무기 강화 가능!','갑옷 살까!','투자해!','장비 교체!','강화 기회!','쇼핑 준비!','돈 모였다!','업그레이드!'],
-  logFrozen:['얼었다! 무기 연결!','얼음 상태! 공격!','지금 해골 쳐!','공격 기회!','반격 불가!','때리는 턴!','맞을 일 없어!','안전한 공격!','때려도 안 맞아!','프리 턴!','동결! 공격!','여유 공격!','지금이 찬스!','얼음! 쳐!','마음껏 때려!'],
-  logStunned:['기절! 무기 연결!','공격 안 해!','안전한 턴!','지금 쳐!','반격 없어!','자유롭게 때려!','기절 상태!','마음껏!','때리는 턴!','놓치지 마!','때릴 기회!','프리 턴!','안전 공격!','기절! 쳐!','지금 때려!'],
-  logBigHeal:['풀피 가까워!','체력 넘친다!','완전 회복!','HP 꽉 찼다!','든든하다!','최상 컨디션!','풀 회복!','여유 있을 때 공격!','체력 만땅!','최고 상태!'],
-  logSwordOnly:['무기만 챙겼다!','공격 집중 중!','방어도 챙겨!','칼만 있으면!','한쪽만 치우치지 마!','방패도 필요해!','공격은 좋아!','밸런스 맞춰!','약도 챙겨!','한쪽만 안 돼!'],
-  logSpecSpawn:['특수 해골 등장!','저놈 달라!','조심해!','특수 능력!','일반 해골 아냐!','위험한 놈!','저놈 주의!','특수한 놈!','눈 떼지 마!','경계해!'],
-  logSpecKill:['특수 해골 처치!','위협 제거!','잘 잡았다!','한놈 해치웠다!','위험 해소!','제거 완료!','잘했다!','큰 놈 잡았다!','강적 처치!','해냈다!'],
-  logLeveledUp:['강해졌다!','한 단계 올랐다!','파워업!','새 힘이!','성장했다!','진화 완료!','레벨업!','전보다 강하다!','더 세졌다!','업그레이드!'],
+  tutHint:'같은 배경색 카드끼리 연결하세요.',
+  logDanger:['체력이 위험합니다.','물약이 필요합니다.','긴급 회복이 필요합니다.','물약을 연결하세요.','회복을 우선하세요.','물약부터 사용하세요.','한 대면 사망합니다.','피격 시 전사합니다.','회복하지 않으면 위험합니다.','물약을 우선 확보하세요.','다음 턴 생존이 어렵습니다.','체력이 바닥입니다.','물약 없이는 버틸 수 없습니다.','물약만 노리세요.','생존을 우선하세요.'],
+  logLowHp:['물약을 연결하세요.','방패를 올리세요.','해골을 피하세요.','물약부터 확보하세요.','방어를 먼저 올리세요.','공격을 자제하세요.','물약을 모으세요.','방패를 연결하세요.','강한 해골을 피하세요.','회복 타이밍입니다.','방어 후 공격하세요.','체력을 먼저 챙기세요.','리스크를 줄이세요.','안전하게 진행하세요.','물약을 확보하세요.'],
+  logBoss:['방패를 쌓고 버티세요.','한 놈에 집중하세요.','방어부터 올리세요.','보스를 무시하지 마세요.','스킬을 아끼세요.','장기전을 준비하세요.','방패를 먼저 올리세요.','한 턴씩 깎으세요.','방어 없이는 위험합니다.','보스에게 집중하세요.','다른 적부터 정리하세요.','풀 방어로 가세요.','스킬 사용 타이밍입니다.','보스 공격에 대비하세요.','물약을 남겨두세요.'],
+  logPoison:['빠르게 처치하세요.','해골 연결을 우선하세요.','턴을 끌면 위험합니다.','속전속결이 필요합니다.','시간이 부족합니다.','빠르게 끝내세요.','매 턴 체력이 감소합니다.','독 중첩이 위험합니다.','물약을 사용하세요.','해독이 필요합니다.','지체하면 위험합니다.','끌면 불리합니다.','공격에 집중하세요.','해골을 빠르게 처치하세요.','독 데미지가 진행 중입니다.'],
+  logBurn:['화상 데미지가 진행 중입니다.','방어가 깎이고 있습니다.','방패를 연결하세요.','화상이 심합니다.','방어력이 녹고 있습니다.','빠르게 끝내세요.','방패를 쌓으세요.','갑옷이 녹고 있습니다.','방어를 유지하세요.','화상이 중첩되고 있습니다.','턴을 끌지 마세요.','속전속결이 필요합니다.','장기전이 불리합니다.','방어를 보충하세요.','화상 상태입니다.'],
+  logNoShield:['방패를 연결하세요.','방어가 0입니다.','방패부터 챙기세요.','한 대 맞으면 위험합니다.','방패 타일을 찾으세요.','방어 없이는 위험합니다.','방패를 우선하세요.','피격 시 큰 피해입니다.','방어력을 올리세요.','방패가 급합니다.','갑옷이 비었습니다.','방패를 먼저 올리세요.','무방비 상태입니다.','방어가 시급합니다.','방패를 확보하세요.'],
+  logAlmostLv:['경험치가 거의 찼습니다.','해골을 처치하세요.','레벨업 직전입니다.','해골을 연결하세요.','경험치를 채우세요.','한 마리면 됩니다.','레벨업을 우선하세요.','해골을 노리세요.','강화가 임박했습니다.','해골을 잡으세요.','곧 레벨업입니다.','경험치 마무리 단계입니다.','한 턴이면 됩니다.','처치를 우선하세요.','레벨업이 가능합니다.'],
+  logEarly:['무기를 연결하세요.','해골부터 처치하세요.','방패도 챙기세요.','물약 위치를 파악하세요.','무기 타일을 모으세요.','해골을 먼저 처치하세요.','긴 경로를 노리세요.','주변을 탐색하세요.','무기와 해골을 연결하세요.','타일을 파악하세요.','길게 연결하세요.','큰 연결을 노리세요.','해골을 공격하세요.','경로를 확인하세요.','전장을 파악하세요.'],
+  logElite:['엘리트 해골입니다.','붉은 해골을 주의하세요.','엘리트를 먼저 처치하세요.','붉은 해골이 위험합니다.','엘리트 공격력이 높습니다.','강력한 적입니다.','엘리트를 우선하세요.','붉은 해골을 처치하세요.','엘리트를 무시하지 마세요.','붉은 테두리 해골입니다.','엘리트에 집중하세요.','강화된 해골입니다.','위험한 대상입니다.','붉은 적에 주의하세요.','엘리트에 대비하세요.'],
+  logManySkull:['해골 {n}마리, 정리하세요.','해골 {n}마리, 너무 많습니다.','해골 {n}마리, 보드를 정리하세요.','해골 {n}마리, 수를 줄이세요.','해골 {n}마리, 둘러싸여 있습니다.','해골 {n}마리, 처치를 우선하세요.','해골 {n}마리, 줄이세요.','해골 {n}마리, 포위 상태입니다.','해골 {n}마리, 정리가 시급합니다.','해골 {n}마리, 밀려오고 있습니다.','해골 {n}마리, 압박 상태입니다.','해골 {n}마리, 정리하세요.','해골 {n}마리, 줄여야 합니다.','해골 {n}마리, 밀리고 있습니다.','해골 {n}마리, 위험합니다.'],
+  logSafe:['무기를 모아두세요.','방패를 비축하세요.','물약을 챙겨두세요.','자원을 확보하세요.','스킬을 충전하세요.','여유가 있을 때입니다.','비축해 두세요.','다음에 대비하세요.','자원을 모으세요.','안전할 때 준비하세요.','물약을 저장하세요.','방패를 쌓으세요.','여유가 있는 상황입니다.','체력을 채우세요.','다음 파에 대비하세요.'],
+  logHighDef:['방어가 충분합니다.','공격에 집중하세요.','해골을 공격하세요.','무기를 연결하세요.','지금 공격하세요.','방어가 있을 때입니다.','적극적으로 공세하세요.','해골을 처치하세요.','밀어붙이세요.','공격 기회입니다.','방어가 탄탄합니다.','무기를 우선하세요.','공격할 타이밍입니다.','해골을 잡으세요.','공세로 전환하세요.'],
+  logHighAtk:['강한 적부터 처치하세요.','강한 놈을 우선하세요.','해당 적에 집중하세요.','큰 놈부터 처치하세요.','공격력이 높은 적입니다.','방치하면 위험합니다.','우선 처리하세요.','위험한 적입니다.','집중 공격하세요.','타겟에 집중하세요.','먼저 잡으세요.','방치할 수 없습니다.','강한 놈을 먼저 잡으세요.','최우선 대상입니다.','해당 적을 처치하세요.'],
+  logGoodCombo:['해골 수가 감소했습니다.','연결 효율이 좋습니다.','보드가 정리되고 있습니다.','해골 정리 진행 중입니다.','연속 처치 중입니다.','해골 수가 줄었습니다.','보드 상태가 안정되고 있습니다.','높은 콤보입니다.','다수 처치에 성공했습니다.','정리 진행 중입니다.','해골이 감소하고 있습니다.','연쇄 처치 중입니다.','보드가 정리되었습니다.','적이 감소하고 있습니다.','돌파 진행 중입니다.'],
+  logSkillReady:['스킬을 사용하세요.','기술을 발동하세요.','사용할 때입니다.','스킬 타이밍입니다.','지금 발동하세요.','기회입니다.','기술을 쏘세요.','스킬 사용이 가능합니다.','발동하세요.','필살기를 쓰세요.','지금이 적기입니다.','스킬을 활용하세요.','스킬 찬스입니다.','발동이 가능합니다.','스킬을 쓰세요.'],
+  logRich:['상점이 곧 열립니다.','금화가 거의 찼습니다.','장비를 구매할 수 있습니다.','상점에 대비하세요.','금화가 충분합니다.','장비를 업그레이드하세요.','상점이 임박했습니다.','무기 강화가 가능합니다.','갑옷을 구매하세요.','투자할 때입니다.','장비를 교체하세요.','강화 기회입니다.','쇼핑을 준비하세요.','금화가 모였습니다.','업그레이드하세요.'],
+  logFrozen:['적이 얼었습니다. 무기를 연결하세요.','얼음 상태입니다. 공격하세요.','지금 해골을 치세요.','공격 기회입니다.','반격이 불가합니다.','공격 턴입니다.','맞을 일이 없습니다.','안전한 공격입니다.','반격 없이 공격 가능합니다.','프리 턴입니다.','동결 상태입니다. 공격하세요.','여유롭게 공격하세요.','지금이 찬스입니다.','얼음 상태입니다. 치세요.','마음껏 공격하세요.'],
+  logStunned:['기절 상태입니다. 무기를 연결하세요.','적이 공격하지 않습니다.','안전한 턴입니다.','지금 치세요.','반격이 없습니다.','자유롭게 공격하세요.','기절 상태입니다.','마음껏 공격하세요.','공격 턴입니다.','놓치지 마세요.','공격 기회입니다.','프리 턴입니다.','안전하게 공격하세요.','기절 상태입니다. 치세요.','지금 공격하세요.'],
+  logBigHeal:['체력이 거의 가득 찼습니다.','HP가 높은 상태입니다.','회복이 완료되었습니다.','HP가 가득 찼습니다.','체력이 충분합니다.','HP 상태가 양호합니다.','풀 회복 상태입니다.','공격에 집중할 수 있습니다.','체력이 만땅입니다.','HP가 최대치입니다.'],
+  logSwordOnly:['무기 위주로 수집 중입니다.','공격 타일 비율이 높습니다.','방어 타일도 필요합니다.','무기만으로는 부족합니다.','타일 균형이 필요합니다.','방패 타일이 부족합니다.','공격력 확보 중입니다.','밸런스 조정이 필요합니다.','물약 타일도 확보하세요.','타일 균형이 맞지 않습니다.'],
+  logSpecSpawn:['특수 해골이 등장했습니다.','일반 해골과 다른 해골입니다.','특수 능력 보유 해골입니다.','특수 능력을 가지고 있습니다.','일반 해골이 아닙니다.','특수 해골이 배치되었습니다.','특수 해골 주의가 필요합니다.','특수 속성 해골입니다.','특수 해골이 나타났습니다.','특수 해골을 확인하세요.'],
+  logSpecKill:['특수 해골이 처치되었습니다.','위협이 제거되었습니다.','특수 해골 제거 완료입니다.','위험 요소가 제거되었습니다.','위험이 해소되었습니다.','특수 해골 제거 완료입니다.','강적이 처치되었습니다.','특수 적이 처치되었습니다.','강한 적이 제거되었습니다.','특수 해골 처치 완료입니다.'],
+  logLeveledUp:['레벨이 상승했습니다.','레벨업 완료입니다.','능력치가 증가했습니다.','레벨이 올랐습니다.','스탯이 상승했습니다.','레벨업이 완료되었습니다.','레벨이 1 올랐습니다.','능력치가 강화되었습니다.','레벨업 적용 완료입니다.','스탯 상승이 적용되었습니다.'],
   tutLabel:'탭해서 이니셜 입력',
   // HUD labels
   str:'힘',dex:'민첩',vit:'생명',lck:'행운',
@@ -877,10 +877,10 @@ ko:{
   swords:()=>wpnWord(),shields:'방패',potions:'물약',coins:'금화',
   dmgMsg:(sw,sk,dmg)=>`${wpnWord()} ${sw}개 → 해골 ${sk}마리 | 데미지 ${dmg}`,
   typeCount:(type,n)=>`${type} ${n}개!`,
-  pathCount:(n)=>`${n}/3...`,needThree:'3개 이상 연결해',
+  pathCount:(n)=>`${n}/3...`,needThree:'3개 이상 연결하세요.',
   killMsg:(n)=>`${n}마리 처치!`,
   comboMsg:(name,bonus,chain)=>`${name}! +${bonus} 보너스${chain>=3?' · 연쇄 '+chain+'콤보!':''}`,
-  thiefMsg:(n)=>`도둑이 코인 ${n}개 훔쳤다!`,
+  thiefMsg:(n)=>`도둑이 코인 ${n}개를 훔쳤습니다.`,
   chainMsg:(n)=>`— ${n} 콤보! —`,
   atkMsg:(atk,dot,hp)=>`${atk}${dot} → 체력 -${hp}`,
   defMsg:(tot,dot)=>`방어 성공! ${tot} 막음${dot?' | '+dot:''}`,
@@ -956,11 +956,11 @@ ko:{
   healFlt:(hp,cl,mn)=>`체력 +${hp}${cl}${mn>0?' (마나 -'+mn+')':''}`,
   goldFlt:(v)=>`골드 +${v}`,
   // DoT/combat turn
-  frozen:'얼었다! 이번 턴 공격 없음!',
+  frozen:'얼었습니다! 이번 턴 공격이 없습니다!',
   poisonDot:(n)=>`독${n}`,burnDot:(n,ab)=>`화상${n}${ab>0?'(ARM-'+ab+')':''}`,curseDot:(n)=>`저주${n}`,
   atkPart:(n)=>`공격 -${n}`,dotPart:(n)=>`지속 피해 -${n}`,
   cleanPoison:(n)=>`독-${n}`,cleanBurn:(n)=>`화상-${n}`,cleanCurse:'저주-1',
-  cocky:'4개 이상 연결해야 해!',
+  cocky:'4개 이상 연결해야 합니다!',
   // Skill use messages
   skMsgCharge:'Charge! 테두리 수집!',skMsgCounter:'Counter! 해골끼리 싸웠다!',
   skMsgShatter:'Shatter! 해골 약화!',skMsgTeleport:'Teleport! 보드 리셋!',
@@ -986,20 +986,20 @@ ko:{
   ultWarrior:'전멸의 함성',ultWarriorDesc:'모든 해골에 대미지 + 아머 풀 충전',ultMsgWarrior:'전멸의 함성! 분노 해방!',
   ultMage:'아케인 노바',ultMageDesc:'보드 전체 폭발 + 스킬 쿨다운 전부 리셋',ultMsgMage:'아케인 노바! 마력 해방!',
   ultRogue:'데스 마크',ultRogueDesc:'가장 강한 해골 즉사 + 코인 대량 획득',ultMsgRogue:'데스 마크! 처형!',
-  ultReady:'마나가 가득 찼다!',ultConfirm:'필살기 쓸까?',
-  pickTwoStat:'2가지 골라서 강화해',
-  pickTwo:'2가지 골라',
+  ultReady:'마나가 가득 찼습니다!',ultConfirm:'필살기를 사용하시겠습니까?',
+  pickTwoStat:'2가지를 선택하여 강화하세요',
+  pickTwo:'2가지를 선택하세요',
   secSkill:'기술',
   secStat:'강화',
   skNew:'새 기술',
   skRemove:'제거할 기술 선택',
   skRemoveHint:'%s개 골라',
   skReplace:'%s개 기술 교체',
-  skFullWarn:'기술 슬롯 가득 참. 기술 선택 시 기존 기술과 교체돼.',
+  skFullWarn:'기술 슬롯이 가득 찼습니다. 기술 선택 시 기존 기술과 교체됩니다.',
   tutSkip:'건너뛰기 >',
-  firstTimeQ:'처음이야?',newGame:'새 게임',changeLang:'🌐 언어 변경',
-  firstYes:'응',
-  firstNo:'아니',lbTitle:'Ranking',namePlaceholder:'이름 입력',saveOk:'저장 완료',saveEmpty:'저장된 데이터 없음',loadSave:'저장한 게임 불러오기',setSave:'저장',lbLoading:'불러오는 중...',lbEmpty:'등록된 기록 없음',saveNoLoad:'불러온 게임은 저장 불가',saveMaxed:'저장 횟수 다 씀',saveLimitMsg:'저장은 한 게임당 2회까지야.',saveRemain:'남은 횟수',loadOnceNotice:'반복 고득점 방지를 위해\n게임 로딩은 1회만 가능해.',
+  firstTimeQ:'처음이십니까?',newGame:'새 게임',changeLang:'🌐 언어 변경',
+  firstYes:'네',
+  firstNo:'아니요',lbTitle:'Ranking',namePlaceholder:'이름 입력',saveOk:'저장 완료',saveEmpty:'저장된 데이터 없음',loadSave:'저장한 게임 불러오기',setSave:'저장',lbLoading:'불러오는 중...',lbEmpty:'등록된 기록 없음',saveNoLoad:'불러온 게임은 저장 불가',saveMaxed:'저장 횟수 다 씀',saveLimitMsg:'저장은 한 게임당 2회까지입니다.',saveRemain:'남은 횟수',loadOnceNotice:'반복 고득점 방지를 위해\n게임 로딩은 1회만 가능합니다.',
   snHeal:'생명수집',snRepair:'방패수집',snSlash:'칼바람',snTreasure:'금화수집',snCharge:'전방위공격',
   snCounter:'자멸유도',snShatter:'약화의눈',snTeleport:'타일재배치',snGolden:'황금변환',snScavenge:'방패변환',
   snDazzle:()=>wpnWord()+'변환',snDisarm:'해골제거',snEnchant:'즉시강화',snExplosive:'물약폭발',snPoison:'전체독공격',
@@ -1066,9 +1066,9 @@ ko:{
   tileSkullThief:'도적 해골 : 골드를 훔쳐감',
   tileSkullFreeze:'빙결 해골 : 타일을 얼려 이동 방해',
   tileSkullBoss:'보스 해골 : 강력한 해골',
-  tileBuff:'버프 타일 : 획득 시 특수 효과',buffTip:'보석이 나타났다!\n터치하면 특수 효과를 얻을 수 있어',
+  tileBuff:'버프 타일 : 획득 시 특수 효과',buffTip:'보석 출현! 터치하면 특수 효과 획득',
   tileHp:'HP',tileAtk:'공격',tileDef:'방어',
-  welcomeMsg:'던전에 온 걸 환영해.',
+  welcomeMsg:'던전에 오신 것을 환영합니다.',
 
   noTarget:'대상 없음',
   evasionActive:'회피 중! 공격 무효!',
@@ -1076,7 +1076,7 @@ ko:{
   snDrainLife:'생명흡수',skDrainLife:'모든 해골 소량 피해 → 흡혈 회복',skMsgDrainLife:(n)=>`${n} 흡혈 회복!`,
   snBloodPact:'피의 서약',skBloodPact:'HP 15% 희생 → 전체 해골 3배 데미지',skMsgBloodPact:(n)=>`HP ${n} 희생! 피의 서약!`,
   snPurify:'정화',skPurify:'독/화염/빙결 해제 + HP 5 회복',skMsgPurify:'모든 상태이상 정화!',
-  snAlchemy:'연금술',skAlchemy:'물약 → 동전 변환',skMsgAlchemy:'물약이 금으로 변했다!',
+  snAlchemy:'연금술',skAlchemy:'물약 → 동전 변환',skMsgAlchemy:'물약이 금으로 변했습니다!',
   snTransmute:'변환',skTransmute:'방패 → 물약 변환',skMsgTransmute:'방패가 물약으로!',
   snRally:'결집',skRally:'모든 스킬 쿨다운 2턴 감소',skMsgRally:'전투 의지를 모았다!',
   snIntimidate:'위협',skIntimidate:'모든 해골 공격력 -2',skMsgIntimidate:(n)=>`${n}마리 해골을 위협!`,
@@ -1317,7 +1317,7 @@ en:{
   tileSkullThief:'Thief Skull : Steals your gold',
   tileSkullFreeze:'Freeze Skull : Freezes tiles nearby',
   tileSkullBoss:'Boss Skull : Powerful skull',
-  tileBuff:'Buff Tile : Grants a special effect',buffTip:'A gem appeared!\nTap it to gain a special effect',
+  tileBuff:'Buff Tile : Grants a special effect',buffTip:'A gem appeared! Tap for a special effect',
   tileHp:'HP',tileAtk:'ATK',tileDef:'DEF',
   welcomeMsg:'Welcome to the Dungeon.',
 
@@ -1568,7 +1568,7 @@ es:{
   tileSkullThief:'Calavera ladrona : Roba tu oro',
   tileSkullFreeze:'Calavera de hielo : Congela los azulejos',
   tileSkullBoss:'Calavera jefe : Calavera poderosa',
-  tileBuff:'Azulejo de mejora : Otorga un efecto especial',buffTip:'¡Apareció una gema!\nTócala para obtener un efecto especial',
+  tileBuff:'Azulejo de mejora : Otorga un efecto especial',buffTip:'¡Apareció una gema! Tócala para un efecto especial',
   tileHp:'HP',tileAtk:'ATQ',tileDef:'DEF',
   welcomeMsg:'Bienvenido a la Mazmorra.',
 
@@ -1844,7 +1844,7 @@ zh:{
   tileSkullThief:'盗贼骷髅 : 偷走你的金币',
   tileSkullFreeze:'冰冻骷髅 : 冻结附近砖块',
   tileSkullBoss:'BOSS骷髅 : 强大的骷髅',
-  tileBuff:'增强砖块 : 获得时赋予特殊效果',buffTip:'宝石出现了！\n点击获得特殊效果',
+  tileBuff:'增强砖块 : 获得时赋予特殊效果',buffTip:'宝石出现！点击获得特殊效果',
   tileHp:'HP',tileAtk:'攻',tileDef:'防',
   welcomeMsg:'欢迎来到地牢。',
 
@@ -2120,7 +2120,7 @@ ja:{
   tileSkullThief:'盗賊ドクロ：金を盗む',
   tileSkullFreeze:'凍結ドクロ：タイルを凍結して移動妨害',
   tileSkullBoss:'ボスドクロ：強力なドクロ',
-  tileBuff:'バフタイル：獲得時に特殊効果付与',buffTip:'宝石が出現！\nタップして特殊効果を獲得',
+  tileBuff:'バフタイル：獲得時に特殊効果付与',buffTip:'宝石が出現！タップで特殊効果獲得',
   tileHp:'HP',tileAtk:'攻',tileDef:'防',
   welcomeMsg:'ダンジョンへようこそ。',
 
@@ -2314,7 +2314,7 @@ const SK_IC={
   execute:`<i class="ra ra-death-skull" style="color:#ffffff;font-size:16px"></i>`,
   // === Mage ===
   fireball:`<i class="ra ra-fire" style="color:#ffffff;font-size:16px"></i>`,
-  frostNova:`<i class="ra ra-frost-emblem" style="color:#ffffff;font-size:16px"></i>`,
+  frostNova:`<i class="ra ra-snowflake" style="color:#ffffff;font-size:16px"></i>`,
   arcaneShift:`<i class="ra ra-hourglass" style="color:#ffffff;font-size:16px"></i>`,
   manaShield:`<i class="ra ra-bolt-shield" style="color:#ffffff;font-size:16px"></i>`,
   // === Rogue ===
@@ -2327,48 +2327,48 @@ const SK_IC={
   ultMage:`<i class="ra ra-burning-book" style="color:#ffffff;font-size:16px"></i>`,
   ultRogue:`<i class="ra ra-daggers" style="color:#ffffff;font-size:16px"></i>`,
   // === NEW SKILL ICONS (RPG-Awesome) ===
-  drainLife:`<i class="ra ra-bleeding-hearts" style="color:#ffffff;font-size:16px"></i>`,
+  drainLife:`<i class="ra ra-hearts" style="color:#ffffff;font-size:16px"></i>`,
   bloodPact:`<i class="ra ra-drop" style="color:#ffffff;font-size:16px"></i>`,
-  purify:`<i class="ra ra-sun-symbol" style="color:#ffffff;font-size:16px"></i>`,
+  purify:`<i class="ra ra-sun" style="color:#ffffff;font-size:16px"></i>`,
   alchemy:`<i class="ra ra-flask" style="color:#ffffff;font-size:16px"></i>`,
-  transmute:`<i class="ra ra-cycle" style="color:#ffffff;font-size:16px"></i>`,
-  rally:`<i class="ra ra-rally-the-troops" style="color:#ffffff;font-size:16px"></i>`,
-  intimidate:`<i class="ra ra-aware" style="color:#ffffff;font-size:16px"></i>`,
-  whirlwind:`<i class="ra ra-tornado" style="color:#ffffff;font-size:16px"></i>`,
-  meditate:`<i class="ra ra-incense" style="color:#ffffff;font-size:16px"></i>`,
+  transmute:`<i class="ra ra-recycle" style="color:#ffffff;font-size:16px"></i>`,
+  rally:`<i class="ra ra-trumpets" style="color:#ffffff;font-size:16px"></i>`,
+  intimidate:`<i class="ra ra-eye-monster" style="color:#ffffff;font-size:16px"></i>`,
+  whirlwind:`<i class="ra ra-spinning-sword" style="color:#ffffff;font-size:16px"></i>`,
+  meditate:`<i class="ra ra-meditation" style="color:#ffffff;font-size:16px"></i>`,
   barrier:`<i class="ra ra-shield" style="color:#ffffff;font-size:16px"></i>`,
-  quake:`<i class="ra ra-mountain-road" style="color:#ffffff;font-size:16px"></i>`,
+  quake:`<i class="ra ra-groundbreaker" style="color:#ffffff;font-size:16px"></i>`,
   sacrifice:`<i class="ra ra-bleeding-eye" style="color:#ffffff;font-size:16px"></i>`,
   smite:`<i class="ra ra-lightning-bolt" style="color:#ffffff;font-size:16px"></i>`,
-  mirage:`<i class="ra ra-kaleidoscope" style="color:#ffffff;font-size:16px"></i>`,
-  lifeSpring:`<i class="ra ra-bottle-vapors" style="color:#ffffff;font-size:16px"></i>`,
-  goldRush:`<i class="ra ra-gold-bar" style="color:#ffffff;font-size:16px"></i>`,
+  mirage:`<i class="ra ra-player-lift" style="color:#ffffff;font-size:16px"></i>`,
+  lifeSpring:`<i class="ra ra-bottled-bolt" style="color:#ffffff;font-size:16px"></i>`,
+  goldRush:`<i class="ra ra-coins" style="color:#ffffff;font-size:16px"></i>`,
   venom:`<i class="ra ra-vial" style="color:#ffffff;font-size:16px"></i>`,
   reforge:`<i class="ra ra-anvil" style="color:#ffffff;font-size:16px"></i>`,
-  doom:`<i class="ra ra-death-skull" style="color:#ffffff;font-size:16px"></i>`,
-  windSlash:`<i class="ra ra-crossed-swords" style="color:#ffffff;font-size:16px"></i>`,
+  doom:`<i class="ra ra-skull" style="color:#ffffff;font-size:16px"></i>`,
+  windSlash:`<i class="ra ra-wind-slap" style="color:#ffffff;font-size:16px"></i>`,
   rampage:`<i class="ra ra-axe" style="color:#ffffff;font-size:16px"></i>`,
   shieldBash:`<i class="ra ra-round-shield" style="color:#ffffff;font-size:16px"></i>`,
-  bloodlust:`<span style="font-size:16px;line-height:1">🦇</span>`,
+  bloodlust:`<i class="ra ra-broken-heart" style="color:#ffffff;font-size:16px"></i>`,
   stonewall:`<i class="ra ra-tower" style="color:#ffffff;font-size:16px"></i>`,
-  revenge:`<i class="ra ra-broken-heart" style="color:#ffffff;font-size:16px"></i>`,
+  revenge:`<i class="ra ra-heartburn" style="color:#ffffff;font-size:16px"></i>`,
   ironWill:`<i class="ra ra-armor" style="color:#ffffff;font-size:16px"></i>`,
-  taunt:`<i class="ra ra-horn-call" style="color:#ffffff;font-size:16px"></i>`,
+  taunt:`<i class="ra ra-aware" style="color:#ffffff;font-size:16px"></i>`,
   earthQuake:`<i class="ra ra-cracked-shield" style="color:#ffffff;font-size:16px"></i>`,
-  chainLightning:`<i class="ra ra-chain-lightning" style="color:#ffffff;font-size:16px"></i>`,
-  polymorph:`<span style="font-size:16px;line-height:1">🐸</span>`,
-  timeWarp:`<i class="ra ra-hourglass" style="color:#ffffff;font-size:16px"></i>`,
-  meteor:`<i class="ra ra-fire" style="color:#ffffff;font-size:16px"></i>`,
-  blizzard:`<i class="ra ra-snowflake" style="color:#ffffff;font-size:16px"></i>`,
-  arcaneBlast:`<i class="ra ra-burning-embers" style="color:#ffffff;font-size:16px"></i>`,
-  enchantWeapon:`<i class="ra ra-crystal-wand" style="color:#ffffff;font-size:16px"></i>`,
+  chainLightning:`<i class="ra ra-chain" style="color:#ffffff;font-size:16px"></i>`,
+  polymorph:`<i class="ra ra-dragon" style="color:#ffffff;font-size:16px"></i>`,
+  timeWarp:`<i class="ra ra-clockwork" style="color:#ffffff;font-size:16px"></i>`,
+  meteor:`<i class="ra ra-meteor-impact" style="color:#ffffff;font-size:16px"></i>`,
+  blizzard:`<i class="ra ra-ice-shield" style="color:#ffffff;font-size:16px"></i>`,
+  arcaneBlast:`<i class="ra ra-lightning-storm" style="color:#ffffff;font-size:16px"></i>`,
+  enchantWeapon:`<i class="ra ra-fairy-wand" style="color:#ffffff;font-size:16px"></i>`,
   soulDrain:`<i class="ra ra-ghost" style="color:#ffffff;font-size:16px"></i>`,
   backstab:`<i class="ra ra-plain-dagger" style="color:#ffffff;font-size:16px"></i>`,
-  smokeBomb:`<i class="ra ra-smoke" style="color:#ffffff;font-size:16px"></i>`,
-  pickpocket:`<i class="ra ra-hand" style="color:#ffffff;font-size:16px"></i>`,
+  smokeBomb:`<i class="ra ra-incense" style="color:#ffffff;font-size:16px"></i>`,
+  pickpocket:`<i class="ra ra-grab" style="color:#ffffff;font-size:16px"></i>`,
   evasion:`<i class="ra ra-player-dodge" style="color:#ffffff;font-size:16px"></i>`,
-  bladeDance:`<i class="ra ra-sword" style="color:#ffffff;font-size:16px"></i>`,
-  markTarget:`<i class="ra ra-archery-target" style="color:#ffffff;font-size:16px"></i>`,
+  bladeDance:`<i class="ra ra-rune-sword" style="color:#ffffff;font-size:16px"></i>`,
+  markTarget:`<i class="ra ra-target-arrows" style="color:#ffffff;font-size:16px"></i>`,
   cripple:`<i class="ra ra-bone-bite" style="color:#ffffff;font-size:16px"></i>`,
   deathMark:`<i class="ra ra-skull-trophy" style="color:#ffffff;font-size:16px"></i>`,
 };
@@ -2601,22 +2601,22 @@ function showBuffTip(r,c){
 async function collectBuff(r,c){
   const t=board[r][c];
   if(!t||t.type!=='buff'||!t.buff)return;
-  busy=true;
-  const bf=t.buff;
-  SFX.upgrade();haptic(30);
-  bf.fn();
-  const nm=bf.name.replace(/<[^>]*>/g,'');
-  msg(nm+'!');
-  screenFx('rgba(255,200,50,.12)',300);
-  // Grab animation on the tile element
-  const el=tEl(r,c);
-  if(el){el.style.animation='buffGrab .3s ease-out forwards';}
-  await sl(300);
-  // Remove from board and collapse
-  board[r][c]=null;
-  await collapse();
-  ui();
-  busy=false;
+  busy=true;_busySetAt=Date.now();
+  try{
+    const bf=t.buff;
+    SFX.upgrade();haptic(30);
+    bf.fn();
+    const nm=bf.name.replace(/<[^>]*>/g,'');
+    msg(nm+'!');
+    screenFx('rgba(255,200,50,.12)',300);
+    const el=tEl(r,c);
+    if(el){el.style.animation='buffGrab .3s ease-out forwards';}
+    await sl(300);
+    board[r][c]=null;
+    await collapse();
+    ui();
+  }catch(e){console.error('collectBuff err:',e);}
+  finally{busy=false;_drainQueue();}
 }
 
 // ===== EQUIPMENT =====
@@ -2630,10 +2630,10 @@ const EQ_DESC_K={Quicken:'eqQuicken',LifeSteal:'eqLifeSteal',Regen:'eqRegen',Spi
 
 // ===== DIFFICULTY =====
 const DIFF={
-  easy:{hp:100,mAr:30,wD:4,aD:3,sr:.14,sg:.002,sH:1,sA:1,sD:0},
-  normal:{hp:65,mAr:24,wD:3,aD:2,sr:.17,sg:.003,sH:2,sA:1,sD:0},
-  hard:{hp:50,mAr:20,wD:3,aD:2,sr:.21,sg:.005,sH:3,sA:1,sD:0},
-  hell:{hp:35,mAr:16,wD:2,aD:1,sr:.27,sg:.008,sH:4,sA:2,sD:1}
+  easy:{hp:120,mAr:35,wD:5,aD:3,sr:.12,sg:.002,sH:1,sA:1,sD:0},
+  normal:{hp:80,mAr:28,wD:4,aD:2,sr:.15,sg:.003,sH:1,sA:1,sD:0},
+  hard:{hp:55,mAr:22,wD:3,aD:2,sr:.19,sg:.005,sH:2,sA:1,sD:0},
+  hell:{hp:40,mAr:18,wD:2,aD:1,sr:.25,sg:.008,sH:3,sA:2,sD:1}
 };
 
 
@@ -2644,7 +2644,13 @@ const DIFF={
 let _audioCtx=null;
 function _unlockAudio(){
   if(!_audioCtx){try{_audioCtx=new(window.AudioContext||window.webkitAudioContext)();}catch(e){console.error('[AUDIO] ctx create fail',e);}}
-  if(_audioCtx&&_audioCtx.state==='suspended'){_audioCtx.resume().catch(function(e){console.warn('Audio resume:',e);});}
+  if(_audioCtx){
+    // iOS WKWebView: 'interrupted' state after background — need new context
+    if(_audioCtx.state==='closed'||(_audioCtx.state!=='running'&&_audioCtx.state!=='suspended')){
+      try{_audioCtx=new(window.AudioContext||window.webkitAudioContext)();}catch(e){}
+    }
+    if(_audioCtx.state==='suspended'){_audioCtx.resume().catch(function(e){console.warn('Audio resume:',e);});}
+  }
 }
 // Pre-warm on first touch/click anywhere — ensures AudioContext is unlocked by user gesture
 (function(){
@@ -3273,29 +3279,110 @@ function titleSfx(){
 }
 
 // ===== APP RESUME / VISIBILITY HANDLER =====
-function _appResume(){
-  // Clear stuck dissolve overlay
+// Track when busy was set — watchdog resets if stuck too long
+let _busySetAt=0;
+let _resumeCount=0;
+
+function _forceGameReset(){
+  // Nuclear option: completely reset game state locks
+  busy=false;drag=false;path=[];pty=null;_inputQueue=null;
+  if(typeof _epoch!=='undefined')_epoch++;
+  // Close all modals
+  try{
+    document.querySelectorAll('.mbg.show').forEach(function(m){m.classList.remove('show');});
+    document.querySelector('.restart-confirm')?.remove();
+    document.querySelectorAll('[style*="z-index:700"],[style*="z-index:950"]').forEach(function(el){el.remove();});
+    if(typeof dismissBuffTip==='function')dismissBuffTip();
+    if(typeof _forceResolveAllModals==='function')_forceResolveAllModals();
+  }catch(e){}
+  // Clear all animations
+  document.querySelectorAll('.a-fall,.a-pop,.a-slash,.a-shake,.a-dmg,.a-heal,.a-glow,.a-kill').forEach(function(el){
+    el.classList.remove('a-fall','a-pop','a-slash','a-shake','a-dmg','a-heal','a-glow','a-kill');
+  });
+  // Clear dissolve overlay
   var ov=document.getElementById('dissolve-overlay');
-  if(ov){ov.style.transition='none';ov.style.opacity='0';ov.style.pointerEvents='none';
-    setTimeout(function(){ov.style.transition='';},50);}
-  // Clear any stuck CSS animations / transitions
-  document.querySelectorAll('.a-fall').forEach(function(el){el.classList.remove('a-fall');});
-  // Resume AudioContext
+  if(ov){ov.style.transition='none';ov.style.opacity='0';ov.style.pointerEvents='none';}
+  // Full re-render
+  try{
+    if(typeof G!=='undefined'&&G&&G.hp>0){
+      if(typeof renderFull==='function')renderFull();
+      if(typeof rsk==='function')rsk();
+      if(typeof ui==='function')ui();
+    }
+  }catch(e){}
+}
+
+function _appResume(){
+  _resumeCount++;
+  var rc=_resumeCount;
+  // Immediate reset
+  _forceGameReset();
+  // GPU repaint for WKWebView
+  var root=document.getElementById('root');
+  var boardEl=document.getElementById('board');
+  [root,boardEl,document.body].forEach(function(el){
+    if(!el)return;
+    el.style.willChange='transform';
+    el.style.transform='translateZ(0)';
+  });
+  void document.body.offsetHeight;
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){
+      [root,boardEl,document.body].forEach(function(el){
+        if(!el)return;el.style.willChange='';el.style.transform='';
+      });
+    });
+  });
+  document.body.style.opacity='0.999';
+  setTimeout(function(){document.body.style.opacity='1';},50);
+  window.scrollTo(0,1);setTimeout(function(){window.scrollTo(0,0);},30);
+  // Audio resume
+  _audioNeedsResume=true;
   try{if(typeof SFX!=='undefined'&&SFX.resumeCtx)SFX.resumeCtx();}catch(e){}
   try{if(typeof BGM!=='undefined'&&BGM.resumeCtx)BGM.resumeCtx();}catch(e){}
-  // Force repaint to recover from WKWebView rendering freeze
-  document.body.style.display='none';
-  void document.body.offsetHeight;
-  document.body.style.display='';
+  // Silver mode
+  try{if(_silverMode)_applySilver();}catch(e){}
+  // Delayed second pass — catches cases where first pass runs too early
+  setTimeout(function(){
+    if(_resumeCount!==rc)return; // newer resume already handled it
+    _forceGameReset();
+    try{if(typeof SFX!=='undefined'&&SFX.resumeCtx)SFX.resumeCtx();}catch(e){}
+    try{if(typeof BGM!=='undefined'&&BGM.resumeCtx)BGM.resumeCtx();}catch(e){}
+  },200);
+  // Third pass at 500ms — final safety net
+  setTimeout(function(){
+    if(_resumeCount!==rc)return;
+    if(busy){busy=false;if(typeof _epoch!=='undefined')_epoch++;}
+    try{if(typeof G!=='undefined'&&G&&G.hp>0&&typeof ui==='function')ui();}catch(e){}
+  },500);
 }
+
+// === WATCHDOG: if busy stuck > 3 seconds, force reset on next touch ===
+let _audioNeedsResume=false;
+document.addEventListener('touchstart',function(){
+  // Audio resume on touch (iOS requires user gesture)
+  if(_audioNeedsResume){
+    _audioNeedsResume=false;
+    try{if(typeof SFX!=='undefined'&&SFX.resumeCtx)SFX.resumeCtx();}catch(e){}
+    try{if(typeof BGM!=='undefined'&&BGM.resumeCtx)BGM.resumeCtx();}catch(e){}
+  }
+  // Watchdog: if busy for too long, force reset
+  if(busy&&_busySetAt>0&&(Date.now()-_busySetAt)>3000){
+    console.warn('[WATCHDOG] busy stuck for',Date.now()-_busySetAt,'ms — forcing reset');
+    _forceGameReset();
+  }
+},{passive:true,capture:true});
+
+// === RESUME EVENT LISTENERS (multiple for maximum coverage) ===
 document.addEventListener('visibilitychange',function(){
   if(document.visibilityState==='visible') _appResume();
 });
 window.addEventListener('pageshow',function(e){
   if(e.persisted) _appResume();
 });
-// Capacitor App plugin resume event (if available)
 document.addEventListener('resume',function(){ _appResume(); });
+window.addEventListener('focus',function(){ _appResume(); });
+// Capacitor App plugin (multiple registration attempts for different Capacitor versions)
 try{
   if(window.Capacitor&&window.Capacitor.Plugins&&window.Capacitor.Plugins.App){
     window.Capacitor.Plugins.App.addListener('appStateChange',function(state){
@@ -3303,8 +3390,17 @@ try{
     });
   }
 }catch(e){}
-// Fallback: focus event
-window.addEventListener('focus',function(){ _appResume(); });
+// Capacitor 5+ global bridge
+try{
+  if(window.Capacitor&&window.Capacitor.registerPlugin){
+    var _capApp=window.Capacitor.registerPlugin('App');
+    if(_capApp&&_capApp.addListener){
+      _capApp.addListener('appStateChange',function(state){
+        if(state.isActive) _appResume();
+      });
+    }
+  }
+}catch(e){}
 
 // ===== DISSOLVE TRANSITION HELPER =====
 function dissolve(duringFn,afterFn){
@@ -3332,12 +3428,14 @@ function _hideStartUI(){
 }
 // Country detection from locale
 function detectCountry(){
-  const nav=(navigator.language||navigator.userLanguage||'en-US').toLowerCase();
-  // Try region code first (e.g., en-us → US, ko-kr → KR)
-  const parts=nav.split('-');
-  if(parts.length>=2){const r=parts[parts.length-1].toUpperCase();if(r.length===2)return r;}
+  // Use navigator.languages[0] first (more likely to include region), then language
+  const langs=navigator.languages||[];
+  const nav=(langs[0]||navigator.language||navigator.userLanguage||'en-US').toLowerCase();
+  // Try region code: en-us → US, ko-kr → KR, zh-hant-tw → TW
+  const parts=nav.split(/[-_]/);
+  for(let i=parts.length-1;i>=1;i--){const r=parts[i].toUpperCase();if(r.length===2&&/^[A-Z]{2}$/.test(r))return r;}
   // Fallback from language code
-  const map={ko:'KR',ja:'JP',zh:'CN',es:'ES',en:'US',fr:'FR',de:'DE',pt:'BR',it:'IT',ru:'RU',ar:'SA',hi:'IN',th:'TH',vi:'VN',id:'ID',ms:'MY',tr:'TR',pl:'PL',nl:'NL',sv:'SE'};
+  const map={ko:'KR',ja:'JP',zh:'CN',es:'ES',en:'US',fr:'FR',de:'DE',pt:'BR',it:'IT',ru:'RU',ar:'SA',hi:'IN',th:'TH',vi:'VN',id:'ID',ms:'MY',tr:'TR',pl:'PL',nl:'NL',sv:'SE',da:'DK',fi:'FI',nb:'NO',uk:'UA',cs:'CZ',hu:'HU',ro:'RO',el:'GR',he:'IL',bn:'BD',ta:'IN',te:'IN',mr:'IN',ur:'PK',fa:'IR',fil:'PH',sw:'KE',zu:'ZA'};
   return map[parts[0]]||'';
 }
 function countryFlag(cc){
@@ -3542,12 +3640,12 @@ function go(diff,skipTut){
   G={
     diff,cls:cls.id,clsMods:m,turn:0,kills:0,totGold:0,comboCount:0,maxCombo:0,
     hp:d.hp+(m.maxHpBonus||0),maxHp:d.hp+(m.maxHpBonus||0),
-    armor:0,maxArmor:d.mAr+(m.armorBonus||0),armDur:.5,
+    armor:0,maxArmor:d.mAr+(m.armorBonus||0),armDur:.6,
     mana:0,maxMana:100,ultReady:false,
     str:1,dex:1,vit:1,lck:1,
     wDmg:d.wD+(m.baseDmgBonus||0),aDef:d.aD,
     level:1,xp:0,xpN:80,
-    gold:0,goldN:100,
+    gold:0,goldN:80,
     upgPt:0,upgN:20,
     skills:[],maxSkills:5,
     // passives from equipment
@@ -3557,7 +3655,7 @@ function go(diff,skipTut){
     // special skull tracking
     skWeak:0, // skull weaken from upgrades
     // === Diablo-style mechanics ===
-    vampiric:.10,      // base life steal: 10% of combat damage → HP
+    vampiric:.12,      // base life steal: 12% of combat damage → HP
     thornsDmg:0,       // thorns: reflect dmg to all skulls on shield collect
     poisonStacks:0,    // poison DoT stacks (each = 1 dmg/turn, decays -1/turn)
     burnStacks:0,      // burn DoT stacks (each = 1 dmg + armor erosion, decays -1/turn)
@@ -3587,7 +3685,7 @@ function go(diff,skipTut){
 }
 
 function showTutorial(){
-  busy=true;
+  busy=true;_busySetAt=Date.now();
   const ov=document.createElement('div');ov.id='tut-overlay';
   ov.style.opacity='0';ov.style.transition='opacity .5s ease-in';
   ov.innerHTML=`
@@ -3731,8 +3829,8 @@ function rc(){
   G.bSh=Math.max(0,.05*G.dex-(m.shieldPenalty||0));
   G.bPo=.05*G.vit;
   G.bCo=.05*G.lck;
-  G.defPS=2+Math.floor(G.dex*.5);// defense per shield
-  G.hpPP=7+G.lck;// hp per potion
+  G.defPS=3+Math.floor(G.dex*.5);// defense per shield
+  G.hpPP=10+G.lck;// hp per potion
 }
 
 // Make tile
@@ -3760,25 +3858,25 @@ function mt(r,c){
   if(type==='coin'&&Math.random()<0.111)t.superCoin=true;
 
   if(type==='skull'){
-    const pg=Math.floor(G.turn/7);
+    const pg=Math.floor(G.turn/9);
     t.hp=Math.max(1,d.sH+pg-G.skWeak+(m.skHpBonus||0));
     t.mhp=t.hp;
-    t.atk=d.sA+Math.floor(pg/3);
-    t.def=d.sD+Math.floor(pg/4);
+    t.atk=d.sA+Math.floor(pg/4);
+    t.def=d.sD+Math.floor(pg/5);
     t.wait=1; // wait 1 turn after spawn before attacking
 
     // Special skulls
-    const specTurn=12-(m.specialEarly||0);
+    const specTurn=16-(m.specialEarly||0);
     const specRate=.09*(m.specialRate!==undefined?m.specialRate:1);
     if(G.turn>specTurn&&Math.random()<specRate){
       const types=['poison','thief','freeze'];
       t.spec=types[Math.floor(Math.random()*3)];
       t.hp+=2;t.mhp=t.hp;t.atk+=1;t.def+=1;
       if(m.skSpecialHpMult)t.hp=Math.ceil(t.hp*m.skSpecialHpMult);t.mhp=t.hp;
-      setTimeout(()=>{if(G&&G.hp>0)msg(_pick('logSpecSpawn'));},600);
+      setTimeout(()=>{if(G&&G.hp>0){if(curLang==='ko')msg('특수('+t.spec+'), 해골 '+_skullCount());else msg(_pick('logSpecSpawn'));}},600);
     }
     // Boss
-    if(G.turn>25&&Math.random()<.04){
+    if(G.turn>30&&Math.random()<.035){
       t.boss=true;t.hp+=10;t.mhp=t.hp;t.atk+=3;t.def+=3;
     }
   }
@@ -3787,37 +3885,51 @@ function mt(r,c){
 
 // Spawn an elite skull on a random empty (or non-skull) cell
 async function spawnEliteSkull(){
+  try{
+  if(!board||!board[0])return;
   const d=DIFF[G.diff];
   const pg=Math.floor(G.turn/7);
-  // Find a random non-skull cell to replace
-  const candidates=[];
-  for(let r=0;r<R;r++)for(let c=0;c<C;c++){const t=board[r][c];if(t&&t.type!=='skull'&&t.type!=='buff')candidates.push({r,c});}
-  if(candidates.length===0)return;
-  const pos=candidates[Math.floor(Math.random()*candidates.length)];
+  // Pick a random column and drop elite skull from top
+  const col=Math.floor(Math.random()*C);
+  // Remove top-row tile in that column to make room
+  board[0][col]=null;
+  // Collapse that column — tiles fall, new tile fills from top
+  // Instead, shift everything: remove row 0 of this column, shift down, place elite at row 0
+  // Actually: just place elite at row 0, replacing whatever was there
   const lvMult=Math.max(1,G.level-2);
-  // Elite skulls are significantly stronger — 2x base stats, especially dangerous early
-  const baseHp=Math.max(8,d.sH*2+pg*3+lvMult*4);
-  const baseAtk=Math.max(3,d.sA*2+Math.floor(pg/2)+lvMult*3);
-  const baseDef=Math.max(2,d.sD*2+Math.floor(pg/3)+lvMult*2);
+  const baseHp=Math.max(6,d.sH*2+pg*2+lvMult*3);
+  const baseAtk=Math.max(2,d.sA*2+Math.floor(pg/3)+lvMult*2);
+  const baseDef=Math.max(1,d.sD+Math.floor(pg/4)+lvMult);
   const t={
-    type:'skull',r:pos.r,c:pos.c,_id:++uid,elite:true,
+    type:'skull',r:0,c:col,_id:++uid,elite:true,
     hp:baseHp,atk:baseAtk,def:baseDef,
     wait:1
   };
   t.mhp=t.hp;
-  board[pos.r][pos.c]=t;
-  refreshCell(pos.r,pos.c,'a-spawn');
-  // Flash entry animation
-  const el=tEl(pos.r,pos.c);
-  if(el){setTimeout(()=>{if(el)el.style.animation='elitePulse 0.3s ease 3';setTimeout(()=>{if(el){el.style.animation='';el.classList.add('sk-elite');}},900);},300);}
+  board[0][col]=t;
+  // Animate fall from above
+  const cell=cellEl(0,col);
+  if(cell){
+    cell.innerHTML='';
+    const el=mkEl(t,'');
+    el.style.setProperty('--fd',R);
+    cell.appendChild(el);
+    void el.offsetHeight;
+    el.classList.add('a-fall');
+  }
   SFX.skDeathMark();
   screenFx('rgba(255,0,0,.08)',300);
+  await sl(200);
+  // Add elite pulse after landing
+  const el2=tEl(0,col);
+  if(el2){el2.style.animation='elitePulse 0.3s ease 2';setTimeout(()=>{if(el2){el2.style.animation='';el2.classList.add('sk-elite');}},600);}
+  }catch(e){console.error('spawnElite err:',e);}
 }
 
 // ================================================================
 //  RENDER
 // ================================================================
-function cellEl(r,c){return document.getElementById('board').children[r*C+c];}
+function cellEl(r,c){const b=document.getElementById('board');return b?b.children[r*C+c]:null;}
 
 function mkEl(t,anim){
   const d=document.createElement('div');
@@ -3903,7 +4015,7 @@ function refreshCell(r,c,anim){
 
 async function animRem(keys,animClass='a-pop'){
   for(const k of keys){const[r,c]=k.split(',').map(Number);const e=tEl(r,c);if(e){e.classList.remove('a-pop','a-kill','a-slash');e.classList.add(animClass);}}
-  await sl(300);
+  await sl(120);
   for(const k of keys){const[r,c]=k.split(',').map(Number);const cell=cellEl(r,c);if(cell)cell.innerHTML='';}
 }
 
@@ -4021,18 +4133,21 @@ async function collapse(newIds){
     }
   }
   // Force reflow then add animation class so browser always plays the animation
-  if(fallEls.length){void fallEls[0].offsetHeight;fallEls.forEach(e=>e.classList.add('a-fall'));}
-  SFX.drop();await sl(380);
+  if(fallEls.length){
+    fallEls.forEach(e=>void e.offsetWidth);
+    requestAnimationFrame(()=>{fallEls.forEach(e=>e.classList.add('a-fall'));});
+  }
+  SFX.drop();await sl(200);
   // First buff tile tip
   if(!_buffTipShown){
     for(let r=0;r<R;r++)for(let c=0;c<C;c++){
-      if(board[r][c]?.type==='buff'){_buffTipShown=true;showBuffTip(r,c);break;}
+      if(board[r][c]?.type==='buff'){_buffTipShown=true;msg(T('buffTip')||'A gem appeared! Tap it to gain a special effect');break;}
     }
   }
 }
 
 function rsk(){
-  const bar=document.getElementById('skill-bar');bar.innerHTML='';
+  const bar=document.getElementById('skill-bar');if(!bar)return;bar.innerHTML='';
   // Always render 5 skill slots
   for(let i=0;i<5;i++){
     const s=G.skills[i];
@@ -4112,7 +4227,7 @@ function ui(){
 // ================================================================
 //  COMPANION GUIDE MESSAGE SYSTEM
 // ================================================================
-let _lastGuideKey='';
+let _lastGuideKey='';let _lastGuideTxt='';
 let _guideIdx={};
 let _lastKills=0;
 let _bossKilled=false;
@@ -4124,51 +4239,73 @@ function _pick(key){
   _guideIdx[key]=(idx+1);
   return arr[idx];
 }
+function _dataGuide(){
+  const hp=G.hp,mhp=G.maxHp,arm=G.armor,marm=G.maxArmor;
+  const sc=_skullCount(),xpPct=Math.floor((G.xp/G.xpN)*100);
+  const rdySk=G.skills.filter(s=>s&&s.cd<=0).length;
+  const goldPct=Math.floor((G.gold/G.goldN)*100);
+  if(hp<=mhp*0.15)return`HP ${hp}/${mhp}, 회복 급함`;
+  if(_hasBoss())return`보스, 방어 ${arm}/${marm}`;
+  if(G.poisonStacks>0)return`독 ${G.poisonStacks}중첩, 빠르게`;
+  if(G.burnStacks>0)return`화상 ${G.burnStacks}중첩, 방패`;
+  if(hp<=mhp*0.4)return`HP ${hp}/${mhp}, 물약`;
+  if(arm<=0&&_hasSkullsAbove(5))return`방어 0, 해골 ${sc}`;
+  const sa=_strongestSkullAtk();
+  if(sa>=hp*0.3)return`적 ATK ${sa}, HP ${hp}`;
+  if(_hasElite())return`엘리트 해골, 주의`;
+  if(_hasFrozen())return`동결, 공격 기회`;
+  if(_hasStunned())return`기절, 공격 기회`;
+  if(sc>=7)return`해골 ${sc}, 정리`;
+  if(G.xp>=G.xpN*0.8)return`XP ${xpPct}%, 레벨업 임박`;
+  if(rdySk>0&&Math.random()<0.4)return`스킬 ${rdySk}개 가능`;
+  if(G.gold>=G.goldN*0.8&&Math.random()<0.3)return`금화 ${goldPct}%, 상점 임박`;
+  if(hp>=mhp*0.8&&Math.random()<0.35)return`HP ${hp}/${mhp}, 공격`;
+  if(sc<=2)return`해골 ${sc}, 비축`;
+  if(arm>=marm*0.7&&Math.random()<0.35)return`방어 ${arm}/${marm}, 공격`;
+  if(G.turn<=3)return`턴 ${G.turn}, 탐색`;
+  if(hp<=mhp*0.6)return`HP ${hp}/${mhp}, 물약`;
+  if(sc>=5)return`해골 ${sc}, 정리`;
+  if(arm<=marm*0.3&&_hasSkullsAbove(3))return`방어 ${arm}/${marm}, 방패`;
+  if(rdySk>0)return`스킬 ${rdySk}개 가능`;
+  if(xpPct>=50)return`XP ${xpPct}%`;
+  return null;
+}
 function guideMsg(){
   if(!G||G.hp<=0)return;
-  let key=null;
-  // 0. COMBO: tactical acknowledgment
-  if(_lastKills>=3&&Math.random()<0.7){key='logGoodCombo';_lastKills=0;msg(_pick(key));return;}
+  // Korean: data-driven messages
+  if(curLang==='ko'){
+    // Combo acknowledgment
+    if(_lastKills>=3){_lastKills=0;const sc=_skullCount();msg(`${_lastKills+3}연속 처치. 해골 ${sc}마리 남음.`);return;}
+    _lastKills=0;
+    const txt=_dataGuide();
+    if(!txt)return;
+    if(txt===_lastGuideTxt&&Math.random()<0.5)return;
+    _lastGuideTxt=txt;
+    msg(txt);return;
+  }
+  // Other languages: array-based
   _lastKills=0;
-  // 1. CRITICAL: HP dangerously low (<15%)
+  let key=null;
   if(G.hp<=G.maxHp*0.15){key='logDanger';}
-  // 2. HIGH: Boss on board
   else if(_hasBoss()){key='logBoss';}
-  // 3. HIGH: Poison active
   else if(G.poisonStacks>0){key='logPoison';}
-  // 4. HIGH: Burn active
   else if(G.burnStacks>0){key='logBurn';}
-  // 5. MEDIUM: Low HP (<40%)
   else if(G.hp<=G.maxHp*0.4){key='logLowHp';}
-  // 6. MEDIUM: No shield with skulls present
   else if(G.armor<=0&&_hasSkullsAbove(5)){key='logNoShield';}
-  // 7. MEDIUM: Strong enemy on board
   else if(_strongestSkullAtk()>=G.hp*0.3){key='logHighAtk';}
-  // 8. MEDIUM: Elite skull on board
   else if(_hasElite()){key='logElite';}
-  // 9. MEDIUM: Frozen/stunned enemies — exploit window
   else if(_hasFrozen()){key='logFrozen';}
   else if(_hasStunned()){key='logStunned';}
-  // 10. MEDIUM: Too many skulls (>=7) — board pressure
   else if(_skullCount()>=7){key='logManySkull';}
-  // 11. LOW: Almost level up
   else if(G.xp>=G.xpN*0.8){key='logAlmostLv';}
-  // 12. LOW: Skill ready
   else if(_hasSkillReady()&&Math.random()<0.4){key='logSkillReady';}
-  // 13. LOW: Rich — gold threshold
   else if(G.gold>=G.goldN*0.8&&Math.random()<0.3){key='logRich';}
-  // 14. LOW: Near full HP — encourage offense
   else if(G.hp>=G.maxHp*0.8&&Math.random()<0.35){key='logBigHeal';}
-  // 15. LOW: Board mostly safe (few skulls) — build resources
   else if(_skullCount()<=2){key='logSafe';}
-  // 16. LOW: High armor — offensive window
   else if(G.armor>=G.maxArmor*0.7&&Math.random()<0.35){key='logHighDef';}
-  // 16. EARLY game
   else if(G.turn<=3){key='logEarly';}
-  // 17. Default: tactical observation based on board
   else{key=_tacticalDefault();}
   if(!key)return;
-  // Avoid repeating same category
   if(key===_lastGuideKey&&Math.random()<0.5)return;
   _lastGuideKey=key;
   msg(_pick(key));
@@ -4248,23 +4385,23 @@ function showStatTip(key,el){
 // ================================================================
 //  INPUT
 // ================================================================
+// === INPUT QUEUE: allow swiping during animations ===
+let _inputQueue=null;
 function onD(r,c){
-  if(busy)return;drag=true;SFX.tick();
+  drag=true;SFX.tick();
   const t=board[r][c];if(!t)return;
   path=[{r,c}];
-  // Buff tiles can start combat chains or be tapped alone
   pty=(t.type==='sword'||t.type==='skull'||t.type==='buff')?'combat':t.type;
   hl();
 }
 function onE(r,c){
-  if(!drag||busy)return;
+  if(!drag)return;
   const l=path[path.length-1];
   if(Math.abs(r-l.r)>1||Math.abs(c-l.c)>1||(!r&&!c&&r===l.r&&c===l.c))return;
   if(r===l.r&&c===l.c)return;
   const pi=path.findIndex(p=>p.r===r&&p.c===c);
   if(pi>=0){if(pi===path.length-2){path.pop();hl();}return;}
   const t=board[r][c];if(!t)return;
-  // Buff tiles join combat chains
   if(pty==='combat'){if(t.type!=='sword'&&t.type!=='skull'&&t.type!=='buff')return;}
   else if(t.type!==pty)return;
   path.push({r,c});SFX.pathAdd();hl();
@@ -4275,12 +4412,26 @@ function onU(){
   if(path.length===1&&board[path[0].r]?.[path[0].c]?.type==='buff'){
     const{r,c}=path[0];
     path=[];pty=null;
-    collectBuff(r,c);
+    if(busy){_inputQueue={type:'buff',r,c};}else collectBuff(r,c);
     return;
   }
-  if(path.length>=3)proc();
+  if(path.length>=3){
+    if(busy){
+      // Queue this action — will fire when current proc() finishes
+      _inputQueue={type:'proc',path:[...path],pty};
+      path=[];pty=null;
+    }else{
+      proc();
+    }
+  }
   else if(path.length===2){msg(T('needThree')||'3개 이상 연결해 주세요');SFX.cancel();path=[];pty=null;}
-  else{path=[];pty=null;msg('&nbsp;');}
+  else{path=[];pty=null;}
+}
+function _drainQueue(){
+  if(!_inputQueue)return;
+  const q=_inputQueue;_inputQueue=null;
+  if(q.type==='proc'){path=q.path;pty=q.pty;proc();}
+  else if(q.type==='buff'){collectBuff(q.r,q.c);}
 }
 
 function hl(){
@@ -4326,14 +4477,14 @@ function clr(){
 //  MATCH PROCESSING
 // ================================================================
 async function proc(){
-  busy=true;
+  busy=true;_busySetAt=Date.now();
   try{
   const p=[...path];path=[];pty=null;
   const m=G.clsMods||{};
   SFX.match();
 
   // Raider cocky penalty: 3 tiles only = nothing
-  if(m.cockyPenalty&&p.length===3){msg(T('cocky'));await sl(400);busy=false;return;}
+  if(m.cockyPenalty&&p.length===3){msg(T('cocky'));await sl(150);busy=false;return;}
 
   const sw=p.filter(x=>board[x.r][x.c]?.type==='sword');
   const sk=p.filter(x=>board[x.r][x.c]?.type==='skull');
@@ -4385,7 +4536,7 @@ async function proc(){
         if(s.elite)_bossKilled=true;
         rem.add(`${sp.r},${sp.c}`);
         if(G.eqLifeSteal>0)G.hp=Math.min(G.maxHp,G.hp+G.eqLifeSteal);
-        if(s.spec&&Math.random()<0.5)msg(_pick('logSpecKill'));
+        if(s.spec&&Math.random()<0.5){if(curLang==='ko')msg('특수('+s.spec+') 처치, 해골 '+_skullCount());else msg(_pick('logSpecKill'));}
       }
 
     }
@@ -4525,7 +4676,7 @@ async function proc(){
     xp+=Math.floor(kills*comboMult);
     const comboName=kills>=5?'MASSACRE':kills>=4?'OVERKILL':kills>=3?'TRIPLE KILL':'DOUBLE KILL';
     const comboColor=kills>=5?'#ff2222':kills>=4?'#ff6622':kills>=3?'#ffaa22':'#ffcc44';
-    await sl(300);
+    await sl(120);
     {const ct=sk[0]||sw[0];if(ct)flt(ct,`${comboName} x${comboMult}!`,comboColor,'ft-crit');}
     if(kills>=3)SFX.combo();
     // combo msg suppressed — float text handles it
@@ -4564,12 +4715,12 @@ async function proc(){
   }
   // Kill skulls with death animation, others with pop
   if(killKeys.size>0){
-    {let _bi=0;for(const k of killKeys){const[r,c]=k.split(',').map(Number);const e=tEl(r,c);const _d=_bi*50;if(e){setTimeout(()=>{e.classList.remove('a-slash','a-pop');e.classList.add('a-kill');burstFx(e);},_d);}_bi++;}}
+    {let _bi=0;for(const k of killKeys){const[r,c]=k.split(',').map(Number);const e=tEl(r,c);const _d=_bi*25;if(e){setTimeout(()=>{e.classList.remove('a-slash','a-pop');e.classList.add('a-kill');burstFx(e);},_d);}_bi++;}}
   }
   if(popKeys.size>0){
     for(const k of popKeys){const[r,c]=k.split(',').map(Number);const e=tEl(r,c);if(e){e.classList.remove('a-slash');e.classList.add('a-pop');}}
   }
-  await sl(150);
+  await sl(80);
   for(const k of rem){const[rr,cc]=k.split(',').map(Number);const cell=cellEl(rr,cc);if(cell)cell.innerHTML='';board[rr][cc]=null;}
   // Refresh surviving skulls
   for(const sp of sk){if(board[sp.r]?.[sp.c]?.type==='skull'&&board[sp.r][sp.c].hp>0)refreshCell(sp.r,sp.c);}
@@ -4578,8 +4729,8 @@ async function proc(){
   if(p.length>=6){
     SFX.combo();
     screenFx('rgba(255,220,100,.12)',250);
-    const msgEl=document.getElementById('msg');msgEl.style.animation='comboGlow .6s ease-in-out';setTimeout(()=>msgEl.style.animation='',600);
-    await sl(300);
+    const msgEl=document.getElementById('msg');if(msgEl){msgEl.style.animation='comboGlow .6s ease-in-out';setTimeout(()=>{if(msgEl)msgEl.style.animation='';},600);}
+    await sl(100);
   }
 
   await collapse();
@@ -4598,10 +4749,10 @@ async function proc(){
 
   // --- LEVEL UP ---
   while(G.xp>=G.xpN){
-    G.xp-=G.xpN;G.level++;G.xpN=Math.floor(G.xpN*1.65)+12;
+    G.xp-=G.xpN;G.level++;G.xpN=Math.floor(G.xpN*1.45)+10;
     G.hp=G.maxHp; // Full HP on level up!
     SFX.levelUp();screenFx('rgba(255,255,200,.15)',400);haptic(50);
-    const badge=document.getElementById('lvl-badge');badge.style.animation='comboGlow .8s ease';setTimeout(()=>badge.style.animation='',800);
+    const badge=document.getElementById('lvl-badge');if(badge){badge.style.animation='comboGlow .8s ease';setTimeout(()=>{if(badge)badge.style.animation='';},800);}
     await showLvlUpBanner();
     if(G.level===3)await showClassPick();
     await showLvl();ui();
@@ -4609,11 +4760,11 @@ async function proc(){
     if(G.level>=3){await spawnEliteSkull();}
   }
   // --- UPGRADE ---
-  if(G.upgPt>=G.upgN){G.upgPt-=G.upgN;G.upgN=Math.floor(G.upgN*1.3)+5;SFX.upgrade();screenFx('rgba(180,180,255,.1)',300);await showUpg();ui();}
+  if(G.upgPt>=G.upgN){G.upgPt-=G.upgN;G.upgN=Math.floor(G.upgN*1.2)+5;SFX.upgrade();screenFx('rgba(180,180,255,.1)',300);await showUpg();ui();}
   // --- BOSS KILL REWARD ---
   if(_bossKilled){_bossKilled=false;await showBossReward();await showUpg();ui();}
   // --- GOLD SHOP ---
-  if(G.gold>=G.goldN){G.gold-=G.goldN;G.goldN=Math.floor(G.goldN*1.4)+20;SFX.shop();screenFx('rgba(255,200,80,.12)',300);await showShop();ui();}
+  if(G.gold>=G.goldN){G.gold-=G.goldN;G.goldN=Math.floor(G.goldN*1.3)+15;SFX.shop();screenFx('rgba(255,200,80,.12)',300);await showShop();ui();}
 
   // Skill cooldowns
   G.skills.forEach(s=>{if(s.cd>0)s.cd--;});
@@ -4621,16 +4772,17 @@ async function proc(){
   // Buff tiles now spawn naturally via mt() during collapse
   _lastKills=kills||0;
   setTimeout(()=>{try{guideMsg();}catch(e){msg('&nbsp;');}},3500);
-  }catch(e){console.error('Proc error:',e);}finally{busy=false;}
+  }catch(e){if(e!=='epoch')console.error('Proc error:',e);}finally{busy=false;_drainQueue();}
 }
 
 // ================================================================
 //  ENEMY TURN
 // ================================================================
 async function enemyTurn(){
-  if(G.frozen){G.frozen=false;msg(T('frozen'));await sl(500);return;}
+  try{
+  if(G.frozen){G.frozen=false;msg(T('frozen'));await sl(200);return;}
   // === NEW SKILL STATES ===
-  if(G._evasion>0){G._evasion--;msg(T('evasionActive'));await sl(400);_processDeathMarks();if(G._bloodlust>0)G._bloodlust--;if(G._thornsTemp>0)G._thornsTemp--;return;}
+  if(G._evasion>0){G._evasion--;msg(T('evasionActive'));await sl(150);_processDeathMarks();if(G._bloodlust>0)G._bloodlust--;if(G._thornsTemp>0)G._thornsTemp--;return;}
   let tot=0;
   let freezeActive=false;
   let poisonSkulls=0,bossSkulls=0;
@@ -4676,7 +4828,7 @@ async function enemyTurn(){
     dotDmg+=G.poisonStacks;
     dotMsg+=T('poisonDot',G.poisonStacks);
     SFX.poisonTick();
-    G.poisonStacks=Math.max(0,G.poisonStacks-1-(G.poisonResist||0));
+    G.poisonStacks=Math.max(0,G.poisonStacks-2-(G.poisonResist||0));
   }
   if(G.burnStacks>0){
     dotDmg+=G.burnStacks;
@@ -4684,7 +4836,7 @@ async function enemyTurn(){
     G.armor=Math.max(0,G.armor-armorBurn);
     dotMsg+=(dotMsg?'+':'')+T('burnDot',G.burnStacks,armorBurn);
     SFX.burnTick();
-    G.burnStacks=Math.max(0,G.burnStacks-1-(G.burnResist||0));
+    G.burnStacks=Math.max(0,G.burnStacks-2-(G.burnResist||0));
   }
   if(G.curseStacks>0){
     dotMsg+=(dotMsg?'+':'')+T('curseDot',G.curseStacks);
@@ -4722,12 +4874,12 @@ async function enemyTurn(){
     // Iron Will: survive lethal hit once
     if(G.hp<=0&&G._ironWill){G.hp=1;G._ironWill=false;msg(T('ironWillSave'));SFX.skIronWill();boardFlash('#ffffff');}
     const fr=document.getElementById('board-frame');
-    fr.classList.add('a-shake','a-dmg');
+    if(fr)fr.classList.add('a-shake','a-dmg');
     SFX.hurt();
     haptic(40);
     screenFx('rgba(255,30,30,.1)',350);
     // enemy attack detail suppressed — visual/audio feedback is enough
-    await sl(500);fr.classList.remove('a-shake','a-dmg');
+    await sl(200);if(fr)fr.classList.remove('a-shake','a-dmg');
   }else if(tot>0){
     SFX.block();
     screenFx('rgba(100,150,255,.06)',250);
@@ -4735,13 +4887,14 @@ async function enemyTurn(){
     G.hp=Math.max(0,G.hp-dotDmg);
     SFX.hurt();haptic(20);
     screenFx('rgba(150,100,50,.06)',300);
-    const fr2=document.getElementById('board-frame');fr2.classList.add('a-shake');setTimeout(()=>fr2.classList.remove('a-shake'),350);
+    const fr2=document.getElementById('board-frame');if(fr2){fr2.classList.add('a-shake');setTimeout(()=>fr2.classList.remove('a-shake'),350);}
   }
-  await sl(400);
+  await sl(100);
   // === NEW SKILL STATE TICKS ===
   if(G._bloodlust>0)G._bloodlust--;
   if(G._thornsTemp>0)G._thornsTemp--;
   _processDeathMarks();
+  }catch(e){if(e!=='epoch')console.error('enemyTurn err:',e);}
 }
 // Death Mark countdown helper
 async function _processDeathMarks(){
@@ -4750,12 +4903,20 @@ async function _processDeathMarks(){
   if(rem.size>0){await animRem(rem,'a-kill');for(const k of rem){const[rr,cc]=k.split(',').map(Number);board[rr][cc]=null;}await collapse();}
 }
 
+// === MODAL PROMISE RESOLVER REGISTRY (for _appResume force-close) ===
+let _pendingModalResolvers=[];
+function _registerModalResolver(resFn){_pendingModalResolvers.push(resFn);}
+function _unregisterModalResolver(resFn){_pendingModalResolvers=_pendingModalResolvers.filter(f=>f!==resFn);}
+function _forceResolveAllModals(){const arr=[..._pendingModalResolvers];_pendingModalResolvers=[];arr.forEach(fn=>{try{fn();}catch(e){}});}
+
 // ================================================================
 //  LEVEL UP (choose 2 of 4: 2 skills + 2 stats)
 // ================================================================
 function showLvlUpBanner(){
   dismissBuffTip();
   return new Promise(res=>{
+    const _res=()=>{_unregisterModalResolver(_res);res();};
+    _registerModalResolver(_res);
     const ov=document.createElement('div');
     ov.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:700;display:flex;align-items:center;justify-content:center;flex-direction:column;backdrop-filter:blur(3px);animation:skConfIn .2s ease-out;';
     ov.innerHTML=`
@@ -4765,11 +4926,13 @@ function showLvlUpBanner(){
       </div>
     `;
     document.body.appendChild(ov);
-    setTimeout(()=>{ov.style.transition='opacity .3s';ov.style.opacity='0';setTimeout(()=>{ov.remove();res();},300);},1500);
+    setTimeout(()=>{ov.style.transition='opacity .3s';ov.style.opacity='0';setTimeout(()=>{ov.remove();_res();},300);},1500);
   });
 }
 function showClassPick(){
   return new Promise(res=>{
+    const _res=()=>{_unregisterModalResolver(_res);res();};
+    _registerModalResolver(_res);
     const clsList=[
       {id:'warrior',nameKey:'clsWarrior',descKey:'clsWarriorDesc',img:CLS_IMG.warrior},
       {id:'mage',nameKey:'clsMage',descKey:'clsMageDesc',img:CLS_IMG.mage},
@@ -4802,7 +4965,7 @@ function showClassPick(){
         card.classList.add('cls-selected');card.style.opacity='1';
         {
           const cls=CLASSES.find(c=>c.id===cid);
-          if(!cls){ov.remove();res();return;}
+          if(!cls){ov.remove();_res();return;}
           const oldMods=G.clsMods;
           // Remove old class mods
           G.maxHp-=(oldMods.maxHpBonus||0);
@@ -4848,11 +5011,11 @@ function showClassPick(){
             });
             Promise.all(flipPromises).then(()=>{
               ov.style.transition='opacity .3s';ov.style.opacity='0';
-              setTimeout(()=>{ov.remove();res();},300);
+              setTimeout(()=>{ov.remove();_res();},300);
             });
           } else {
             ov.style.transition='opacity .3s';ov.style.opacity='0';
-            setTimeout(()=>{ov.remove();res();},300);
+            setTimeout(()=>{ov.remove();_res();},300);
           }
         }
       };
@@ -4863,10 +5026,12 @@ function showClassPick(){
 function showLvl(){
   dismissBuffTip();
   return new Promise(res=>{
-    const m=document.getElementById('m-lvl');
+    const _res=()=>{_unregisterModalResolver(_res);res();};
+    _registerModalResolver(_res);
+    const m=document.getElementById('m-lvl');if(!m){_res();return;}
     const lvlH2=document.getElementById('lvl-h2');if(lvlH2){lvlH2.style.cssText='display:flex;align-items:center;justify-content:center;gap:3px;margin:24px 0 12px;';lvlH2.innerHTML=chromeLvl(G.level).replace(/class="chrome-digit"/g,'class="chrome-digit" style="height:64px"');}
-    
-    const d=document.getElementById('ml-c');d.innerHTML='';
+
+    const d=document.getElementById('ml-c');if(!d){_res();return;}d.innerHTML='';
     const hasClass=G.level>=3;
     const avail=ALL_SK.filter(s=>!G.skills.find(x=>x.id===s.id));
     // After class selection (lv3+), mix in class-specific skills & stats
@@ -4924,14 +5089,14 @@ function showLvl(){
           m.classList.remove('show');
           const replaceResult=await showSkillReplace(toRemove,pickedSkills);
           if(replaceResult==='back'){
-            await showLvl();rsk();ui();res();return;
+            await showLvl();rsk();ui();_res();return;
           }
         }
       }
       // Apply stats after skill handling confirmed
       pickedStats.forEach(c=>c.fn());
-      m.classList.remove('show');rsk();ui();res();
-      msg(_pick('logLeveledUp'));
+      m.classList.remove('show');rsk();ui();_res();
+      if(curLang==='ko')msg('Lv.'+G.level+' 달성');else msg(_pick('logLeveledUp'));
     };
     // Hint text
     const hint=document.createElement('div');hint.className='lvl-hint';
@@ -4996,6 +5161,8 @@ function showLvl(){
 // ================================================================
 function showSkillReplace(removeCount,newSkills){
   return new Promise(res=>{
+    const _res=(v)=>{_unregisterModalResolver(_res);res(v);};
+    _registerModalResolver(_res);
     const m=document.getElementById('m-lvl');
     const d=document.getElementById('ml-c');d.innerHTML='';
     const lvlH2=document.getElementById('lvl-h2');
@@ -5046,7 +5213,7 @@ function showSkillReplace(removeCount,newSkills){
         const cdVal=G.eqQuicken?Math.min(c.maxCd,5):c.maxCd;
         G.skills.push({...c,cd:0,maxCd:cdVal});
       });
-      m.classList.remove('show');res();
+      m.classList.remove('show');_res();
     };
     // Button row: back + ok
     const btnRow=document.createElement('div');
@@ -5058,7 +5225,7 @@ function showSkillReplace(removeCount,newSkills){
     backBtn.onclick=()=>{
       SFX.click();
       m.classList.remove('show');
-      res('back');
+      _res('back');
     };
     btnRow.appendChild(backBtn);
     okBtn.style.flex='2';
@@ -5074,7 +5241,9 @@ function showSkillReplace(removeCount,newSkills){
 function showShop(){
   dismissBuffTip();
   return new Promise(res=>{
-    const m=document.getElementById('m-eq');const d=document.getElementById('me-c');d.innerHTML='';
+    const _res=()=>{_unregisterModalResolver(_res);res();};
+    _registerModalResolver(_res);
+    const m=document.getElementById('m-eq');if(!m){_res();return;}const d=document.getElementById('me-c');if(!d){_res();return;}d.innerHTML='';
     const items=[];
     for(let i=0;i<3;i++){
       const isW=Math.random()<.5;
@@ -5109,7 +5278,7 @@ function showShop(){
         else{G.aDef=it.def;G.maxArmor=it.mA;G.aTier=it.tier;G.aName=it.name;}
         applyAttr(it.attr);
       }else{SFX.click();}
-      m.classList.remove('show');ui();res();
+      m.classList.remove('show');ui();_res();
     };
     items.forEach((it,idx)=>{
       const b=document.createElement('div');b.className='cbtn';
@@ -5142,6 +5311,8 @@ function applyAttr(attr){
 function showBossReward(){
   dismissBuffTip();
   return new Promise(res=>{
+    const _res=()=>{_unregisterModalResolver(_res);res();};
+    _registerModalResolver(_res);
     G.hp=G.maxHp;ui();
     SFX.levelUp();screenFx('rgba(255,255,200,.15)',500);haptic(50);
     const ov=document.createElement('div');
@@ -5158,7 +5329,7 @@ function showBossReward(){
     const ok=document.createElement('div');
     ok.className='ch-ok';
     ok.textContent='OK';
-    ok.onclick=()=>{SFX.click();ov.remove();res();};
+    ok.onclick=()=>{SFX.click();ov.remove();_res();};
     box.appendChild(ok);
     ov.appendChild(box);
     document.body.appendChild(ov);
@@ -5171,7 +5342,9 @@ function showBossReward(){
 function showUpg(){
   dismissBuffTip();
   return new Promise(res=>{
-    const m=document.getElementById('m-up');const d=document.getElementById('mu-c');d.innerHTML='';
+    const _res=()=>{_unregisterModalResolver(_res);res();};
+    _registerModalResolver(_res);
+    const m=document.getElementById('m-up');if(!m){_res();return;}const d=document.getElementById('mu-c');if(!d){_res();return;}d.innerHTML='';
     const ups=[
       {name:T('upgWpnName')||'Weapon Upgrade',desc:T('upgWpnDesc',G.wDmg,G.wDmg+1),icon:'<i class="ra ra-sword" style="color:#ffffff;font-size:20px"></i>',fn:()=>{G.wDmg++;}},
       {name:T('upgArmName')||'Armor Upgrade',desc:T('upgArmDesc',G.aDef,G.aDef+1),icon:'<i class="ra ra-heavy-shield" style="color:#ffffff;font-size:20px"></i>',fn:()=>{G.aDef++;}},
@@ -5186,7 +5359,7 @@ function showUpg(){
     okBtn.onclick=()=>{
       if(selIdx<0)return;
       SFX.forge();boardFlash('#ccbbff');ups[selIdx].fn();
-      m.classList.remove('show');ui();res();
+      m.classList.remove('show');ui();_res();
     };
     ups.forEach((u,idx)=>{
       const b=document.createElement('div');b.className='cbtn';
@@ -5323,7 +5496,7 @@ function burstFx(el){
   }
 }
 function confirmSk(i){
-  if(busy)return;const s=G.skills[i];if(s.cd>0)return;
+  if(busy)return;const s=G.skills[i];if(!s||s.cd>0)return;
   // Remove existing confirm popup if any
   const old=document.querySelector('.sk-confirm');if(old)old.remove();
   const ov=document.createElement('div');ov.className='sk-confirm';
@@ -5347,11 +5520,11 @@ function confirmSk(i){
 }
 async function useSk(i){
   if(busy)return;const s=G.skills[i];if(!s||s.cd>0)return;
-  busy=true;s.cd=s.maxCd;
+  busy=true;_busySetAt=Date.now();s.cd=s.maxCd;
   try{
     framePulse('a-skill',400);screenFx('rgba(180,130,255,.06)',250);
     await s.fn();rsk();ui();
-  }catch(e){console.error('Skill error:',e);}finally{busy=false;}
+  }catch(e){if(e!=='epoch')console.error('Skill error:',e);}finally{busy=false;_drainQueue();}
 }
 
 // Helper: collect all tiles of type
@@ -5419,9 +5592,9 @@ async function skSacrifice(){SFX.skSacrifice();boardFlash('#aa44aa');
 async function skSmite(){SFX.skSmite();boardFlash('#ffff88');
   let minHp=Infinity,tr=-1,tc=-1;
   for(let r=0;r<R;r++)for(let c=0;c<C;c++){const t=board[r][c];if(t?.type==='skull'&&t.hp<minHp){minHp=t.hp;tr=r;tc=c;}}
-  if(tr>=0){board[tr][tc].hp=0;G.kills++;const rem=new Set();rem.add(tr+','+tc);
-    await animRem(rem,'a-kill');board[tr][tc]=null;await collapse();}
-  msg(T('skMsgSmite'));}
+  if(tr>=0){const killedHp=board[tr][tc].hp;board[tr][tc].hp=0;G.kills++;const rem=new Set();rem.add(tr+','+tc);
+    await animRem(rem,'a-kill');board[tr][tc]=null;await collapse();msg(T('skMsgSmite')+' (HP:'+killedHp+')');}
+  else msg(T('skMsgSmite'));}
 async function skMirage(){SFX.skMirage();boardFlash('#cc99ff');
   const tiles=[];for(let r=0;r<R;r++)for(let c=0;c<C;c++)if(board[r][c])tiles.push(board[r][c]);
   for(let i=tiles.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[tiles[i],tiles[j]]=[tiles[j],tiles[i]];}
@@ -5459,7 +5632,7 @@ async function skWindSlash(){SFX.skWindSlash();boardFlash('#99ddcc');
     if(t.type==='skull'){t.hp-=G.wDmg*2;if(t.hp<=0){G.kills++;}}
     if(t.type!=='skull'||t.hp<=0)rem.add(r+','+c);}
   await animRem(rem);for(const k of rem){const[rr,cc]=k.split(',').map(Number);board[rr][cc]=null;}
-  await collapse();msg(T('skMsgWindSlash'));}
+  await collapse();msg(T('skMsgWindSlash')+' ('+rem.size+')');}
 async function skRampage(){SFX.skRampage();boardFlash('#ff3300');
   const r1=Math.floor(Math.random()*R);let r2=Math.floor(Math.random()*R);while(r2===r1)r2=Math.floor(Math.random()*R);
   const rem=new Set();[r1,r2].forEach(row=>{for(let c=0;c<C;c++){const t=board[row][c];if(!t)continue;
@@ -5469,16 +5642,16 @@ async function skRampage(){SFX.skRampage();boardFlash('#ff3300');
     if(t.type!=='skull'||t.hp<=0)rem.add(row+','+c);}});
   await animRem(rem);for(const k of rem){const[rr,cc]=k.split(',').map(Number);board[rr][cc]=null;}
   [r1,r2].forEach(row=>{for(let c=0;c<C;c++){if(board[row]?.[c]?.type==='skull'&&board[row][c].hp>0)refreshCell(row,c);}});
-  await collapse();msg(T('skMsgRampage'));}
+  await collapse();msg(T('skMsgRampage')+' ('+rem.size+')');}
 async function skShieldBash(){SFX.skShieldBash();boardFlash('#4477bb');
-  const dmg=G.armor;let tr=-1,tc=-1,mhp=0;
+  const dmg=Math.max(G.armor,Math.floor(G.maxArmor*0.3)+G.str);let tr=-1,tc=-1,mhp=0;
   for(let r=0;r<R;r++)for(let c=0;c<C;c++){const t=board[r][c];if(t?.type==='skull'&&t.hp>mhp){mhp=t.hp;tr=r;tc=c;}}
   if(tr>=0){board[tr][tc].hp-=dmg;if(board[tr][tc].hp<=0){G.kills++;const rem=new Set();rem.add(tr+','+tc);await animRem(rem,'a-kill');board[tr][tc]=null;await collapse();}else refreshCell(tr,tc);}
   msg(T('skMsgShieldBash',dmg));}
 async function skBloodlust(){SFX.skBloodlust();boardFlash('#cc3344');
-  G._bloodlust=3;msg(T('skMsgBloodlust'));}
+  G._bloodlust=3;msg(T('skMsgBloodlust')+' (3T)');}
 async function skStonewall(){SFX.skStonewall();boardFlash('#889988');
-  G.armor=G.maxArmor;G.armDur=Math.min(.95,G.armDur+.03);ui();msg(T('skMsgStonewall'));}
+  G.armor=G.maxArmor;G.armDur=Math.min(.95,G.armDur+.03);ui();msg(T('skMsgStonewall')+' ('+G.armor+'/'+G.maxArmor+')');}
 async function skRevenge(){SFX.skRevenge();boardFlash('#ee5544');
   const lost=G.maxHp-G.hp;const dmg=Math.floor(lost*.8);
   const rem=new Set();for(let r=0;r<R;r++)for(let c=0;c<C;c++){const t=board[r][c];if(t?.type==='skull'){t.hp-=dmg;if(t.hp<=0){G.kills++;rem.add(r+','+c);}else refreshCell(r,c);}}
@@ -5502,10 +5675,11 @@ async function skChainLightning(){SFX.skChainLightning();boardFlash('#aaddff');
 async function skPolymorph(){SFX.skPolymorph();boardFlash('#ee88ff');
   let mhp=0,tr=-1,tc=-1;
   for(let r=0;r<R;r++)for(let c=0;c<C;c++){const t=board[r][c];if(t?.type==='skull'&&t.hp>mhp&&!t.boss){mhp=t.hp;tr=r;tc=c;}}
-  if(tr>=0){board[tr][tc]={type:'potion',r:tr,c:tc,_id:++uid};refreshCell(tr,tc,'a-spawn');}
-  await sl(300);msg(T('skMsgPolymorph'));}
+  if(tr>=0){const prevHp=mhp;board[tr][tc]={type:'potion',r:tr,c:tc,_id:++uid};refreshCell(tr,tc,'a-spawn');
+    await sl(300);msg(T('skMsgPolymorph')+' (HP:'+prevHp+'→Potion)');}
+  else{await sl(300);msg(T('skMsgPolymorph'));}}
 async function skTimeWarp(){SFX.skTimeWarp();boardFlash('#ddaaff');
-  G.skills.forEach(s=>{s.cd=0;});rsk();msg(T('skMsgTimeWarp'));}
+  const twCt=G.skills.filter(s=>s.cd>0).length;G.skills.forEach(s=>{s.cd=0;});rsk();msg(T('skMsgTimeWarp')+' ('+twCt+')');}
 async function skMeteor(){SFX.skMeteor();boardFlash('#ff4400');
   const skulls=[];for(let r=0;r<R;r++)for(let c=0;c<C;c++){if(board[r][c]?.type==='skull')skulls.push({r,c});}
   if(skulls.length===0){msg(T('noTarget'));return;}
@@ -5527,7 +5701,7 @@ async function skArcaneBlast(){SFX.skArcaneBlast();boardFlash('#9955ff');
   if(rem.size>0){await animRem(rem,'a-kill');for(const k of rem){const[rr,cc]=k.split(',').map(Number);board[rr][cc]=null;}}
   await collapse();msg(T('skMsgArcaneBlast',dmg));}
 async function skEnchantWeapon(){SFX.skEnchantWeapon();boardFlash('#bb77ff');
-  G.wDmg+=2;G.str+=1;ui();msg(T('skMsgEnchantWeapon'));}
+  G.wDmg+=2;G.str+=1;ui();msg(T('skMsgEnchantWeapon')+' (DMG:'+G.wDmg+' STR:'+G.str+')');}
 async function skSoulDrain(){SFX.skSoulDrain();boardFlash('#8844bb');
   let mhp=0,tr=-1,tc=-1;for(let r=0;r<R;r++)for(let c=0;c<C;c++){const t=board[r][c];if(t?.type==='skull'&&t.hp<=t.mhp*.4&&t.hp>0){if(t.mhp>mhp){mhp=t.mhp;tr=r;tc=c;}}}
   if(tr>=0){const heal=board[tr][tc].mhp;board[tr][tc].hp=0;G.kills++;G.hp=Math.min(G.maxHp,G.hp+heal);
@@ -5539,8 +5713,8 @@ async function skBackstab(){SFX.skBackstab();boardFlash('#aa55cc');
     if(board[tr][tc].hp<=0){G.kills++;const rem=new Set();rem.add(tr+','+tc);await animRem(rem,'a-kill');board[tr][tc]=null;await collapse();}else refreshCell(tr,tc);
     msg(T('skMsgBackstab',dmg));}else msg(T('noTarget'));}
 async function skSmokeBomb(){SFX.skSmokeBomb();boardFlash('#666688');
-  for(let r=0;r<R;r++)for(let c=0;c<C;c++){const t=board[r][c];if(t?.type==='skull')t.wait=(t.wait||0)+1;}
-  msg(T('skMsgSmokeBomb'));}
+  let sbCt=0;for(let r=0;r<R;r++)for(let c=0;c<C;c++){const t=board[r][c];if(t?.type==='skull'){t.wait=(t.wait||0)+1;sbCt++;}}
+  msg(T('skMsgSmokeBomb')+' ('+sbCt+')');}
 async function skPickpocket(){SFX.skPickpocket();boardFlash('#ddbb44');
   let ct=0;for(let r=0;r<R;r++)for(let c=0;c<C;c++){if(board[r][c]?.type==='skull')ct++;}
   const gold=ct*3;G.gold+=gold;G.totGold+=gold;ui();msg(T('skMsgPickpocket',gold));}
@@ -5831,7 +6005,7 @@ function showUltPopup(){
 
 async function useUltimate(){
   if(busy||!G.ultReady)return;
-  busy=true;G.ultReady=false;G.mana=0;
+  busy=true;_busySetAt=Date.now();G.ultReady=false;G.mana=0;
   document.getElementById('bar-mana').classList.remove('mana-pulse');
   SFX.skill();boardFlash('#cc88ff',500);
   try{
@@ -5840,7 +6014,7 @@ async function useUltimate(){
     else if(G.cls==='mage')await ultMage();
     else await ultRogue();
     rsk();ui();
-  }catch(e){console.error('Ultimate error:',e);}finally{busy=false;}
+  }catch(e){if(e!=='epoch')console.error('Ultimate error:',e);}finally{busy=false;_drainQueue();}
 }
 async function ultWarrior(){
   // DMG all skulls + full armor
@@ -5927,13 +6101,13 @@ function gameOver(){
       <div class="ini-btn ini-no" onclick="skipAndShowLB()">X</div>
     </div>
   </div>`;
-  document.getElementById('go-st').innerHTML=goHTML;
+  const goSt=document.getElementById('go-st');if(goSt)goSt.innerHTML=goHTML;
   setTimeout(()=>{
-    document.getElementById('scr-over').classList.add('show');
+    const scrOv=document.getElementById('scr-over');if(scrOv)scrOv.classList.add('show');
     const ni=document.getElementById('name-input');
     if(ni){
-      if(bestInitials&&bestInitials!=='---')ni.value=bestInitials;
-      ni.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();ni.blur();submitName();}});
+      if(bestInitials&&bestInitials!=='---'&&bestInitials!=='???')ni.value=bestInitials;
+      ni.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();ni.blur();}});
       ni.addEventListener('focus',()=>{setTimeout(()=>{ni.scrollIntoView({behavior:'smooth',block:'center'});},300);});
       // Don't auto-focus on iOS to avoid keyboard jumping; let user tap
       if(!/iPhone|iPad|iPod/i.test(navigator.userAgent))setTimeout(()=>ni.focus(),800);
@@ -5992,6 +6166,8 @@ let _lbConsent=false;
 try{_lbConsent=localStorage.getItem('lb_consent')==='1';}catch(e){}
 function _askLbConsent(){
   return new Promise(res=>{
+    const _res=(v)=>{_unregisterModalResolver(_res);res(v);};
+    _registerModalResolver(_res);
     const ov=document.createElement('div');
     ov.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:950;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(3px);';
     const box=document.createElement('div');
@@ -6006,21 +6182,26 @@ function _askLbConsent(){
     const yBtn=document.createElement('div');
     yBtn.style.cssText='display:inline-block;padding:10px 28px;background:#2a2a2a;color:#ddd;font-size:13px;font-weight:700;cursor:pointer;margin:0 6px;border:1px solid #444;';
     yBtn.textContent=curLang==='ko'?'동의':'OK';
-    yBtn.onclick=()=>{_lbConsent=true;try{localStorage.setItem('lb_consent','1');}catch(e){}ov.remove();res(true);};
+    yBtn.onclick=()=>{_lbConsent=true;try{localStorage.setItem('lb_consent','1');}catch(e){}ov.remove();_res(true);};
     const nBtn=document.createElement('div');
     nBtn.style.cssText='display:inline-block;padding:10px 28px;background:#111;color:#888;font-size:13px;font-weight:700;cursor:pointer;margin:0 6px;border:1px solid #333;';
     nBtn.textContent=curLang==='ko'?'취소':'Cancel';
-    nBtn.onclick=()=>{ov.remove();res(false);};
+    nBtn.onclick=()=>{ov.remove();_res(false);};
     box.appendChild(yBtn);box.appendChild(nBtn);ov.appendChild(box);document.body.appendChild(ov);
   });
 }
 async function submitName(){
   const inp=document.getElementById('name-input');
   let name=(inp?inp.value:'').trim().substring(0,8);
-  if(!name)name='???';
+  if(!name){
+    // No name entered — don't submit, just show leaderboard
+    SFX.cancel();
+    setTimeout(()=>showLB(),300);
+    return;
+  }
   if(_lastGameScore>=bestScore){bestScore=_lastGameScore;bestInitials=name;try{localStorage.setItem('dr_best',bestScore);localStorage.setItem('dr_ini',bestInitials);}catch(e){}}
   const iniEl2=document.getElementById('v-ini');if(iniEl2)iniEl2.textContent=bestInitials;
-  document.getElementById('v-best').textContent=bestScore;
+  const vBest=document.getElementById('v-best');if(vBest)vBest.textContent=bestScore;
   SFX.levelUp();
   if(!_scoreSubmitted){
     if(!_lbConsent){const ok=await _askLbConsent();if(!ok){setTimeout(()=>showLB(),300);return;}}
@@ -6106,7 +6287,7 @@ function showLB(){
 function closeLB(){document.getElementById('lb-overlay').classList.remove('show');}
 function skipAndShowLB(){
   // Hide game over screen, show leaderboard with RETRY only
-  document.getElementById('scr-over').classList.remove('show');
+  const _so=document.getElementById('scr-over');if(_so)_so.classList.remove('show');
   const btns=document.getElementById('lb-btns');
   if(btns){
     btns.innerHTML=`<div class="lb-close" onclick="quickRetry()">RETRY</div>`;
@@ -6324,20 +6505,21 @@ function getAllSkills(){
 // ================================================================
 //  UTILITY
 // ================================================================
-function sl(ms){return new Promise(r=>setTimeout(r,ms));}
+let _epoch=0;
+function sl(ms){const ep=_epoch;return new Promise((resolve,reject)=>{setTimeout(()=>{if(_epoch!==ep)reject('epoch');else resolve();},ms);});}
+
 let _msgCur=null,_msgTimer=null;
 function msg(t){
   const box=document.getElementById('msg');
-  // Kill any pending timer
+  if(!box)return;
   if(_msgTimer){clearTimeout(_msgTimer);_msgTimer=null;}
-  // Instantly remove ALL existing slides (no animation to prevent buildup)
   while(box.firstChild)box.removeChild(box.firstChild);
   _msgCur=null;
   // Create new slide
   const nw=document.createElement('span');
   nw.className='msg-slide';
   nw.innerHTML=t;
-  nw.style.animation='msgSlideIn .3s cubic-bezier(.22,.68,.36,1) forwards';
+  nw.style.opacity='1';nw.style.transform='none';
   box.appendChild(nw);
   _msgCur=nw;
 }
@@ -6408,10 +6590,10 @@ document.addEventListener('gesturestart',e=>e.preventDefault());
 document.addEventListener('gesturechange',e=>e.preventDefault());
 document.addEventListener('gestureend',e=>e.preventDefault());
 document.getElementById('root').addEventListener('touchmove',e=>{
-  if(!e.target.closest('.mbox'))e.preventDefault();
+  if(!e.target.closest('.mbox,.mbg,.cbtn,.ch-ok'))e.preventDefault();
 },{passive:false});
 // Prevent double-tap zoom
-let lastTap=0;document.addEventListener('touchend',e=>{const now=Date.now();if(now-lastTap<300&&!e.target.closest('.mbox,.mbg,.cbtn,.rbtn,.dbtn,.cls-btn'))e.preventDefault();lastTap=now;},false);
+let lastTap=0;document.addEventListener('touchend',e=>{const now=Date.now();if(now-lastTap<300&&!e.target.closest('.mbox,.mbg,.cbtn,.ch-ok,.rbtn,.dbtn,.cls-btn,.sk-btn,.sk-confirm'))e.preventDefault();lastTap=now;},false);
 document.body.style.overscrollBehavior='none';
 // ===== LONG-PRESS TILE INFO =====
 (function(){
