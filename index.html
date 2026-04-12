@@ -2665,24 +2665,30 @@ const SFX=(()=>{
 
   // Utility: quick oscillator note
   function osc(ctx,type,freq,start,dur,vol=0.15,detune=0){
-    const o=ctx.createOscillator(),g=ctx.createGain();
-    o.type=type;o.frequency.value=freq;o.detune.value=detune;
-    g.gain.setValueAtTime(vol,start);
-    g.gain.exponentialRampToValueAtTime(0.001,start+dur);
-    o.connect(g);g.connect(ctx.destination);
-    o.start(start);o.stop(start+dur);
+    try{
+      if(!ctx||ctx.state==='closed')return;
+      const o=ctx.createOscillator(),g=ctx.createGain();
+      o.type=type;o.frequency.value=freq;o.detune.value=detune;
+      g.gain.setValueAtTime(vol,start);
+      g.gain.exponentialRampToValueAtTime(0.001,start+dur);
+      o.connect(g);g.connect(ctx.destination);
+      o.start(start);o.stop(start+dur);
+    }catch(e){}
   }
 
   // Utility: noise burst
   function noise(ctx,start,dur,vol=0.08){
-    const buf=ctx.createBuffer(1,ctx.sampleRate*dur,ctx.sampleRate);
-    const d=buf.getChannelData(0);
-    for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1);
-    const s=ctx.createBufferSource(),g=ctx.createGain();
-    s.buffer=buf;g.gain.setValueAtTime(vol,start);
-    g.gain.exponentialRampToValueAtTime(0.001,start+dur);
-    s.connect(g);g.connect(ctx.destination);
-    s.start(start);s.stop(start+dur);
+    try{
+      if(!ctx||ctx.state==='closed')return;
+      const buf=ctx.createBuffer(1,ctx.sampleRate*dur,ctx.sampleRate);
+      const d=buf.getChannelData(0);
+      for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1);
+      const s=ctx.createBufferSource(),g=ctx.createGain();
+      s.buffer=buf;g.gain.setValueAtTime(vol,start);
+      g.gain.exponentialRampToValueAtTime(0.001,start+dur);
+      s.connect(g);g.connect(ctx.destination);
+      s.start(start);s.stop(start+dur);
+    }catch(e){}
   }
 
   return {
@@ -2979,25 +2985,27 @@ const BGM=(()=>{
 
   // Cave drip: randomized periodic water drop sounds
   function scheduleDrips(c){
-    if(!playing)return;
-    const t=c.currentTime;
-    const delay=2+Math.random()*5;
-    const freq=1800+Math.random()*1200;
-    const o=c.createOscillator();
-    const g=c.createGain();
-    o.type='sine';o.frequency.value=freq;
-    o.frequency.exponentialRampToValueAtTime(freq*0.4,t+delay+0.12);
-    g.gain.setValueAtTime(0,t+delay);
-    g.gain.linearRampToValueAtTime(0.025+Math.random()*0.015,t+delay+0.01);
-    g.gain.exponentialRampToValueAtTime(0.001,t+delay+0.25);
-    // Reverb-like tail via delay
-    const dl=c.createDelay();dl.delayTime.value=0.15+Math.random()*0.1;
-    const dlG=c.createGain();dlG.gain.value=0.015;
-    o.connect(g);g.connect(master);
-    g.connect(dl);dl.connect(dlG);dlG.connect(master);
-    o.start(t+delay);o.stop(t+delay+0.4);
+    if(!playing||!c||c.state==='closed')return;
+    try{
+      const t=c.currentTime;
+      const delay=2+Math.random()*5;
+      const freq=1800+Math.random()*1200;
+      const o=c.createOscillator();
+      const g=c.createGain();
+      o.type='sine';o.frequency.value=freq;
+      o.frequency.exponentialRampToValueAtTime(freq*0.4,t+delay+0.12);
+      g.gain.setValueAtTime(0,t+delay);
+      g.gain.linearRampToValueAtTime(0.025+Math.random()*0.015,t+delay+0.01);
+      g.gain.exponentialRampToValueAtTime(0.001,t+delay+0.25);
+      // Reverb-like tail via delay
+      const dl=c.createDelay();dl.delayTime.value=0.15+Math.random()*0.1;
+      const dlG=c.createGain();dlG.gain.value=0.015;
+      o.connect(g);g.connect(master);
+      g.connect(dl);dl.connect(dlG);dlG.connect(master);
+      o.start(t+delay);o.stop(t+delay+0.4);
+    }catch(e){console.warn('[BGM] drip err',e);}
     // Schedule next drip
-    setTimeout(()=>scheduleDrips(c),(delay+0.5)*1000);
+    setTimeout(()=>scheduleDrips(c),(2+Math.random()*5+0.5)*1000);
   }
 
   // Wind/breath: filtered noise loop
@@ -3040,47 +3048,52 @@ const BGM=(()=>{
 
   // Metallic chain clinks: sparse random
   function scheduleChains(c){
-    if(!playing)return;
-    const t=c.currentTime;
-    const delay=4+Math.random()*8;
-    const freq=3000+Math.random()*2000;
-    const o=c.createOscillator();
-    const g=c.createGain();
-    o.type='square';o.frequency.value=freq;
-    o.frequency.exponentialRampToValueAtTime(freq*0.3,t+delay+0.06);
-    g.gain.setValueAtTime(0,t+delay);
-    g.gain.linearRampToValueAtTime(0.008+Math.random()*0.006,t+delay+0.005);
-    g.gain.exponentialRampToValueAtTime(0.001,t+delay+0.1);
-    o.connect(g);g.connect(master);
-    o.start(t+delay);o.stop(t+delay+0.15);
-    setTimeout(()=>scheduleChains(c),(delay+0.2)*1000);
+    if(!playing||!c||c.state==='closed')return;
+    try{
+      const t=c.currentTime;
+      const delay=4+Math.random()*8;
+      const freq=3000+Math.random()*2000;
+      const o=c.createOscillator();
+      const g=c.createGain();
+      o.type='square';o.frequency.value=freq;
+      o.frequency.exponentialRampToValueAtTime(freq*0.3,t+delay+0.06);
+      g.gain.setValueAtTime(0,t+delay);
+      g.gain.linearRampToValueAtTime(0.008+Math.random()*0.006,t+delay+0.005);
+      g.gain.exponentialRampToValueAtTime(0.001,t+delay+0.1);
+      o.connect(g);g.connect(master);
+      o.start(t+delay);o.stop(t+delay+0.15);
+    }catch(e){console.warn('[BGM] chain err',e);}
+    setTimeout(()=>scheduleChains(c),(4+Math.random()*8+0.2)*1000);
   }
 
   return{
     resumeCtx(){_unlockAudio();},
     start(){
       if(playing)return;
-      const c=getCtx();if(!c)return;playing=true;
-      master=c.createGain();master.gain.value=bgmVol;master.connect(c.destination);BGM._master=master;
-      // Layers
-      createDrone(c,55,0.035);      // Deep bass drone A
-      createDrone(c,82.5,0.02);     // Fifth above, quieter
-      createDrone(c,110,0.012);     // Octave harmonic
-      createPad(c,220,0.01);        // Eerie mid pad
-      createPad(c,330,0.006);       // Haunting fifth
-      createPad(c,165,0.008);       // Dark minor third
-      createWind(c,0.015);          // Cave wind
-      createRumble(c,0.02);         // Sub rumble
-      scheduleDrips(c);             // Water drips
-      scheduleChains(c);            // Distant chains
-      // Fade in
-      master.gain.setValueAtTime(0,c.currentTime);
-      master.gain.linearRampToValueAtTime(0.7,c.currentTime+3);
+      try{
+        const c=getCtx();if(!c||c.state==='closed')return;playing=true;
+        master=c.createGain();master.gain.value=bgmVol;master.connect(c.destination);BGM._master=master;
+        // Layers
+        createDrone(c,55,0.035);      // Deep bass drone A
+        createDrone(c,82.5,0.02);     // Fifth above, quieter
+        createDrone(c,110,0.012);     // Octave harmonic
+        createPad(c,220,0.01);        // Eerie mid pad
+        createPad(c,330,0.006);       // Haunting fifth
+        createPad(c,165,0.008);       // Dark minor third
+        createWind(c,0.015);          // Cave wind
+        createRumble(c,0.02);         // Sub rumble
+        scheduleDrips(c);             // Water drips
+        scheduleChains(c);            // Distant chains
+        // Fade in
+        master.gain.setValueAtTime(0,c.currentTime);
+        master.gain.linearRampToValueAtTime(0.7,c.currentTime+3);
+      }catch(e){console.warn('[BGM] start err',e);playing=false;}
     },
     stop(){
       if(!playing||!_audioCtx)return;playing=false;
-      // Fade out
-      master.gain.linearRampToValueAtTime(0,_audioCtx.currentTime+1.5);
+      try{
+        if(master)master.gain.linearRampToValueAtTime(0,_audioCtx.currentTime+1.5);
+      }catch(e){}
       setTimeout(()=>{
         nodes.forEach(n=>{try{n.stop();}catch(e){}});
         nodes.length=0;
@@ -3282,10 +3295,108 @@ function titleSfx(){
 // Track when busy was set — watchdog resets if stuck too long
 let _busySetAt=0;
 let _resumeCount=0;
+let _audioNeedsResume=false;
 
+// --- Nuclear DOM integrity check: if web process was killed, reload ---
+function _checkDOMIntegrity(){
+  var root=document.getElementById('root');
+  var board=document.getElementById('board');
+  // If critical DOM elements are gone, the web content process was killed
+  if(!root||!board||!document.body){
+    console.error('[RESUME] DOM integrity lost — reloading page');
+    window.location.reload();
+    return false;
+  }
+  return true;
+}
+
+// --- Force WKWebView GPU repaint from JS side ---
+function _forceRepaint(){
+  var root=document.getElementById('root');
+  var board=document.getElementById('board');
+  var body=document.body;
+  if(!body)return;
+
+  // 1. Ensure body is visible
+  body.style.visibility='visible';
+  body.style.opacity='1';
+  body.style.display='block';
+
+  // 2. Ensure root is visible (has .active class + inline display)
+  if(root){
+    root.classList.add('active');
+    root.style.display='flex';
+  }
+
+  // 3. Kill any full-screen black overlays
+  var splash=document.getElementById('splash-screen');
+  if(splash)splash.remove();
+
+  var dissolve=document.getElementById('dissolve-overlay');
+  if(dissolve){
+    dissolve.style.transition='none';
+    dissolve.style.opacity='0';
+    dissolve.style.pointerEvents='none';
+    dissolve.className='';
+  }
+
+  // Remove any stray high-z-index overlay elements
+  document.querySelectorAll('[style*="z-index: 9"],[style*="z-index:9"]').forEach(function(el){
+    if(el.id==='dissolve-overlay'||el.id==='root')return;
+    if(parseInt(el.style.zIndex)>=900)el.remove();
+  });
+
+  // 4. GPU compositor reset tricks
+  // Trick A: force reflow with translateZ
+  [body,root,board].forEach(function(el){
+    if(!el)return;
+    el.style.willChange='transform';
+    el.style.transform='translateZ(0)';
+  });
+  void body.offsetHeight; // force synchronous reflow
+
+  // Trick B: viewport meta jiggle (forces WKWebView to re-layout)
+  var vp=document.querySelector('meta[name="viewport"]');
+  if(vp){
+    var origContent=vp.getAttribute('content');
+    vp.setAttribute('content',origContent+',x='+Date.now());
+    setTimeout(function(){vp.setAttribute('content',origContent);},50);
+  }
+
+  // Trick C: temporary full-screen canvas forces compositor
+  try{
+    var cv=document.createElement('canvas');
+    cv.width=1;cv.height=1;
+    cv.style.cssText='position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:99999;pointer-events:none;opacity:0.01;';
+    body.appendChild(cv);
+    var ctx=cv.getContext('2d');
+    if(ctx){ctx.fillStyle='rgba(0,0,0,0.01)';ctx.fillRect(0,0,1,1);}
+    requestAnimationFrame(function(){if(cv.parentNode)cv.remove();});
+  }catch(e){}
+
+  // Trick D: opacity flash
+  body.style.opacity='0.999';
+
+  // Trick E: scroll jiggle
+  window.scrollTo(0,1);
+
+  // Cleanup after double rAF
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){
+      [body,root,board].forEach(function(el){
+        if(!el)return;
+        el.style.willChange='';
+        el.style.transform='';
+      });
+      body.style.opacity='1';
+      window.scrollTo(0,0);
+    });
+  });
+}
+
+// --- Reset all game state locks ---
 function _forceGameReset(){
-  // Nuclear option: completely reset game state locks
-  busy=false;drag=false;path=[];pty=null;_inputQueue=null;
+  busy=false;drag=false;path=[];pty=null;_inputQueue=null;_busySetAt=0;
   if(typeof _epoch!=='undefined')_epoch++;
   // Close all modals
   try{
@@ -3295,14 +3406,35 @@ function _forceGameReset(){
     if(typeof dismissBuffTip==='function')dismissBuffTip();
     if(typeof _forceResolveAllModals==='function')_forceResolveAllModals();
   }catch(e){}
-  // Clear all animations
+  // Clear all stuck CSS animations
   document.querySelectorAll('.a-fall,.a-pop,.a-slash,.a-shake,.a-dmg,.a-heal,.a-glow,.a-kill').forEach(function(el){
     el.classList.remove('a-fall','a-pop','a-slash','a-shake','a-dmg','a-heal','a-glow','a-kill');
   });
-  // Clear dissolve overlay
-  var ov=document.getElementById('dissolve-overlay');
-  if(ov){ov.style.transition='none';ov.style.opacity='0';ov.style.pointerEvents='none';}
-  // Full re-render
+}
+
+// --- Audio resume helper ---
+function _resumeAudio(){
+  _audioNeedsResume=true;
+  try{if(typeof SFX!=='undefined'&&SFX.resumeCtx)SFX.resumeCtx();}catch(e){}
+  try{if(typeof BGM!=='undefined'&&BGM.resumeCtx)BGM.resumeCtx();}catch(e){}
+}
+
+// --- Main resume handler ---
+function _appResume(){
+  console.log('[RESUME] _appResume called');
+  _resumeCount++;
+  var rc=_resumeCount;
+
+  // Step 0: DOM integrity check — if web process was killed, reload
+  if(!_checkDOMIntegrity())return;
+
+  // Step 1: IMMEDIATELY force GPU repaint (fixes black screen)
+  _forceRepaint();
+
+  // Step 2: Reset game state locks
+  _forceGameReset();
+
+  // Step 3: Full re-render of game board
   try{
     if(typeof G!=='undefined'&&G&&G.hp>0){
       if(typeof renderFull==='function')renderFull();
@@ -3310,55 +3442,46 @@ function _forceGameReset(){
       if(typeof ui==='function')ui();
     }
   }catch(e){}
-}
 
-function _appResume(){
-  _resumeCount++;
-  var rc=_resumeCount;
-  // Immediate reset
-  _forceGameReset();
-  // GPU repaint for WKWebView
-  var root=document.getElementById('root');
-  var boardEl=document.getElementById('board');
-  [root,boardEl,document.body].forEach(function(el){
-    if(!el)return;
-    el.style.willChange='transform';
-    el.style.transform='translateZ(0)';
-  });
-  void document.body.offsetHeight;
-  requestAnimationFrame(function(){
-    requestAnimationFrame(function(){
-      [root,boardEl,document.body].forEach(function(el){
-        if(!el)return;el.style.willChange='';el.style.transform='';
-      });
-    });
-  });
-  document.body.style.opacity='0.999';
-  setTimeout(function(){document.body.style.opacity='1';},50);
-  window.scrollTo(0,1);setTimeout(function(){window.scrollTo(0,0);},30);
-  // Audio resume
-  _audioNeedsResume=true;
-  try{if(typeof SFX!=='undefined'&&SFX.resumeCtx)SFX.resumeCtx();}catch(e){}
-  try{if(typeof BGM!=='undefined'&&BGM.resumeCtx)BGM.resumeCtx();}catch(e){}
-  // Silver mode
-  try{if(_silverMode)_applySilver();}catch(e){}
-  // Delayed second pass — catches cases where first pass runs too early
-  setTimeout(function(){
-    if(_resumeCount!==rc)return; // newer resume already handled it
-    _forceGameReset();
-    try{if(typeof SFX!=='undefined'&&SFX.resumeCtx)SFX.resumeCtx();}catch(e){}
-    try{if(typeof BGM!=='undefined'&&BGM.resumeCtx)BGM.resumeCtx();}catch(e){}
-  },200);
-  // Third pass at 500ms — final safety net
+  // Step 4: Audio resume
+  _resumeAudio();
+
+  // Step 5: Silver mode
+  try{if(typeof _silverMode!=='undefined'&&_silverMode&&typeof _applySilver==='function')_applySilver();}catch(e){}
+
+  // === DELAYED PASSES (catch timing issues) ===
+
+  // Pass 2 at 300ms
   setTimeout(function(){
     if(_resumeCount!==rc)return;
+    if(!_checkDOMIntegrity())return;
+    _forceRepaint();
+    _forceGameReset();
+    _resumeAudio();
+    try{if(typeof G!=='undefined'&&G&&G.hp>0){
+      if(typeof renderFull==='function')renderFull();
+      if(typeof ui==='function')ui();
+    }}catch(e){}
+  },300);
+
+  // Pass 3 at 800ms — final safety net
+  setTimeout(function(){
+    if(_resumeCount!==rc)return;
+    if(!_checkDOMIntegrity())return;
+    // Ensure everything is still visible
+    document.body.style.opacity='1';
+    document.body.style.visibility='visible';
+    var root=document.getElementById('root');
+    if(root){root.style.display='flex';root.classList.add('active');}
+    var dissolve=document.getElementById('dissolve-overlay');
+    if(dissolve){dissolve.style.opacity='0';dissolve.style.pointerEvents='none';}
     if(busy){busy=false;if(typeof _epoch!=='undefined')_epoch++;}
     try{if(typeof G!=='undefined'&&G&&G.hp>0&&typeof ui==='function')ui();}catch(e){}
-  },500);
+    _resumeAudio();
+  },800);
 }
 
 // === WATCHDOG: if busy stuck > 3 seconds, force reset on next touch ===
-let _audioNeedsResume=false;
 document.addEventListener('touchstart',function(){
   // Audio resume on touch (iOS requires user gesture)
   if(_audioNeedsResume){
@@ -3367,9 +3490,15 @@ document.addEventListener('touchstart',function(){
     try{if(typeof BGM!=='undefined'&&BGM.resumeCtx)BGM.resumeCtx();}catch(e){}
   }
   // Watchdog: if busy for too long, force reset
+  // BUT skip if a modal is open (user is making a choice — this is normal)
   if(busy&&_busySetAt>0&&(Date.now()-_busySetAt)>3000){
-    console.warn('[WATCHDOG] busy stuck for',Date.now()-_busySetAt,'ms — forcing reset');
-    _forceGameReset();
+    if(typeof _pendingModalResolvers!=='undefined'&&_pendingModalResolvers.length>0){
+      // Modal is open — user is choosing. Reset timer, don't kill the modal.
+      _busySetAt=Date.now();
+    }else{
+      console.warn('[WATCHDOG] busy stuck for',Date.now()-_busySetAt,'ms — forcing reset');
+      _forceGameReset();
+    }
   }
 },{passive:true,capture:true});
 
@@ -4925,8 +5054,16 @@ function showLvlUpBanner(){
         <div style="display:flex;align-items:center;justify-content:center;gap:4px;margin-top:12px;opacity:0;animation:lvlBannerIn .4s ease-out .3s both;">${chromeLvl(G.level).replace(/class="chrome-digit"/g,'class="chrome-digit" style="height:64px"')}</div>
       </div>
     `;
+    let dismissed=false;
+    function dismiss(){
+      if(dismissed)return;dismissed=true;
+      ov.style.transition='opacity .2s';ov.style.opacity='0';
+      setTimeout(()=>{if(ov.parentNode)ov.remove();_res();},200);
+    }
+    ov.addEventListener('click',dismiss);
+    ov.addEventListener('touchstart',dismiss,{passive:true});
     document.body.appendChild(ov);
-    setTimeout(()=>{ov.style.transition='opacity .3s';ov.style.opacity='0';setTimeout(()=>{ov.remove();_res();},300);},1500);
+    setTimeout(dismiss,1500);
   });
 }
 function showClassPick(){
