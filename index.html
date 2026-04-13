@@ -782,7 +782,7 @@ if(!window._fbFail&&typeof firebase!=='undefined'){try{firebase.initializeApp(fi
         <div id="restart-btn" onclick="confirmRestart()" role="button" aria-label="Restart"><svg viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" opacity=".5"><path d="M2.5 8.5l5-5"/><path d="M2.5 8.5l5 4.5"/><path d="M2.5 8.5h12a6 6 0 0 1 0 12H10"/></svg></div>
       </div>
       <div id="score-bar">
-        <div class="score-item"><span class="score-label">TIME</span><span class="score-num" id="v-score">00:00:00</span></div>
+        <div class="score-item"><span class="score-label">TIME</span><span class="score-num" id="v-score" style="font-variant-numeric:tabular-nums;min-width:62px;display:inline-block;text-align:center;">00:00:00</span></div>
         <div class="score-item" onclick="showLBFromGame()" style="cursor:pointer;"><span class="score-label">BEST</span><span class="score-num score-best" id="v-best">0</span></div>
       </div>
       <div id="app-bar-right">
@@ -3191,12 +3191,29 @@ let _lastSubmittedScore=0,_lastSubmittedInitials='---';
 try{bestScore=parseInt(localStorage.getItem('dr_best'))||0;bestInitials=localStorage.getItem('dr_ini')||'---';}catch(e){}
 
 function calcScore(){return G.kills*10+G.totGold+G.level*50+G.turn*2;}
+let _scoreDisplayed=0,_scoreAnimId=null;
 function updateScore(){
-  const s=calcScore();
-  const ptEl=document.getElementById('play-time');
-  if(ptEl)ptEl.textContent=s;
+  const target=calcScore();
   document.getElementById('v-best').textContent=bestScore;
   const iniEl=document.getElementById('v-ini');if(iniEl)iniEl.textContent=bestInitials;
+  if(target===_scoreDisplayed){const ptEl=document.getElementById('play-time');if(ptEl)ptEl.textContent=target;return;}
+  if(_scoreAnimId){cancelAnimationFrame(_scoreAnimId);_scoreAnimId=null;}
+  const start=_scoreDisplayed;
+  const diff=target-start;
+  const duration=Math.min(800,Math.max(300,Math.abs(diff)*15));
+  const t0=performance.now();
+  function tick(now){
+    const elapsed=now-t0;
+    const progress=Math.min(elapsed/duration,1);
+    const ease=1-Math.pow(1-progress,3);
+    const current=Math.round(start+diff*ease);
+    const ptEl=document.getElementById('play-time');
+    if(ptEl)ptEl.textContent=current;
+    if(progress<1){_scoreAnimId=requestAnimationFrame(tick);}
+    else{_scoreDisplayed=target;_scoreAnimId=null;}
+  }
+  _scoreAnimId=requestAnimationFrame(tick);
+  _scoreDisplayed=target;
 }
 
 // ================================================================
@@ -4220,21 +4237,29 @@ async function spawnEliteSkull(){
   };
   t.mhp=t.hp;
   board[0][col]=t;
-  // Animate fall from above
+  // Morph in-place: existing tile transforms into elite skull
   const cell=cellEl(0,col);
   if(cell){
+    const oldEl=cell.querySelector('.tile');
+    if(oldEl){
+      oldEl.style.transition='transform .3s ease, filter .3s ease';
+      oldEl.style.transform='scale(1.15)';
+      oldEl.style.filter='brightness(2) saturate(0)';
+    }
+    await sl(300);
     cell.innerHTML='';
     const el=mkEl(t,'');
-    el.style.setProperty('--fd',R);
-    el.style.setProperty('--fall-dur','.4s');
+    el.style.transform='scale(1.2)';
+    el.style.filter='brightness(1.5)';
+    el.style.transition='transform .3s ease-out, filter .3s ease-out';
     cell.appendChild(el);
     void el.offsetHeight;
-    el.classList.add('a-fall-new');
+    el.style.transform='scale(1)';
+    el.style.filter='brightness(1)';
   }
   SFX.skDeathMark();
   screenFx('rgba(255,0,0,.08)',300);
   await sl(200);
-  // Add elite pulse after landing
   const el2=tEl(0,col);
   if(el2){el2.style.animation='elitePulse 0.3s ease 2';setTimeout(()=>{if(el2){el2.style.animation='';el2.classList.add('sk-elite');}},600);}
   }catch(e){console.error('spawnElite err:',e);}
@@ -4289,21 +4314,30 @@ async function spawnDarkSkull(){
     t.mhp=t.hp;
     board[0][col]=t;
     G._darkSkullActive=true;
-    // Animate spawn
+    // Animate spawn — morph in place
     const cell=cellEl(0,col);
     if(cell){
+      const oldEl=cell.querySelector('.tile');
+      if(oldEl){
+        oldEl.style.transition='transform .35s ease, filter .35s ease';
+        oldEl.style.transform='scale(1.15)';
+        oldEl.style.filter='brightness(2.5) saturate(0) hue-rotate(270deg)';
+      }
+      await sl(350);
       cell.innerHTML='';
       const el=mkEl(t,'');
-      el.style.setProperty('--fd',R);
-      el.style.setProperty('--fall-dur','.5s');
+      el.style.transform='scale(1.25)';
+      el.style.filter='brightness(1.8) saturate(1.5)';
+      el.style.transition='transform .35s ease-out, filter .35s ease-out';
       cell.appendChild(el);
       void el.offsetHeight;
-      el.classList.add('a-fall-new');
+      el.style.transform='scale(1)';
+      el.style.filter='brightness(1)';
     }
     SFX.skDeathMark();
     screenFx('rgba(80,0,160,.15)',500);
     haptic(80);
-    await sl(500);
+    await sl(400);
     // Dark pulse on the skull
     const el2=tEl(0,col);
     if(el2){el2.style.animation='darkSkPulse 0.4s ease 3';setTimeout(()=>{if(el2){el2.style.animation='';el2.classList.add('sk-dark');}},1200);}
@@ -5377,12 +5411,11 @@ async function enemyTurn(){
 
   // Spikes: skulls take damage when attacking (exclude waiting skulls)
   if(G.eqSpikes>0){
+    let spkKills=0;
     for(let r=0;r<R;r++)for(let c=0;c<C;c++){
-      if(board[r][c]?.type==='skull'&&!board[r][c].wait){board[r][c].hp-=G.eqSpikes;if(board[r][c].hp<=0){G.kills++;board[r][c]=null;const cl=cellEl(r,c);if(cl)cl.innerHTML='';}}
+      if(board[r][c]?.type==='skull'&&!board[r][c].wait){board[r][c].hp-=G.eqSpikes;if(board[r][c].hp<=0){spkKills++;G.kills++;board[r][c]=null;const cl=cellEl(r,c);if(cl)cl.innerHTML='';}}
     }
-    let anyDead=false;
-    for(let r=0;r<R;r++)for(let c=0;c<C;c++){if(!board[r][c]&&cellEl(r,c)?.children.length===0){anyDead=true;break;}}
-    if(anyDead)await collapse();
+    if(spkKills>0)await collapse();
   }
 
   // === WEAPON POISON/FIRE DoT on afflicted skulls ===
@@ -5398,7 +5431,7 @@ async function enemyTurn(){
       if(!t.wpnPoison&&!t.wpnFire){}
       refreshCell(r,c);
     }
-    if(wpnDotKills>0){let anyDead=false;for(let r=0;r<R;r++)for(let c=0;c<C;c++){if(!board[r][c]&&cellEl(r,c)?.querySelector('.tile')){anyDead=true;break;}}if(anyDead)await collapse();}
+    if(wpnDotKills>0){await collapse();}
   }
 
   // === POISON STACKS: each poison skull adds +2 stacks per turn ===
